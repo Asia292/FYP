@@ -44,7 +44,7 @@ void main() /** Entry point for the application */
 			clock.restart();
 		}
 
-		window.clear(sf::Color(120,120,120));
+		window.clear(sf::Color(120, 120, 120));
 
 		window.draw(game);
 

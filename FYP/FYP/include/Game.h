@@ -10,6 +10,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "SFMLDebugDraw.h"
+#include "Platform.h"
+#include "Player.h"
 #include <memory>
 
 
@@ -17,17 +19,18 @@ class Game : public sf::Drawable
 {
 private:
 	sf::View view; //!< The view maps from physical co-ordinates to rendering co-ordinates
-	sf::Vector2f worldSize = sf::Vector2f(4.f, 3.f); //!< Size of the physical worlds is 4 X 3 metres
-	sf::Vector2f playerPos;		//!< Position of the player
+	sf::Vector2f worldSize = sf::Vector2f(8.f, 6.f); //!< Size of the physical worlds is 8 X 6 metres
 
 	b2World* world = nullptr; //!< Pointer to the Box2D world.  Using pointers as BOX2D has it's own memory management
 	const int velIterations = 7; //!< On each update there will be 7 velocity iterations in the physics engine
 	const int posIterations = 5; //!< On each update there will be 5 position iterations on each update
 	const b2Vec2 gravity = b2Vec2(0.f, 9.81f); //!< Standard earth gravity 
 
-	
 	bool debug; //!< Toggle for debug drawing
 	SFMLDebugDraw debugDraw; //!< Box2D debug drawing
+
+	Platform *platform[1];
+	Player *playerOne;
 
 public:
 	Game(); //!< Constructor which sets up the game

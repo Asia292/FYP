@@ -12,9 +12,12 @@ public:
 	const float friction = 0.4f; //!< Friction - only friction from movement, not when static
 	const float restitution = 0.1f; //!< Restitution - bouncyness of stuff
 
+	b2Fixture *fixture;		//!< The body's fixture
+	b2Filter filter;
+
 public:
 	Player() {};		//!< Default constructor
-	Player(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation);		//!< Full constructor
+	Player(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, int cat, sf::Color col);		//!< Full constructor
 	void update(float timestep);	//!< Updates entity
 	void setUserData(void* data);		//!< Sets the user data of the body
 

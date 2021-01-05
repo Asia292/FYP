@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation)
+Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, int cat, sf::Color col)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -28,8 +28,14 @@ Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	setSize(size);
 	setOrigin(size * 0.5f);
 	setRotation(orientation);
-	setFillColor(sf::Color::Red);
+	setFillColor(col);
 	setOutlineThickness(0.f);
+
+
+	fixture = body->GetFixtureList();
+	filter.categoryBits = cat;
+	filter.maskBits = 0x0001;
+	fixture->SetFilterData(filter);
 }
 
 void Player::update(float timestep)
@@ -40,7 +46,7 @@ void Player::update(float timestep)
 
 void Player::setUserData(void * data)
 {
-
+	body->SetUserData(data);
 }
 
 void Player::moveLeft()

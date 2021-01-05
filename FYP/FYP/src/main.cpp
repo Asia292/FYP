@@ -33,6 +33,10 @@ void main() /** Entry point for the application */
 			{
 				game.processKeyPress(event.key.code);
 			}
+			if (event.type == sf::Event::KeyReleased)
+			{
+				game.processKeyRelease(event.key.code);
+			}
 		}
 
 		// Find out how much time has elapsed

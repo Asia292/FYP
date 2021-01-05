@@ -1,0 +1,4 @@
+﻿Main.obj : error LNK2019: unresolved external symbol "public: static class testing::UnitTest * __cdecl testing::UnitTest::GetInstance(void)" (?GetInstance@UnitTest@testing@@SAPEAV12@XZ) referenced in function "int __cdecl RUN_ALL_TESTS(void)" (?RUN_ALL_TESTS@@YAHXZ)
+Main.obj : error LNK2019: unresolved external symbol "public: int __cdecl testing::UnitTest::Run(void)" (?Run@UnitTest@testing@@QEAAHXZ) referenced in function "int __cdecl RUN_ALL_TESTS(void)" (?RUN_ALL_TESTS@@YAHXZ)
+Main.obj : error LNK2019: unresolved external symbol "void __cdecl testing::InitGoogleTest(int *,char * *)" (?InitGoogleTest@testing@@YAXPEAHPEAPEAD@Z) referenced in function main
+C:\Users\Tia-A\Documents\FYP\Student's Cartridge\Development\Code\FYP\FYP\x64\Debug\Unit Tests.exe : fatal error LNK1120: 3 unresolved externals

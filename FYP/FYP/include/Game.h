@@ -12,6 +12,7 @@
 #include "SFMLDebugDraw.h"
 #include "Platform.h"
 #include "Player.h"
+#include "Hazard.h"
 #include <memory>
 
 
@@ -30,7 +31,14 @@ private:
 	SFMLDebugDraw debugDraw; //!< Box2D debug drawing
 
 	Platform *platform[1];
-	Player *playerOne;
+	Hazard *hazards[1];
+	Player *lightPlayer;
+	Player *darkPlayer;
+
+	bool lightRight;
+	bool lightLeft;
+	bool darkRight;
+	bool darkLeft;
 
 public:
 	Game(); //!< Constructor which sets up the game
@@ -39,4 +47,5 @@ public:
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const; //!< Draw the game to the render context
 	void toggleDebug() { debug = !debug; }; //!< Toggle for debug drawing
 	void processKeyPress(sf::Keyboard::Key code);		//!< Decides what to do on key press
+	void processKeyRelease(sf::Keyboard::Key code);		//!< Decides what to do on key release
 };

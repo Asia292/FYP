@@ -12,7 +12,9 @@ Game::Game()
 	lightPlayer = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, sf::Color::White);
 	darkPlayer = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, sf::Color::Black);
 	platform[0] = new Platform(world, sf::Vector2f(0.0f, 1.0f), sf::Vector2f(5.0f, 0.5f), 0.f);
-	hazards[0] = new Hazard(world, sf::Vector2f(-1.f, 0.75f), sf::Vector2f(0.25f, 0.25f), 0.f, 0x0100);
+	darkHazards[0] = new Hazard(world, sf::Vector2f(-1.f, 0.75f), sf::Vector2f(0.25f, 0.25f), 0.f, 0x0100, sf::Color::Black);
+	lightHazards[0] = new Hazard(world, sf::Vector2f(1.f, 0.75f), sf::Vector2f(0.25f, 0.25f), 0.f, 0x0010, sf::Color::White);
+	bothHazards[0] = new Hazard(world, sf::Vector2f(0.f, 0.75f), sf::Vector2f(0.25f, 0.25f), 0.f, 0xFFFF, sf::Color::Blue);
 
 	debug = false;
 	lightRight = false;
@@ -37,10 +39,20 @@ Game::~Game()
 		delete plat;
 		plat = nullptr;
 	}
-	for (Hazard* haz : hazards)
+	for (Hazard* hazard : darkHazards)
 	{
-		delete haz;
-		haz = nullptr;
+		delete hazard;
+		hazard = nullptr;
+	}
+	for (Hazard* hazard : lightHazards)
+	{
+		delete hazard;
+		hazard = nullptr;
+	}
+	for (Hazard* hazard : bothHazards)
+	{
+		delete hazard;
+		hazard = nullptr;
 	}
 }
 
@@ -74,8 +86,9 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	target.draw(*lightPlayer);
 	target.draw(*darkPlayer);
 	for (Platform *plat : platform) target.draw(*plat);
-	for (Hazard *haz : hazards) target.draw(*haz);
-
+	for (Hazard *hazard : darkHazards) target.draw(*hazard);
+	for (Hazard *hazard : lightHazards) target.draw(*hazard);
+	for (Hazard *hazard : bothHazards) target.draw(*hazard);
 
 	// Debug Draw
 	if (debug) target.draw(debugDraw);

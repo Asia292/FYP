@@ -1,4 +1,12 @@
 ﻿  Main.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(35): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(55): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(75): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(94): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(114): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(134): warning C4305: 'argument': truncation from 'double' to 'float32'
+Main.obj : warning LNK4049: locally defined symbol ?Black@Color@sf@@2V12@B (public: static class sf::Color const sf::Color::Black) imported
+Main.obj : warning LNK4049: locally defined symbol ?White@Color@sf@@2V12@B (public: static class sf::Color const sf::Color::White) imported
 Game - lib.lib(WindowImplWin32.cpp.obj) : warning LNK4099: PDB 'sfml-window-s-d.pdb' was not found with 'Game - lib.lib(WindowImplWin32.cpp.obj)' or at 'C:\Users\Tia-A\Documents\FYP\Student's Cartridge\Development\Code\FYP\FYP\x64\Debug\sfml-window-s-d.pdb'; linking object as if no debug info
 Game - lib.lib(VideoModeImpl.cpp.obj) : warning LNK4099: PDB 'sfml-window-s-d.pdb' was not found with 'Game - lib.lib(VideoModeImpl.cpp.obj)' or at 'C:\Users\Tia-A\Documents\FYP\Student's Cartridge\Development\Code\FYP\FYP\x64\Debug\sfml-window-s-d.pdb'; linking object as if no debug info
 Game - lib.lib(SensorImpl.cpp.obj) : warning LNK4099: PDB 'sfml-window-s-d.pdb' was not found with 'Game - lib.lib(SensorImpl.cpp.obj)' or at 'C:\Users\Tia-A\Documents\FYP\Student's Cartridge\Development\Code\FYP\FYP\x64\Debug\sfml-window-s-d.pdb'; linking object as if no debug info

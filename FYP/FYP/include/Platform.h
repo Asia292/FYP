@@ -1,9 +1,15 @@
 #pragma once
+/*!
+\file Platform.h
+*/
 
 #include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+/*! \class Platform
+\brief Defines base for all platform types
+*/
 class Platform : public sf::RectangleShape
 {
 private:

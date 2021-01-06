@@ -30,15 +30,17 @@ private:
 	bool debug; //!< Toggle for debug drawing
 	SFMLDebugDraw debugDraw; //!< Box2D debug drawing
 
-	Platform *platform[1];
-	Hazard *hazards[1];
-	Player *lightPlayer;
-	Player *darkPlayer;
+	Platform *platform[1];		//!< Array of platforms
+	Hazard *darkHazards[1];		//!< Array of hazards to the dark player
+	Hazard *lightHazards[1];	//!< Array of hazards to the light player
+	Hazard *bothHazards[1];		//!< Array of hazards to both players
+	Player *lightPlayer;		//!< The light player
+	Player *darkPlayer;			//!< The dark player
 
-	bool lightRight;
-	bool lightLeft;
-	bool darkRight;
-	bool darkLeft;
+	bool lightRight;	//!< If light player should be moving right
+	bool lightLeft;		//!< If light player should be moving left
+	bool darkRight;		//!< If dark player should be moving right
+	bool darkLeft;		//!< If dark player should be moving left
 
 public:
 	Game(); //!< Constructor which sets up the game

@@ -1,9 +1,15 @@
 #pragma once
+/*!
+\file Player.h
+*/
 
 #include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+/*! \class Player
+\brief Creates and controls the player
+*/
 class Player : public sf::RectangleShape
 {
 public:

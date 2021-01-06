@@ -1,6 +1,6 @@
 #include "Hazard.h"
 
-Hazard::Hazard(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, int mask)
+Hazard::Hazard(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, int mask, sf::Color col)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -26,7 +26,7 @@ Hazard::Hazard(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	setSize(size);
 	setOrigin(size * 0.5f);
 	setRotation(orientation);
-	setFillColor(sf::Color::Blue);
+	setFillColor(col);
 	setOutlineThickness(0.f);
 
 

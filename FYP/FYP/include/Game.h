@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "SFMLDebugDraw.h"
+#include "ContactListener.h"
 #include "PlatTemp.h"
 #include "Player.h"
 #include "Hazard.h"
@@ -55,4 +56,6 @@ public:
 	void toggleDebug() { debug = !debug; }; //!< Toggle for debug drawing
 	void processKeyPress(sf::Keyboard::Key code);		//!< Decides what to do on key press
 	void processKeyRelease(sf::Keyboard::Key code);		//!< Decides what to do on key release
+
+	ContactListener listener;	//!< The contact listener
 };

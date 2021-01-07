@@ -6,6 +6,7 @@ Game::Game()
 	view.setSize(worldSize);
 
 	world = new b2World(gravity);
+	world->SetContactListener(&listener);
 
 	debugDraw.setWorld(world);
 
@@ -24,6 +25,20 @@ Game::Game()
 	lightLeft = false;
 	darkRight = false;
 	darkLeft = false;
+
+
+	//// USER DATA ////
+	lightPlayer->setUserData(new std::pair<std::string, void *>(typeid(decltype(*lightPlayer)).name(), lightPlayer));
+	darkPlayer->setUserData(new std::pair<std::string, void *>(typeid(decltype(*darkPlayer)).name(), darkPlayer));
+
+	door->setUserData(new std::pair<std::string, void *>(typeid(decltype(*door)).name(), door));
+	button->setUserData(button);
+
+	for (PlatTemp *plat : platform) plat->setUserData(new std::pair<std::string, void *>(typeid(decltype(*plat)).name(), plat));
+
+	for (Hazard *hazard : darkHazards) hazard->setUserData(new std::pair<std::string, void *>(typeid(decltype(*hazard)).name(), hazard));
+	for (Hazard *hazard : lightHazards) hazard->setUserData(new std::pair<std::string, void *>(typeid(decltype(*hazard)).name(), hazard));
+	for (Hazard *hazard : bothHazards) hazard->setUserData(new std::pair<std::string, void *>(typeid(decltype(*hazard)).name(), hazard));
 }
 
 Game::~Game()

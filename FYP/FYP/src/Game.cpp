@@ -11,10 +11,13 @@ Game::Game()
 
 	lightPlayer = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, sf::Color::White);
 	darkPlayer = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, sf::Color::Black);
-	platform[0] = new Platform(world, sf::Vector2f(0.0f, 1.0f), sf::Vector2f(5.0f, 0.5f), 0.f);
+	platform[0] = new PlatTemp(world, sf::Vector2f(0.0f, 1.0f), sf::Vector2f(5.0f, 0.5f), 0.f);
 	darkHazards[0] = new Hazard(world, sf::Vector2f(-1.f, 0.75f), sf::Vector2f(0.25f, 0.25f), 0.f, 0x0100, sf::Color::Black);
 	lightHazards[0] = new Hazard(world, sf::Vector2f(1.f, 0.75f), sf::Vector2f(0.25f, 0.25f), 0.f, 0x0010, sf::Color::White);
 	bothHazards[0] = new Hazard(world, sf::Vector2f(0.f, 0.75f), sf::Vector2f(0.25f, 0.25f), 0.f, 0xFFFF, sf::Color::Blue);
+
+	door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
+	button = new Button(world, sf::Vector2f(1.5f, 0.75f), sf::Vector2f(0.25f, 0.25f), door);
 
 	debug = false;
 	lightRight = false;
@@ -34,10 +37,15 @@ Game::~Game()
 	delete darkPlayer;
 	darkPlayer = nullptr;
 
-	for (Platform* plat : platform)
+	delete door;
+	door = nullptr;
+	delete door;
+	door = nullptr;
+
+	for (PlatTemp* plat : platform)
 	{
-		delete plat;
-		plat = nullptr;
+		delete button;
+		button = nullptr;
 	}
 	for (Hazard* hazard : darkHazards)
 	{
@@ -64,6 +72,7 @@ void Game::update(float timestep)
 	// Update each dyanmic element - effectively update render information
 	lightPlayer->update(timestep);
 	darkPlayer->update(timestep);
+	door->update(timestep);
 
 	if (lightLeft)
 		lightPlayer->moveLeft();
@@ -85,10 +94,13 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 	target.draw(*lightPlayer);
 	target.draw(*darkPlayer);
-	for (Platform *plat : platform) target.draw(*plat);
+	for (PlatTemp *plat : platform) target.draw(*plat);
 	for (Hazard *hazard : darkHazards) target.draw(*hazard);
 	for (Hazard *hazard : lightHazards) target.draw(*hazard);
 	for (Hazard *hazard : bothHazards) target.draw(*hazard);
+
+	target.draw(*door);
+	target.draw(*button);
 
 	// Debug Draw
 	if (debug) target.draw(debugDraw);

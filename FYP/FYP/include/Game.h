@@ -10,9 +10,11 @@
 #include <SFML/Graphics.hpp>
 
 #include "SFMLDebugDraw.h"
-#include "Platform.h"
+#include "PlatTemp.h"
 #include "Player.h"
 #include "Hazard.h"
+#include "DoorPlat.h"
+#include "Button.h"
 #include <memory>
 
 
@@ -30,10 +32,13 @@ private:
 	bool debug; //!< Toggle for debug drawing
 	SFMLDebugDraw debugDraw; //!< Box2D debug drawing
 
-	Platform *platform[1];		//!< Array of platforms
+	PlatTemp *platform[1];		//!< Array of platforms
 	Hazard *darkHazards[1];		//!< Array of hazards to the dark player
 	Hazard *lightHazards[1];	//!< Array of hazards to the light player
 	Hazard *bothHazards[1];		//!< Array of hazards to both players
+	DoorPlat *door;
+	Button *button;
+
 	Player *lightPlayer;		//!< The light player
 	Player *darkPlayer;			//!< The dark player
 

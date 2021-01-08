@@ -16,6 +16,7 @@
 #include "Hazard.h"
 #include "DoorPlat.h"
 #include "MovingPlat.h"
+#include "TiltingPlat.h"
 #include "Button.h"
 #include "Lever.h"
 #include <memory>
@@ -42,6 +43,7 @@ private:
 	DoorPlat *door;
 	Lever *button;
 	MovingPlat *move;
+	TiltingPlat *tilt;
 
 	Player *lightPlayer;		//!< The light player
 	Player *darkPlayer;			//!< The dark player

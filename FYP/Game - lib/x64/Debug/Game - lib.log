@@ -1,18 +1,7 @@
-﻿  Game.cpp
-  Hazard.cpp
-  Platform.cpp
-  Player.cpp
-  SFMLDebugDraw.cpp
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\sfmldebugdraw.cpp(21): warning C4244: 'argument': conversion from 'const float32' to 'sf::Uint8', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\sfmldebugdraw.cpp(30): warning C4244: 'argument': conversion from 'const float32' to 'sf::Uint8', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\sfmldebugdraw.cpp(40): warning C4244: 'argument': conversion from 'const float32' to 'sf::Uint8', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\sfmldebugdraw.cpp(48): warning C4244: 'argument': conversion from 'float' to 'size_t', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\sfmldebugdraw.cpp(57): warning C4244: 'argument': conversion from 'const float32' to 'sf::Uint8', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\sfmldebugdraw.cpp(65): warning C4244: 'argument': conversion from 'float' to 'size_t', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\sfmldebugdraw.cpp(70): warning C4244: 'argument': conversion from 'const float32' to 'sf::Uint8', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\sfmldebugdraw.cpp(75): warning C4244: 'argument': conversion from 'const float32' to 'sf::Uint8', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\sfmldebugdraw.cpp(90): warning C4244: 'argument': conversion from 'const float32' to 'sf::Uint8', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\sfmldebugdraw.cpp(91): warning C4244: 'argument': conversion from 'const float32' to 'sf::Uint8', possible loss of data
+﻿  Button.cpp
+  Game.cpp
+  Lever.cpp
+  main.cpp
   Generating Code...
 winmm.lib(WINMM.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored
 winmm.lib(WINMM.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library

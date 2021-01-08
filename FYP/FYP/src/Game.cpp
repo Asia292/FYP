@@ -2,6 +2,18 @@
 
 Game::Game()
 {
+	/*
+	TO DO
+			X Lever
+			- Tilting platform
+			- Pickup
+			- Movable object
+			- Finish contact listener
+			- Floor
+			- Texture manager
+			- HUD
+			- Home sensor
+	*/
 	view.setCenter(0.f, 0.f);
 	view.setSize(worldSize);
 
@@ -18,7 +30,10 @@ Game::Game()
 	bothHazards[0] = new Hazard(world, sf::Vector2f(0.f, 0.75f), sf::Vector2f(0.25f, 0.25f), 0.f, 0xFFFF, sf::Color::Blue);
 
 	door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
-	button = new Button(world, sf::Vector2f(1.5f, 0.75f), sf::Vector2f(0.25f, 0.25f), door);
+
+	move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f));
+
+	button = new Lever(world, sf::Vector2f(1.5f, 0.75f), sf::Vector2f(0.25f, 0.25f), move, false);
 
 	debug = false;
 	lightRight = false;
@@ -32,6 +47,7 @@ Game::Game()
 	darkPlayer->setUserData(new std::pair<std::string, void *>(typeid(decltype(*darkPlayer)).name(), darkPlayer));
 
 	door->setUserData(new std::pair<std::string, void *>(typeid(decltype(*door)).name(), door));
+	move->setUserData(new std::pair<std::string, void *>(typeid(decltype(*move)).name(), move));
 	button->setUserData(button);
 
 	for (PlatTemp *plat : platform) plat->setUserData(new std::pair<std::string, void *>(typeid(decltype(*plat)).name(), plat));
@@ -54,8 +70,10 @@ Game::~Game()
 
 	delete door;
 	door = nullptr;
-	delete door;
-	door = nullptr;
+	delete button;
+	button = nullptr;
+	delete move;
+	move = nullptr;
 
 	for (PlatTemp* plat : platform)
 	{
@@ -88,6 +106,7 @@ void Game::update(float timestep)
 	lightPlayer->update(timestep);
 	darkPlayer->update(timestep);
 	door->update(timestep);
+	move->update(timestep);
 
 	if (lightLeft)
 		lightPlayer->moveLeft();
@@ -116,6 +135,7 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 	target.draw(*door);
 	target.draw(*button);
+	target.draw(*move);
 
 	// Debug Draw
 	if (debug) target.draw(debugDraw);

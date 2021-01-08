@@ -20,7 +20,7 @@ private:
 
 public:
 	Sensor() {};		//!< Default constructor
-	Sensor(b2World * world, const sf::Vector2f& position, sf::Vector2f& size);		//!< Full constructor
+	Sensor(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size);		//!< Full constructor
 
 	virtual void onAction(b2Body * other) = 0;		//!< Action to do when sensor is triggered
 	virtual void offAction(b2Body * other) = 0;		//!< Action to do when sensor stops being triggered

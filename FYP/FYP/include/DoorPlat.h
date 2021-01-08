@@ -7,6 +7,9 @@
 #include <Box2D/Box2D.h>
 #include <iostream>
 
+/*! \class DoorPlat
+\brief Platform that acts as a door, controlled by motor joint
+*/
 class DoorPlat : public sf::RectangleShape
 {
 private:

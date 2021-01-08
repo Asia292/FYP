@@ -1,6 +1,6 @@
 #include "Sensor.h"
 
-Sensor::Sensor(b2World * world, const sf::Vector2f& position, sf::Vector2f& size)
+Sensor::Sensor(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;

@@ -146,3 +146,102 @@ TEST(DarkPlayerFunctions, PlayerJump)
 	EXPECT_GT(velBefore, velAfter);
 	EXPECT_GT(velKeyBefore, velKeyAfter);
 }
+
+//// SENSORS ////
+TEST(SensorButton, OnAction)
+{
+	b2World * world = new b2World(b2Vec2(0, 9.81));
+	DoorPlat * door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
+	MovingPlat *move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f));
+	Button * button = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), door);
+	Button * buttonMove = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), move);
+
+	int stateBefore = (int)door->state;
+	button->onAction(door->door);
+	int stateAfter = (int)door->state;
+
+	auto velBefore = move->body->GetLinearVelocity();
+	buttonMove->onAction(door->door);
+	move->update(2.f);
+	auto velAfter = move->body->GetLinearVelocity();
+
+	EXPECT_NE(stateBefore, stateAfter);
+	EXPECT_EQ(stateAfter, 3);
+	EXPECT_NE(velBefore, velAfter);
+}
+
+TEST(SensorButton, OffAction)
+{
+	b2World * world = new b2World(b2Vec2(0, 9.81));
+	DoorPlat * door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
+	MovingPlat *move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f));
+	Button * button = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), door);
+	Button * buttonMove = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), move);
+
+	button->onAction(door->door);
+	int stateBefore = (int)door->state;
+	door->update(2.f);
+	button->offAction(door->door);
+	int stateAfter = (int)door->state;
+
+	buttonMove->onAction(door->door);
+	move->update(2.f);
+	auto velBefore = move->body->GetLinearVelocity();
+	buttonMove->offAction(door->door);
+	move->update(2.f);
+	auto velAfter = move->body->GetLinearVelocity();
+
+	EXPECT_NE(stateBefore, stateAfter);
+	EXPECT_EQ(stateAfter, 2);
+	EXPECT_NE(velBefore, velAfter);
+}
+
+/*TEST(SensorLever, OnActionLeft)
+{
+	b2World * world = new b2World(b2Vec2(0, 9.81));
+	DoorPlat * door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
+	MovingPlat *move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f));
+	Player * player = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, sf::Color::Black);
+	Lever * button = new Lever(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), door);
+	Lever * buttonMove = new Lever(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), move);
+
+	int stateBefore = (int)door->state;
+	button->onAction(player->body);
+	int stateAfter = (int)door->state;
+
+	auto velBefore = move->body->GetLinearVelocity();
+	buttonMove->onAction(player->body);
+	move->update(2.f);
+	auto velAfter = move->body->GetLinearVelocity();
+
+	EXPECT_NE(stateBefore, stateAfter);
+	EXPECT_EQ(stateAfter, 3);
+	EXPECT_NE(velBefore, velAfter);
+}
+
+TEST(SensorLever, OnActionRight)
+{
+	b2World * world = new b2World(b2Vec2(0, 9.81));
+	DoorPlat * door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
+	MovingPlat *move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f));
+	Player * player = new Player(world, sf::Vector2f(8.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, sf::Color::Black);
+	Lever * button = new Lever(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), door);
+	Lever * buttonMove = new Lever(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), move);
+
+	button->onAction(player->body);
+	int stateBefore = (int)door->state;
+	door->update(2.f);
+	button->offAction(player->body);
+	int stateAfter = (int)door->state;
+
+	buttonMove->onAction(player->body);
+	move->update(2.f);
+	auto velBefore = move->body->GetLinearVelocity();
+	buttonMove->offAction(player->body);
+	move->update(2.f);
+	auto velAfter = move->body->GetLinearVelocity();
+
+	EXPECT_NE(stateBefore, stateAfter);
+	EXPECT_EQ(stateAfter, 2);
+	EXPECT_NE(velBefore, velAfter);
+}*/

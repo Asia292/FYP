@@ -15,7 +15,9 @@
 #include "Player.h"
 #include "Hazard.h"
 #include "DoorPlat.h"
+#include "MovingPlat.h"
 #include "Button.h"
+#include "Lever.h"
 #include <memory>
 
 
@@ -38,7 +40,8 @@ private:
 	Hazard *lightHazards[1];	//!< Array of hazards to the light player
 	Hazard *bothHazards[1];		//!< Array of hazards to both players
 	DoorPlat *door;
-	Button *button;
+	Lever *button;
+	MovingPlat *move;
 
 	Player *lightPlayer;		//!< The light player
 	Player *darkPlayer;			//!< The dark player

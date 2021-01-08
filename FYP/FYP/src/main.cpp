@@ -10,7 +10,7 @@
 
 void main() /** Entry point for the application */
 {
-	sf::RenderWindow window(sf::VideoMode(1024, 800), "CW Starter"); // Open main window
+	sf::RenderWindow window(sf::VideoMode(1024, 800), "FYP"); // Open main window
 
 	Game game;
 

@@ -19,6 +19,7 @@
 #include "TiltingPlat.h"
 #include "Button.h"
 #include "Lever.h"
+#include "PickUp.h"
 #include <memory>
 
 
@@ -40,6 +41,7 @@ private:
 	Hazard *darkHazards[1];		//!< Array of hazards to the dark player
 	Hazard *lightHazards[1];	//!< Array of hazards to the light player
 	Hazard *bothHazards[1];		//!< Array of hazards to both players
+	PickUp *lightPickUps[1];	//!< Array of pickups for light player
 	DoorPlat *door;
 	Lever *button;
 	MovingPlat *move;

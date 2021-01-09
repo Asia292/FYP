@@ -12,7 +12,7 @@
 */
 class Sensor : public sf::RectangleShape
 {
-private:
+protected:
 	b2Body * body = nullptr; //!< Box2D body
 	const float density = 1.0f; //!< Density of the material - used to give mass
 	const float friction = 0.4f; //!< Friction - only friction from movement, not when static

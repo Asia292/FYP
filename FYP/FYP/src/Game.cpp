@@ -5,8 +5,8 @@ Game::Game()
 	/*
 	TO DO
 			X Lever
-			- Tilting platform
-			- Pickup
+			X Tilting platform
+			X Pickup
 			- Movable object
 			- Finish contact listener
 			- Floor
@@ -28,6 +28,7 @@ Game::Game()
 	darkHazards[0] = new Hazard(world, sf::Vector2f(-1.f, -1.f), sf::Vector2f(0.25f, 0.25f), 0.f, 0x0100, sf::Color::Black);
 	lightHazards[0] = new Hazard(world, sf::Vector2f(1.5f, -1.f), sf::Vector2f(0.25f, 0.25f), 0.f, 0x0010, sf::Color::White);
 	bothHazards[0] = new Hazard(world, sf::Vector2f(0.f, -1.f), sf::Vector2f(0.25f, 0.25f), 0.f, 0xFFFF, sf::Color::Blue);
+	lightPickUps[0] = new PickUp(world, sf::Vector2f(1.2f, 0.5f), sf::Vector2f(0.1f, 0.1f), 0x0100);
 
 	door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
 	move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f));
@@ -56,6 +57,8 @@ Game::Game()
 	for (Hazard *hazard : darkHazards) hazard->setUserData(new std::pair<std::string, void *>(typeid(decltype(*hazard)).name(), hazard));
 	for (Hazard *hazard : lightHazards) hazard->setUserData(new std::pair<std::string, void *>(typeid(decltype(*hazard)).name(), hazard));
 	for (Hazard *hazard : bothHazards) hazard->setUserData(new std::pair<std::string, void *>(typeid(decltype(*hazard)).name(), hazard));
+
+	for (PickUp *item : lightPickUps) item->setUserData(item);
 }
 
 Game::~Game()
@@ -98,6 +101,11 @@ Game::~Game()
 		delete hazard;
 		hazard = nullptr;
 	}
+	for (PickUp* item : lightPickUps)
+	{
+		delete item;
+		item = nullptr;
+	}
 }
 
 void Game::update(float timestep)
@@ -121,6 +129,20 @@ void Game::update(float timestep)
 	if (darkLeft)
 		darkPlayer->moveLeft();
 
+	int i = 0;
+	for (PickUp* item : lightPickUps)
+	{
+		if (item != nullptr)
+		{
+			if (item->getDel() == true)
+			{
+				delete item;
+				lightPickUps[i] = nullptr;
+			}
+		}
+		i++;
+	}
+
 	// Delete debug shapes
 	if (debug) debugDraw.clear();
 }
@@ -136,6 +158,12 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	for (Hazard *hazard : darkHazards) target.draw(*hazard);
 	for (Hazard *hazard : lightHazards) target.draw(*hazard);
 	for (Hazard *hazard : bothHazards) target.draw(*hazard);
+
+	for (PickUp* item : lightPickUps)
+	{
+		if (item != nullptr)
+			target.draw(*item);
+	}	
 
 	target.draw(*door);
 	target.draw(*button);

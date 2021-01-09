@@ -19,7 +19,7 @@ protected:
 	const float restitution = 0.0f; //!< Restitution - bouncyness of stuff
 
 	b2Fixture *fixture;		//!< The body's fixture
-	b2Filter filter;
+	b2Filter filter;		//!< Filter for body collisions
 
 public:
 	Hazard() {};	//!< Default constructor

@@ -245,3 +245,18 @@ TEST(SensorLever, OnActionRight)
 	EXPECT_EQ(stateAfter, 2);
 	EXPECT_NE(velBefore, velAfter);
 }*/
+
+TEST(SensorPickUp, OnAction)
+{
+	b2World * world = new b2World(b2Vec2(0, 9.81));
+	PickUp *lightPickUp = new PickUp(world, sf::Vector2f(1.2f, 0.5f), sf::Vector2f(0.1f, 0.1f), 0x0100);
+	Player * player = new Player(world, sf::Vector2f(8.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, sf::Color::White);
+
+	bool delBefore = lightPickUp->getDel();
+	lightPickUp->onAction(player->body);
+	bool delAfter = lightPickUp->getDel();
+
+	EXPECT_NE(delBefore, delAfter);
+	EXPECT_EQ(delBefore, false);
+	EXPECT_EQ(delAfter, true);
+}

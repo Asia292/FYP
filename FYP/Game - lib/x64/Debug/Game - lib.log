@@ -1,8 +1,4 @@
-﻿  Button.cpp
-  Game.cpp
-  Lever.cpp
-  main.cpp
-  Generating Code...
+﻿  PickUp.cpp
 winmm.lib(WINMM.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored
 winmm.lib(WINMM.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 gdi32.lib(GDI32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored

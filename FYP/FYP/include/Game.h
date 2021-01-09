@@ -20,6 +20,7 @@
 #include "Button.h"
 #include "Lever.h"
 #include "PickUp.h"
+#include "Block.h"
 #include <memory>
 
 
@@ -42,6 +43,7 @@ private:
 	Hazard *lightHazards[1];	//!< Array of hazards to the light player
 	Hazard *bothHazards[1];		//!< Array of hazards to both players
 	PickUp *lightPickUps[1];	//!< Array of pickups for light player
+	Block *blocks[1];			//!< Array of movable blocks
 	DoorPlat *door;
 	Lever *button;
 	MovingPlat *move;

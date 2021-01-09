@@ -7,7 +7,7 @@ Game::Game()
 			X Lever
 			X Tilting platform
 			X Pickup
-			- Movable object
+			X Movable object
 			- Finish contact listener
 			- Floor
 			- Texture manager
@@ -30,7 +30,9 @@ Game::Game()
 	bothHazards[0] = new Hazard(world, sf::Vector2f(0.f, -1.f), sf::Vector2f(0.25f, 0.25f), 0.f, 0xFFFF, sf::Color::Blue);
 	lightPickUps[0] = new PickUp(world, sf::Vector2f(1.2f, 0.5f), sf::Vector2f(0.1f, 0.1f), 0x0100);
 
-	door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
+	blocks[0] = new Block(world, sf::Vector2f(-1.3f, -2.f), sf::Vector2f(0.2f, 0.2f), 0.f);
+
+	door = new DoorPlat(world, sf::Vector2f(-2.f, 0.f), 0.f);
 	move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f));
 	button = new Lever(world, sf::Vector2f(1.5f, 0.75f), sf::Vector2f(0.25f, 0.25f), move, false);
 
@@ -59,6 +61,8 @@ Game::Game()
 	for (Hazard *hazard : bothHazards) hazard->setUserData(new std::pair<std::string, void *>(typeid(decltype(*hazard)).name(), hazard));
 
 	for (PickUp *item : lightPickUps) item->setUserData(item);
+
+	for (Block *block : blocks) block->setUserData(new std::pair<std::string, void *>(typeid(decltype(*block)).name(), block));
 }
 
 Game::~Game()
@@ -106,6 +110,11 @@ Game::~Game()
 		delete item;
 		item = nullptr;
 	}
+	for (Block *block : blocks)
+	{
+		delete block;
+		block = nullptr;
+	}
 }
 
 void Game::update(float timestep)
@@ -119,6 +128,8 @@ void Game::update(float timestep)
 	door->update(timestep);
 	move->update(timestep);
 	tilt->update(timestep);
+
+	for (Block *block : blocks) block->update(timestep);
 
 	if (lightLeft)
 		lightPlayer->moveLeft();
@@ -158,6 +169,7 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	for (Hazard *hazard : darkHazards) target.draw(*hazard);
 	for (Hazard *hazard : lightHazards) target.draw(*hazard);
 	for (Hazard *hazard : bothHazards) target.draw(*hazard);
+	for (Block *block : blocks) target.draw(*block);
 
 	for (PickUp* item : lightPickUps)
 	{

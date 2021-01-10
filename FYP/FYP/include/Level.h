@@ -1,0 +1,33 @@
+#pragma once
+/*!
+\file Level.h
+*/
+
+#include <SFML/Graphics.hpp>
+#include <Box2D/Box2D.h>
+#include <iostream>
+
+
+#include "PlatTemp.h"
+#include "Player.h"
+#include "Hazard.h"
+#include "DoorPlat.h"
+#include "MovingPlat.h"
+#include "TiltingPlat.h"
+#include "Button.h"
+#include "Lever.h"
+#include "PickUp.h"
+#include "Block.h"
+#include "TextureManager.h"
+
+
+/*! \class Level
+\brief Base class for all levels
+*/
+class Level : public Texture
+{
+public:
+	virtual ~Level() = default;
+	virtual void update(float timestep) = 0;
+	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const = 0;
+};

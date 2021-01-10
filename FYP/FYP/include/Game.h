@@ -21,6 +21,7 @@
 #include "Lever.h"
 #include "PickUp.h"
 #include "Block.h"
+#include "TextureManager.h"
 #include <memory>
 
 
@@ -56,6 +57,9 @@ private:
 	bool lightLeft;		//!< If light player should be moving left
 	bool darkRight;		//!< If dark player should be moving right
 	bool darkLeft;		//!< If dark player should be moving left
+
+protected:
+	TextureManager * texManager = TextureManager::getInstance();
 
 public:
 	Game(); //!< Constructor which sets up the game

@@ -12,11 +12,12 @@ Game::Game()
 				X Player is grounded
 				X Player dies
 			X Floor
-			- Texture manager
+			X Texture manager
 			- HUD
 			X Home sensor
 			- Game over
 			- Level complete
+			- Level class
 	*/
 	view.setCenter(0.f, 0.f);
 	view.setSize(worldSize);

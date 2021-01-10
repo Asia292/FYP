@@ -23,6 +23,7 @@ std::shared_ptr<sf::Texture> TextureManager::getTexture(std::string keyName)
 
 void TextureManager::setTexture(std::string keyName, Texture * target)
 {
+	//std::cout << "PASSED: " << spritesheets[keyName] << std::endl;
 	target->setSpriteSheet(spritesheets[keyName]);
 }
 

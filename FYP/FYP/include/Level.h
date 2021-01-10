@@ -18,6 +18,7 @@
 #include "Lever.h"
 #include "PickUp.h"
 #include "Block.h"
+#include "Floor.h"
 #include "TextureManager.h"
 
 

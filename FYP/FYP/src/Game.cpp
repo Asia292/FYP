@@ -27,7 +27,9 @@ Game::Game()
 
 	debugDraw.setWorld(world);
 
-	lightPlayer = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, sf::Color::White);
+	currLevel = new Lvl1(texManager, world);
+
+	/*lightPlayer = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, sf::Color::White);
 	darkPlayer = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, sf::Color::Black);
 	platform[0] = new PlatTemp(world, sf::Vector2f(0.0f, 1.0f), sf::Vector2f(5.0f, 0.5f), 0.f);
 	darkHazards[0] = new Hazard(world, sf::Vector2f(-1.f, -1.f), sf::Vector2f(0.25f, 0.25f), 0.f, 0x0100, sf::Color::Black);
@@ -41,7 +43,7 @@ Game::Game()
 	move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f));
 	button = new Lever(world, sf::Vector2f(1.5f, 0.75f), sf::Vector2f(0.25f, 0.25f), move, false);
 
-	tilt = new TiltingPlat(world, sf::Vector2f(-0.5, 0.6f), sf::Vector2f(1.f, 0.01f), sf::Vector2f(0.f, 0.f), 0.f, sf::Color::Cyan);
+	tilt = new TiltingPlat(world, sf::Vector2f(-0.5, 0.6f), sf::Vector2f(1.f, 0.01f), sf::Vector2f(0.f, 0.f), 0.f, sf::Color::Cyan);*/
 
 	debug = false;
 	lightRight = false;
@@ -51,7 +53,7 @@ Game::Game()
 
 
 	//// USER DATA ////
-	lightPlayer->setUserData(new std::pair<std::string, void *>(typeid(decltype(*lightPlayer)).name(), lightPlayer));
+	/*lightPlayer->setUserData(new std::pair<std::string, void *>(typeid(decltype(*lightPlayer)).name(), lightPlayer));
 	darkPlayer->setUserData(new std::pair<std::string, void *>(typeid(decltype(*darkPlayer)).name(), darkPlayer));
 
 	door->setUserData(new std::pair<std::string, void *>(typeid(decltype(*door)).name(), door));
@@ -67,7 +69,7 @@ Game::Game()
 
 	for (PickUp *item : lightPickUps) item->setUserData(item);
 
-	for (Block *block : blocks) block->setUserData(new std::pair<std::string, void *>(typeid(decltype(*block)).name(), block));
+	for (Block *block : blocks) block->setUserData(new std::pair<std::string, void *>(typeid(decltype(*block)).name(), block));*/
 }
 
 Game::~Game()
@@ -76,7 +78,7 @@ Game::~Game()
 	delete world;
 	world = nullptr;
 
-	delete lightPlayer;
+	/*delete lightPlayer;
 	lightPlayer = nullptr;
 	delete darkPlayer;
 	darkPlayer = nullptr;
@@ -119,7 +121,12 @@ Game::~Game()
 	{
 		delete block;
 		block = nullptr;
-	}
+	}*/
+
+	delete currLevel;
+	currLevel = nullptr;
+
+	TextureManager::delInstance();
 }
 
 void Game::update(float timestep)
@@ -128,7 +135,7 @@ void Game::update(float timestep)
 	world->Step(timestep, velIterations, posIterations);
 
 	// Update each dyanmic element - effectively update render information
-	lightPlayer->update(timestep);
+	/*lightPlayer->update(timestep);
 	darkPlayer->update(timestep);
 	door->update(timestep);
 	move->update(timestep);
@@ -157,18 +164,20 @@ void Game::update(float timestep)
 			}
 		}
 		i++;
-	}
+	}*/
 
+	currLevel->update(timestep);
 	// Delete debug shapes
 	if (debug) debugDraw.clear();
 }
 
 void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+	currLevel->draw(target, sf::RenderStates::Default);
 	// Set the view
 	target.setView(view);
 
-	target.draw(*lightPlayer);
+	/*target.draw(*lightPlayer);
 	target.draw(*darkPlayer);
 	for (PlatTemp *plat : platform) target.draw(*plat);
 	for (Hazard *hazard : darkHazards) target.draw(*hazard);
@@ -185,7 +194,7 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	target.draw(*door);
 	target.draw(*button);
 	target.draw(*move);
-	target.draw(*tilt);
+	target.draw(*tilt);*/
 
 	// Debug Draw
 	if (debug) target.draw(debugDraw);
@@ -198,7 +207,7 @@ void Game::processKeyPress(sf::Keyboard::Key code)
 	case sf::Keyboard::Tab:
 		toggleDebug();
 		break;
-	case sf::Keyboard::D:
+	/*case sf::Keyboard::D:
 		lightRight = true;
 		break;
 	case sf::Keyboard::A:
@@ -215,7 +224,7 @@ void Game::processKeyPress(sf::Keyboard::Key code)
 		break;
 	case sf::Keyboard::Up:
 		darkPlayer->jump();
-		break;
+		break;*/
 	}
 
 }

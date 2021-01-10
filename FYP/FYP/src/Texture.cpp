@@ -55,6 +55,7 @@ void Texture::setFlip(bool Flip)
 void Texture::setSpriteSheet(std::shared_ptr<sf::Texture> tex)
 {
 	spriteSheet = tex;
+	//std::cout << "SET: " << spriteSheet << std::endl;
 }
 
 void Texture::setKeyFrames(std::vector<sf::IntRect> frams, float time)
@@ -91,7 +92,10 @@ void Texture::update(float timestep)
 	else if (background)
 	{
 		currSprite.setTexture(*spriteSheet, true);
-		currSprite.setScale(sf::Vector2f(0.01f, 0.01f));
+		currSprite.setOrigin(currSprite.getTexture()->getSize().x / 2, currSprite.getTexture()->getSize().y / 2);
+		currSprite.setPosition(0.f, 0.f);
+		//std::cout << "SPRITESHEET: " << spriteSheet << std::endl;
+		currSprite.setScale(sf::Vector2f(0.00575f, 0.00775f));
 	}
 }
 
@@ -107,5 +111,6 @@ void Texture::setSize(sf::Vector2f(size))
 
 void Texture::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+	std::cout << "DRAWING: " << currSprite.getTexture() << std::endl;
 	target.draw(currSprite, states);
 }

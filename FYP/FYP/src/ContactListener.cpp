@@ -29,7 +29,32 @@ void ContactListener::BeginContact(b2Contact * contact)
 		if (typeid(Hazard).name() == dataB->first)
 		{
 			std::cout << "Hit" << std::endl;
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setDead(true);
 		}
+		if (typeid(DoorPlat).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setGrounded(true);
+		}
+		if (typeid(TiltingPlat).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setGrounded(true);
+		}
+		if (typeid(MovingPlat).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setGrounded(true);
+
+			b2Vec2 velo = bodyB->GetLinearVelocity();
+			bodyA->SetLinearVelocity(velo);
+		}
+		/*if (typeid(Floor).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setGrounded(true);
+		}*/
 	}
 
 	if (typeid(Hazard).name() == dataA->first)
@@ -37,8 +62,49 @@ void ContactListener::BeginContact(b2Contact * contact)
 		if (typeid(Player).name() == dataB->first)
 		{
 			std::cout << "Hit" << std::endl;
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setDead(true);
 		}
 	}
+
+	if (typeid(DoorPlat).name() == dataA->first)
+	{
+		if (typeid(Player).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataB->second);
+			player->setGrounded(true);
+		}
+	}
+
+	if (typeid(MovingPlat).name() == dataA->first)
+	{
+		if (typeid(Player).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataB->second);
+			player->setGrounded(true);
+
+			b2Vec2 velo = bodyA->GetLinearVelocity();
+			bodyB->SetLinearVelocity(velo);
+		}
+	}
+
+	if (typeid(TiltingPlat).name() == dataA->first)
+	{
+		if (typeid(Player).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataB->second);
+			player->setGrounded(true);
+		}
+	}
+
+	/*if (typeid(Floor).name() == dataA->first)
+	{
+		if (typeid(Player).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataB->second);
+			player->setGrounded(true);
+		}
+	}*/
 }
 
 void ContactListener::EndContact(b2Contact * contact)
@@ -64,4 +130,64 @@ void ContactListener::EndContact(b2Contact * contact)
 		Sensor * sensor = static_cast<Sensor *>(bodyB->GetUserData());
 		sensor->offAction(bodyA);
 	}
+
+	if (typeid(Player).name() == dataA->first)
+	{
+		if (typeid(DoorPlat).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setGrounded(false);
+		}
+		if (typeid(TiltingPlat).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setGrounded(false);
+		}
+		if (typeid(MovingPlat).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setGrounded(false);
+		}
+		/*if (typeid(Floor).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setGrounded(false);
+		}*/
+	}
+
+	if (typeid(DoorPlat).name() == dataA->first)
+	{
+		if (typeid(Player).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataB->second);
+			player->setGrounded(false);
+		}
+	}
+
+	if (typeid(MovingPlat).name() == dataA->first)
+	{
+		if (typeid(Player).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataB->second);
+			player->setGrounded(false);
+		}
+	}
+
+	if (typeid(TiltingPlat).name() == dataA->first)
+	{
+		if (typeid(Player).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataB->second);
+			player->setGrounded(false);
+		}
+	}
+
+	/*if (typeid(Floor).name() == dataA->first)
+	{
+		if (typeid(Player).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataB->second);
+			player->setGrounded(false);
+		}
+	}*/
 }

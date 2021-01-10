@@ -9,6 +9,9 @@
 #include "Player.h"
 #include "Hazard.h"
 #include "Sensor.h"
+#include "DoorPlat.h"
+#include "MovingPlat.h"
+#include "TiltingPlat.h"
 
 /*! \class ContactListener
 \brief Defines what happens on collisions

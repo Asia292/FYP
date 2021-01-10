@@ -65,7 +65,35 @@ void Player::moveRight()
 
 void Player::jump()
 {
-	b2Vec2 velo = body->GetLinearVelocity();
-	velo.y = -2;
-	body->SetLinearVelocity(velo);
+	if (grounded)
+	{
+		b2Vec2 velo = body->GetLinearVelocity();
+		velo.y = -2;
+		body->SetLinearVelocity(velo);
+	}
+}
+
+void Player::setGrounded(bool ground)
+{
+	grounded = ground;
+}
+
+void Player::setHome(bool Home)
+{
+	home = Home;
+}
+
+bool Player::getHome()
+{
+	return home;
+}
+
+void Player::setDead(bool Dead)
+{
+	dead = Dead;
+}
+
+bool Player::getDead()
+{
+	return dead;
 }

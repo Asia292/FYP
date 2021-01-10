@@ -20,6 +20,9 @@ public:
 
 	b2Fixture *fixture;		//!< The body's fixture
 	b2Filter filter;		//!< Filter for body collisions
+	bool grounded;			//!< If the player is grounded
+	bool home;				//!< If the player is home
+	bool dead;				//!< If the player is dead
 
 public:
 	Player() {};		//!< Default constructor
@@ -30,4 +33,9 @@ public:
 	void moveLeft();	//!< Moves the player left
 	void moveRight();	//!< Moves the player right
 	void jump();	//!< Makes the player jump
+	void setGrounded(bool ground);
+	void setHome(bool Home);
+	bool getHome();
+	void setDead(bool Dead);
+	bool getDead();
 };

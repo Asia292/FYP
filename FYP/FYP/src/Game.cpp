@@ -8,11 +8,15 @@ Game::Game()
 			X Tilting platform
 			X Pickup
 			X Movable object
-			- Finish contact listener
-			- Floor
+			X Finish contact listener
+				X Player is grounded
+				X Player dies
+			X Floor
 			- Texture manager
 			- HUD
-			- Home sensor
+			X Home sensor
+			- Game over
+			- Level complete
 	*/
 	view.setCenter(0.f, 0.f);
 	view.setSize(worldSize);

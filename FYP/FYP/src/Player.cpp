@@ -11,7 +11,6 @@ Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	bodyDef.type = b2_dynamicBody;
 
 	body = world->CreateBody(&bodyDef);
-	body->SetUserData(this);
 
 	shape.SetAsBox(size.x * 0.5f, size.y * 0.5f);
 	shape.m_radius = 0.0f;
@@ -36,6 +35,8 @@ Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	filter.categoryBits = cat;
 	filter.maskBits = 0x0001;
 	fixture->SetFilterData(filter);
+
+	grounded = false;
 }
 
 void Player::update(float timestep)
@@ -52,14 +53,14 @@ void Player::setUserData(void * data)
 void Player::moveLeft()
 {
 	b2Vec2 velo = body->GetLinearVelocity();
-	velo.x = -2;
+	velo.x = -3;
 	body->SetLinearVelocity(velo);
 }
 
 void Player::moveRight()
 {
 	b2Vec2 velo = body->GetLinearVelocity();
-	velo.x = 2;
+	velo.x = 3;
 	body->SetLinearVelocity(velo);
 }
 
@@ -68,9 +69,16 @@ void Player::jump()
 	if (grounded)
 	{
 		b2Vec2 velo = body->GetLinearVelocity();
-		velo.y = -2;
+		velo.y = -4.5;
 		body->SetLinearVelocity(velo);
 	}
+}
+
+void Player::idle()
+{
+	b2Vec2 velo = body->GetLinearVelocity();
+	velo.x = 0;
+	body->SetLinearVelocity(velo);
 }
 
 void Player::setGrounded(bool ground)

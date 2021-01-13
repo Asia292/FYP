@@ -19,7 +19,7 @@ class Game : public sf::Drawable
 {
 private:
 	sf::View view; //!< The view maps from physical co-ordinates to rendering co-ordinates
-	sf::Vector2f worldSize = sf::Vector2f(8.f, 8.f); //!< Size of the physical worlds is 8 X 6 metres
+	sf::Vector2f worldSize = sf::Vector2f(14.f, 10.4f); //!< Size of the physical worlds is 8 X 6 metres
 
 	b2World* world = nullptr; //!< Pointer to the Box2D world.  Using pointers as BOX2D has it's own memory management
 	const int velIterations = 7; //!< On each update there will be 7 velocity iterations in the physics engine
@@ -29,21 +29,7 @@ private:
 	bool debug; //!< Toggle for debug drawing
 	SFMLDebugDraw debugDraw; //!< Box2D debug drawing
 
-	/*PlatTemp *platform[1];		//!< Array of platforms
-	Hazard *darkHazards[1];		//!< Array of hazards to the dark player
-	Hazard *lightHazards[1];	//!< Array of hazards to the light player
-	Hazard *bothHazards[1];		//!< Array of hazards to both players
-	PickUp *lightPickUps[1];	//!< Array of pickups for light player
-	Block *blocks[1];			//!< Array of movable blocks
-	DoorPlat *door;
-	Lever *button;
-	MovingPlat *move;
-	TiltingPlat *tilt;
-
-	Player *lightPlayer;		//!< The light player
-	Player *darkPlayer;			//!< The dark player*/
-
-	Lvl1 *currLevel;
+	Level *currLevel;
 
 	bool lightRight;	//!< If light player should be moving right
 	bool lightLeft;		//!< If light player should be moving left

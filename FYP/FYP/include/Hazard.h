@@ -23,7 +23,7 @@ protected:
 
 public:
 	Hazard() {};	//!< Default constructor
-	Hazard(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, int mask, sf::Color col);		//!< Full constructor
+	Hazard(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, int mask);		//!< Full constructor
 
 	void setUserData(void* data);		//!< Sets the user data of the body
 };

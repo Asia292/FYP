@@ -11,22 +11,28 @@
 class Lvl1 : public Level
 {
 protected:
-	Player *lightPlayer;		//!< The light player
-	Player *darkPlayer;			//!< The dark player
 
-	Hazard *lightHazard;		//!< Hazards to light player
-	Hazard *darkHazard;			//!< Hazards to dark player
-	Hazard *bothHAzard;			//!< Hazards to both players
+	Hazard *lightHazard;		//!< Hazard to light player
+	Hazard *darkHazard;			//!< Hazard to dark player
+	Hazard *bothHazard;			//!< Hazard to both players
 
 	PickUp *lightPickUp[3];		//!< Array of light pickups
 	PickUp *darkPickUp[3];		//!< Array of dark pickups
 
+	Lever *lever;				//!< A lever
+	Button *buttons[2];			//!> Array of buttons
+	MovingPlat *platforms[2];	//!< Array of platforms
+
 	Block *block;				//!< Movable block
 
 	Floor *floor;				//!< Floor of the game
-	b2Vec2 *outline[15];		//!< Array of floor outline vectors
+	b2Vec2 outline[65];		//!< Array of floor outline vectors
+
+	HomeSensor *lightHome;
+	HomeSensor *darkHome;
 
 public:
+
 	Lvl1(TextureManager * textMan, b2World * world);		//!< Constructor
 	virtual ~Lvl1() override;		//!< Deconstructor
 	virtual void update(float timestep) override;		//!< Updates all game elements

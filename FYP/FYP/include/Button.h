@@ -18,9 +18,10 @@ private:
 
 public:
 	Button() {};		//!< Default constructor
-	Button(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, DoorPlat * Door);		//!< Full constructor for a door platform
-	Button(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, MovingPlat * plat);		//!< Full constructor for a moving platform
+	Button(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, DoorPlat * Door, TextureManager *texMan, const std::string col);		//!< Full constructor for a door platform
+	Button(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, MovingPlat * plat, TextureManager *texMan, const std::string col);		//!< Full constructor for a moving platform
 
 	virtual void onAction(b2Body * other) override;		//!< Action to do when sensor is triggered
 	virtual void offAction(b2Body * other) override;		//!< Action to do when sensor stops being triggered
+	void update(float timestep) override;
 };

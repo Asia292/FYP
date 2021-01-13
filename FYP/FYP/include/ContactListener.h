@@ -12,6 +12,8 @@
 #include "DoorPlat.h"
 #include "MovingPlat.h"
 #include "TiltingPlat.h"
+#include "Floor.h"
+#include "Block.h"
 
 /*! \class ContactListener
 \brief Defines what happens on collisions

@@ -1,6 +1,6 @@
 #include "MovingPlat.h"
 
-MovingPlat::MovingPlat(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, const sf::Vector2f &End)
+MovingPlat::MovingPlat(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, const sf::Vector2f &End, TextureManager *texMan, const std::string col, const std::string Glow)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -22,18 +22,25 @@ MovingPlat::MovingPlat(b2World * world, const sf::Vector2f & position, const sf:
 
 	body->CreateFixture(&fixtureDef);
 
+	texMan->setTexture("all", this);
+	texMan->getFrames(col, this);
+	setSize(sf::Vector2f(0.00575f, 0.00775f));
+	texture = texMan;
+
 	start = b2Vec2(position.x, position.y);
 	end = b2Vec2(End.x, End.y);
 	moveEnd = false;
 	xMove = 0;
 	yMove = 0;
+	platform = col;
+	glow = Glow;
 
-	setPosition(position);
+	/*setPosition(position);
 	setSize(size);
 	setOrigin(size * 0.5f);
 	setRotation(orientation);
 	setFillColor(sf::Color::Yellow);
-	setOutlineThickness(0.f);
+	setOutlineThickness(0.f);*/
 }
 
 void MovingPlat::setUserData(void * data)
@@ -81,9 +88,12 @@ void MovingPlat::moveToStart()
 
 void MovingPlat::update(float timestep)
 {
-	// Redo with reverce engineering velocity?
+	// Redo with reverse engineering velocity?
 	if (moveEnd)
 	{
+		texture->getFrames(glow, this);
+		setSize(sf::Vector2f(0.01f, 0.01f));
+
 		if ((body->GetPosition().x < end.x + 0.1) && (body->GetPosition().x > end.x - 0.1))
 		{
 			xMove = 0;
@@ -94,6 +104,9 @@ void MovingPlat::update(float timestep)
 	}
 	else
 	{
+		texture->getFrames(platform, this);
+		setSize(sf::Vector2f(0.01f, 0.01f));
+
 		if ((body->GetPosition().x < start.x + 0.1) && (body->GetPosition().x > start.x - 0.1))
 		{
 			xMove = 0;
@@ -105,6 +118,8 @@ void MovingPlat::update(float timestep)
 
 	body->SetLinearVelocity(b2Vec2(xMove, yMove));
 
+
+	Texture::update(timestep);
 	b2Vec2 pos = body->GetPosition();
-	setPosition(pos.x, pos.y);
+	currSprite.setPosition(pos.x, pos.y);
 }

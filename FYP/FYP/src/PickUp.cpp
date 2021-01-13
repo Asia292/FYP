@@ -7,14 +7,14 @@ PickUp::PickUp(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	fixture->SetFilterData(filter);
 
 	//// SFML ////
-	setPosition(position);
+	/*setPosition(position);
 	setSize(size);
 	setOrigin(size * 0.5f);
 	setRotation(0);
 	if (mask == 0x0010)
 		setFillColor(sf::Color::Black);
 	else if (mask == 0x0100)
-		setFillColor(sf::Color::White);
+		setFillColor(sf::Color::White);*/
 }
 
 void PickUp::onAction(b2Body * other)

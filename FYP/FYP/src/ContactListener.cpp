@@ -50,11 +50,17 @@ void ContactListener::BeginContact(b2Contact * contact)
 			b2Vec2 velo = bodyB->GetLinearVelocity();
 			bodyA->SetLinearVelocity(velo);
 		}
-		/*if (typeid(Floor).name() == dataB->first)
+		if (typeid(Floor).name() == dataB->first)
 		{
 			Player * player = static_cast<Player*>(dataA->second);
 			player->setGrounded(true);
-		}*/
+		}
+
+		if (typeid(Block).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setGrounded(true);
+		}
 	}
 
 	if (typeid(Hazard).name() == dataA->first)
@@ -97,14 +103,23 @@ void ContactListener::BeginContact(b2Contact * contact)
 		}
 	}
 
-	/*if (typeid(Floor).name() == dataA->first)
+	if (typeid(Floor).name() == dataA->first)
 	{
 		if (typeid(Player).name() == dataB->first)
 		{
 			Player * player = static_cast<Player*>(dataB->second);
 			player->setGrounded(true);
 		}
-	}*/
+	}
+
+	if (typeid(Block).name() == dataA->first)
+	{
+		if (typeid(Player).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataB->second);
+			player->setGrounded(true);
+		}
+	}
 }
 
 void ContactListener::EndContact(b2Contact * contact)
@@ -148,11 +163,16 @@ void ContactListener::EndContact(b2Contact * contact)
 			Player * player = static_cast<Player*>(dataA->second);
 			player->setGrounded(false);
 		}
-		/*if (typeid(Floor).name() == dataB->first)
+		if (typeid(Floor).name() == dataB->first)
 		{
 			Player * player = static_cast<Player*>(dataA->second);
 			player->setGrounded(false);
-		}*/
+		}
+		if (typeid(Block).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataA->second);
+			player->setGrounded(false);
+		}
 	}
 
 	if (typeid(DoorPlat).name() == dataA->first)
@@ -182,12 +202,21 @@ void ContactListener::EndContact(b2Contact * contact)
 		}
 	}
 
-	/*if (typeid(Floor).name() == dataA->first)
+	if (typeid(Floor).name() == dataA->first)
 	{
 		if (typeid(Player).name() == dataB->first)
 		{
 			Player * player = static_cast<Player*>(dataB->second);
 			player->setGrounded(false);
 		}
-	}*/
+	}
+
+	if (typeid(Block).name() == dataA->first)
+	{
+		if (typeid(Player).name() == dataB->first)
+		{
+			Player * player = static_cast<Player*>(dataB->second);
+			player->setGrounded(false);
+		}
+	}
 }

@@ -1,6 +1,6 @@
 #include "Hazard.h"
 
-Hazard::Hazard(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, int mask, sf::Color col)
+Hazard::Hazard(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, int mask)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -22,12 +22,12 @@ Hazard::Hazard(b2World * world, const sf::Vector2f & position, const sf::Vector2
 
 	body->CreateFixture(&fixtureDef);
 
-	setPosition(position);
+	/*setPosition(position);
 	setSize(size);
 	setOrigin(size * 0.5f);
 	setRotation(orientation);
 	setFillColor(col);
-	setOutlineThickness(0.f);
+	setOutlineThickness(0.f);*/
 
 
 	fixture = body->GetFixtureList();

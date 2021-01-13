@@ -6,11 +6,12 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include <iostream>
+#include "TextureManager.h"
 
 /*! \class Sensor
 \brief Base class for all game sensors
 */
-class Sensor : public sf::RectangleShape
+class Sensor : public Texture
 {
 protected:
 	b2Body * body = nullptr; //!< Box2D body
@@ -25,4 +26,5 @@ public:
 	virtual void onAction(b2Body * other) = 0;		//!< Action to do when sensor is triggered
 	virtual void offAction(b2Body * other) = 0;		//!< Action to do when sensor stops being triggered
 	void setUserData(void* data);		//!< Sets the user data of the body
+	virtual void update(float timestep) = 0;
 };

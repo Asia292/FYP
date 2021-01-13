@@ -1,31 +1,57 @@
 #include "..\include\Lever.h"
 
-Lever::Lever(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, DoorPlat * Door, bool Right) : Sensor(world, position, size)
+Lever::Lever(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, DoorPlat * Door, bool Right, TextureManager *texMan, const std::string col, const std::string back) : Sensor(world, position, size)
 {
 	door = Door;
 	platform = nullptr;
 	pos = position;
 	right = Right;
+	move = false;
 
-	setPosition(position);
+	texture = texMan;
+	forward = col;
+	reverse = back;
+
+	texMan->setTexture("all", this);
+	texMan->getFrames(reverse, this);
+	setSize(sf::Vector2f(0.00575f, 0.00775f));
+	setLoop(false);
+	setPos(sf::Vector2f(position));
+	setAnim();
+	setFrame(2);
+
+	/*setPosition(position);
 	setSize(size);
 	setOrigin(size * 0.5f);
 	setRotation(0);
-	setFillColor(sf::Color(76, 76, 76, 255));
+	setFillColor(sf::Color(76, 76, 76, 255));*/
 }
 
-Lever::Lever(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, MovingPlat * plat, bool Right) : Sensor(world, position, size)
+Lever::Lever(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, MovingPlat * plat, bool Right, TextureManager *texMan, const std::string col, const std::string back) : Sensor(world, position, size)
 {
 	platform = plat;
 	door = nullptr;
 	pos = position;
 	right = Right;
+	move = false;
 
-	setPosition(position);
+	texture = texMan;
+	forward = col;
+	reverse = back;
+
+	texMan->setTexture("all", this);
+	texMan->getFrames(reverse, this);
+	setSize(sf::Vector2f(0.01f, 0.01f));
+	setLoop(false);
+	setPos(sf::Vector2f(position));
+	setAnim();
+	setFrame(2);
+
+	/*setPosition(position);
 	setSize(size);
 	setOrigin(size * 0.5f);
 	setRotation(0);
-	setFillColor(sf::Color(76, 76, 76, 255));
+	setFillColor(sf::Color(76, 76, 76, 255));*/
 }
 
 void Lever::onAction(b2Body * other)
@@ -34,6 +60,12 @@ void Lever::onAction(b2Body * other)
 	{
 		if (other->GetPosition().x > pos.x)
 		{
+			if (texture->getState() != forward)
+			{
+				setFrame(0);
+				texture->getFrames(forward, this);
+			}
+
 			if (door != nullptr)
 				door->open();
 			if (platform != nullptr)
@@ -41,6 +73,12 @@ void Lever::onAction(b2Body * other)
 		}
 		else if (other->GetPosition().x < pos.x)
 		{
+			if (texture->getState() != reverse)
+			{
+				setFrame(0);
+				texture->getFrames(reverse, this);
+			}
+
 			if (door != nullptr)
 				door->close();
 			if (platform != nullptr)
@@ -51,6 +89,12 @@ void Lever::onAction(b2Body * other)
 	{
 		if (other->GetPosition().x < pos.x)
 		{
+			if (texture->getState() != forward)
+			{
+				setFrame(0);
+				texture->getFrames(forward, this);
+			}
+
 			if (door != nullptr)
 				door->open();
 			if (platform != nullptr)
@@ -58,10 +102,21 @@ void Lever::onAction(b2Body * other)
 		}
 		else if (other->GetPosition().x > pos.x)
 		{
+			if (texture->getState() != reverse)
+			{
+				setFrame(0);
+				texture->getFrames(reverse, this);
+			}
+
 			if (door != nullptr)
 				door->close();
 			if (platform != nullptr)
 				platform->moveToStart();
 		}
 	}
+}
+
+void Lever::update(float timestep)
+{
+	Texture::update(timestep);
 }

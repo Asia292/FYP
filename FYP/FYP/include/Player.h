@@ -33,9 +33,10 @@ public:
 	void moveLeft();	//!< Moves the player left
 	void moveRight();	//!< Moves the player right
 	void jump();	//!< Makes the player jump
-	void setGrounded(bool ground);
-	void setHome(bool Home);
-	bool getHome();
-	void setDead(bool Dead);
-	bool getDead();
+	void idle();	//!< Player is idle/not moving
+	void setGrounded(bool ground);		//!< Sets the grounded bool
+	void setHome(bool Home);		//!< Sets the home bool
+	bool getHome();		//!< Returns the home bool
+	void setDead(bool Dead);		//!< Sets the dead bool
+	bool getDead();		//!< Returns the dead bool
 };

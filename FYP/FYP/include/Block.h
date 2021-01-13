@@ -6,11 +6,12 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include <iostream>
+#include "TextureManager.h"
 
 /*! \class Block
 \brief Movable object in a block shape
 */
-class Block : public sf::RectangleShape
+class Block : public Texture
 {
 private:
 	b2Body * body = nullptr; //!< Box2D body
@@ -20,7 +21,7 @@ private:
 
 public:
 	Block() {};		//!< Default constructor
-	Block(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation);		//!< Full constructor
+	Block(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, TextureManager *texMan);		//!< Full constructor
 	void update(float timestep);	//!< Updates entity
 	void setUserData(void* data);		//!< Sets the user data of the body
 };

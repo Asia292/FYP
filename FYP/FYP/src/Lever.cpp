@@ -6,7 +6,7 @@ Lever::Lever(b2World * world, const sf::Vector2f & position, const sf::Vector2f 
 	platform = nullptr;
 	pos = position;
 	right = Right;
-	move = false;
+	flipped = false;
 
 	texture = texMan;
 	forward = col;
@@ -33,7 +33,7 @@ Lever::Lever(b2World * world, const sf::Vector2f & position, const sf::Vector2f 
 	door = nullptr;
 	pos = position;
 	right = Right;
-	move = false;
+	flipped = false;
 
 	texture = texMan;
 	forward = col;
@@ -60,10 +60,12 @@ void Lever::onAction(b2Body * other)
 	{
 		if (other->GetPosition().x > pos.x)
 		{
-			if (texture->getState() != forward)
+			if (!flipped)
 			{
 				setFrame(0);
 				texture->getFrames(forward, this);
+
+				flipped = true;
 			}
 
 			if (door != nullptr)
@@ -73,10 +75,12 @@ void Lever::onAction(b2Body * other)
 		}
 		else if (other->GetPosition().x < pos.x)
 		{
-			if (texture->getState() != reverse)
+			if (flipped)
 			{
 				setFrame(0);
 				texture->getFrames(reverse, this);
+
+				flipped = false;
 			}
 
 			if (door != nullptr)
@@ -89,10 +93,12 @@ void Lever::onAction(b2Body * other)
 	{
 		if (other->GetPosition().x < pos.x)
 		{
-			if (texture->getState() != forward)
+			if (!flipped)
 			{
 				setFrame(0);
 				texture->getFrames(forward, this);
+
+				flipped = true;
 			}
 
 			if (door != nullptr)
@@ -102,10 +108,12 @@ void Lever::onAction(b2Body * other)
 		}
 		else if (other->GetPosition().x > pos.x)
 		{
-			if (texture->getState() != reverse)
+			if (flipped)
 			{
 				setFrame(0);
 				texture->getFrames(reverse, this);
+
+				flipped = false;
 			}
 
 			if (door != nullptr)

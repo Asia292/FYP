@@ -23,6 +23,15 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world)
 	buttons[0] = new Button(world, sf::Vector2f(5.42f, 5.31f), sf::Vector2f(0.6f, 0.3f), platforms[1], textMan, "purpleButton");
 	buttons[1] = new Button(world, sf::Vector2f(11.16f, 3.85f), sf::Vector2f(0.6f, 0.3f), platforms[1], textMan, "purpleButton");
 
+	//// ITEMS ////
+	darkPickUps[0] = new PickUp(world, sf::Vector2f(7.39f, 9.00f), sf::Vector2f(0.3f, 0.3f), 0x0100, textMan);
+	darkPickUps[1] = new PickUp(world, sf::Vector2f(5.23f, 6.81f), sf::Vector2f(0.3f, 0.3f), 0x0100, textMan);
+	darkPickUps[2] = new PickUp(world, sf::Vector2f(4.36f, 1.04f), sf::Vector2f(0.3f, 0.3f), 0x0100, textMan);
+
+	lightPickUps[0] = new PickUp(world, sf::Vector2f(10.25f, 9.00f), sf::Vector2f(0.3f, 0.3f), 0x0010, textMan);
+	lightPickUps[1] = new PickUp(world, sf::Vector2f(3.60f, 5.04f), sf::Vector2f(0.3f, 0.3f), 0x0010, textMan);
+	lightPickUps[2] = new PickUp(world, sf::Vector2f(1.10f, 2.11f), sf::Vector2f(0.3f, 0.3f), 0x0010, textMan);
+
 	//// MISC ////
 	block = new Block(world, sf::Vector2f(7.56f, 3.04f), sf::Vector2f(0.5f, 0.5f), 0.f, textMan);
 
@@ -121,6 +130,9 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world)
 	for (Button *button : buttons) button->setUserData(button);
 	for (MovingPlat *platform : platforms) platform->setUserData(new std::pair<std::string, void *>(typeid(decltype(*platform)).name(), platform));
 
+	for (PickUp *item : lightPickUps) item->setUserData(item);
+	for (PickUp *item : darkPickUps) item->setUserData(item);
+
 	block->setUserData(new std::pair<std::string, void *>(typeid(decltype(*block)).name(), block));
 	lightHome->setUserData(lightHome);
 	darkHome->setUserData(darkHome);
@@ -153,6 +165,24 @@ Lvl1::~Lvl1()
 		platform = nullptr;
 	}
 
+
+	for (PickUp *item : lightPickUps)
+	{
+		if (item != nullptr)
+		{
+			delete item;
+			item = nullptr;
+		}
+	}
+	for (PickUp *item : darkPickUps)
+	{
+		if (item != nullptr)
+		{
+			delete item;
+			item = nullptr;
+		}
+	}
+
 	delete block;
 	block = nullptr;
 
@@ -176,6 +206,37 @@ void Lvl1::update(float timestep)
 	for (Button *button : buttons)
 	{
 		button->update(timestep);
+	}
+
+	int i = 0;
+	for (PickUp *item : lightPickUps)
+	{
+		if (item != nullptr)
+		{
+			item->update(timestep);
+
+			if (item->getDel() == true)
+			{
+				delete item;
+				lightPickUps[i] = nullptr;
+			}
+		}
+		i++;
+	}
+	i = 0;
+	for (PickUp *item : darkPickUps)
+	{
+		if (item != nullptr)
+		{
+			item->update(timestep);
+
+			if (item->getDel() == true)
+			{
+				delete item;
+				darkPickUps[i] = nullptr;
+			}
+		}
+		i++;
 	}
 
 	block->update(timestep);
@@ -203,6 +264,17 @@ void Lvl1::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	for (MovingPlat *platform : platforms)
 	{
 		target.draw(*platform);
+	}
+
+	for (PickUp *item : lightPickUps)
+	{
+		if (item != nullptr)
+			item->draw(target, states);
+	}
+	for (PickUp *item : darkPickUps)
+	{
+		if (item != nullptr)
+			item->draw(target, states);
 	}
 
 	target.draw(*block);

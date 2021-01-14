@@ -23,8 +23,6 @@ HomeSensor::HomeSensor(b2World * world, const sf::Vector2f& position, sf::Vector
 
 void HomeSensor::onAction(b2Body * other)
 {
-	player->setHome(true);
-
 	fade = true;
 }
 
@@ -42,6 +40,10 @@ void HomeSensor::update(float timestep)
 	if (fade && a != 0)
 	{
 		a -= 5;
+	}
+	else if (fade && a == 0)
+	{
+		player->setHome(true);
 	}
 	else if (!fade && a != 255)
 	{

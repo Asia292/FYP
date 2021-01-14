@@ -12,6 +12,7 @@
 #include "SFMLDebugDraw.h"
 #include "ContactListener.h"
 #include "Lvl1.h"
+#include "HUD.h"
 #include <memory>
 
 
@@ -29,15 +30,20 @@ private:
 	bool debug; //!< Toggle for debug drawing
 	SFMLDebugDraw debugDraw; //!< Box2D debug drawing
 
-	Level *currLevel;
+	Level *currLevel;	//!< Pointer to the current level
+	HUD *hud;			//!< Instance of HUD
 
 	bool lightRight;	//!< If light player should be moving right
 	bool lightLeft;		//!< If light player should be moving left
 	bool darkRight;		//!< If dark player should be moving right
 	bool darkLeft;		//!< If dark player should be moving left
 
+	sf::Text finish;	//!< Text that displays on game over
+	sf::Font font;		//!< Font used
+	bool over;			//!< If the game is over
+
 protected:
-	TextureManager * texManager = TextureManager::getInstance();
+	TextureManager * texManager = TextureManager::getInstance();	//!< The texture manager
 
 public:
 	Game(); //!< Constructor which sets up the game

@@ -17,11 +17,12 @@ private:
 
 public:
 	PickUp() {};		//!< Default constructor
-	PickUp(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, int mask);		//!< Full constructor for a door platform
+	PickUp(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, int mask, TextureManager *texMan);		//!< Full constructor for a door platform
 	~PickUp();
 
 	virtual void onAction(b2Body * other) override;		//!< Action to do when sensor is triggered
 	virtual void offAction(b2Body * other) override {};		//!< Action to do when sensor stops being triggered
+	virtual void update(float timestep) override;
 
 	bool getDel();		//!< Return the delete bool
 };

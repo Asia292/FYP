@@ -37,6 +37,8 @@ Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	fixture->SetFilterData(filter);
 
 	grounded = false;
+	dead = false;
+	home = false;
 }
 
 void Player::update(float timestep)

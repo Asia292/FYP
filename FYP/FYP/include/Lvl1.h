@@ -16,11 +16,11 @@ protected:
 	Hazard *darkHazard;			//!< Hazard to dark player
 	Hazard *bothHazard;			//!< Hazard to both players
 
-	PickUp *lightPickUp[3];		//!< Array of light pickups
-	PickUp *darkPickUp[3];		//!< Array of dark pickups
+	PickUp *lightPickUps[3];		//!< Array of light pickups
+	PickUp *darkPickUps[3];		//!< Array of dark pickups
 
 	Lever *lever;				//!< A lever
-	Button *buttons[2];			//!> Array of buttons
+	Button *buttons[2];			//!< Array of buttons
 	MovingPlat *platforms[2];	//!< Array of platforms
 
 	Block *block;				//!< Movable block

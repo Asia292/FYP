@@ -16,7 +16,7 @@ private:
 	DoorPlat * door;	//!< The door passed in constructor
 	MovingPlat *platform;	//!< The moving platform passed in constructor
 	sf::Vector2f pos;
-	bool right, move;
+	bool right, flipped;
 	std::string reverse, forward;
 
 	TextureManager *texture;

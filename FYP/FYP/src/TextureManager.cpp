@@ -122,6 +122,7 @@ TextureManager::TextureManager()
 	animTime["darkRun"] = 0.5f;
 	animTime["lightRun"] = 0.5f;
 	animTime["darkJump"] = 1.f;
+	animTime["lightJump"] = 1.f;
 }
 
 

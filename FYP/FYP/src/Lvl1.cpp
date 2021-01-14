@@ -6,8 +6,8 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world)
 	setBg();
 
 	//// PLAYERS ////
-	lightPlayer = new Player(world, sf::Vector2f(1.00f, 8.14f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0010, sf::Color::White);
-	darkPlayer = new Player(world, sf::Vector2f(1.00f, 9.62f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0100, sf::Color::Black);
+	lightPlayer = new Player(world, sf::Vector2f(1.00f, 8.14f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0010, textMan);
+	darkPlayer = new Player(world, sf::Vector2f(1.00f, 9.62f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0100, textMan);
 
 	//// HAZARDS ////
 	lightHazard = new Hazard(world, sf::Vector2f(10.25f, 10.18f), sf::Vector2f(1.5f, 0.25f), 0.f, 0x0010);
@@ -16,7 +16,7 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world)
 
 	//// PLATFORMS ////
 	platforms[0] = new MovingPlat(world, sf::Vector2f(1.09f, 5.55f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(1.09f, 6.60f), textMan, "yellowPlat", "yellowGlow");
-	platforms[1] = new MovingPlat(world, sf::Vector2f(12.96f, 4.24f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(12.96f, 5.50f), textMan, "purplePlat", "purpleGlow");
+	platforms[1] = new MovingPlat(world, sf::Vector2f(12.96f, 4.24f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(12.96f, 5.60f), textMan, "purplePlat", "purpleGlow");
 
 	//// LEVERS/BUTTONS ////
 	lever = new Lever(world, sf::Vector2f(3.77f, 7.0f), sf::Vector2f(0.6f, 0.5f), platforms[0], true, textMan, "yellowLever", "yellowLeverReverse");

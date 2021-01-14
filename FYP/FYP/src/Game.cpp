@@ -13,7 +13,7 @@ Game::Game()
 				X Player dies
 			X Floor
 			X Texture manager
-			- HUD
+			X HUD
 			X Home sensor
 			X Game over
 			X Level complete
@@ -111,7 +111,7 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	currLevel->draw(target, sf::RenderStates::Default);
 	hud->draw(target, sf::RenderStates::Default);
 
-	//if(over)
+	if(over)
 		target.draw(finish);
 
 	// Debug Draw

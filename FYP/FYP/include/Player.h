@@ -7,10 +7,12 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#include "TextureManager.h"
+
 /*! \class Player
 \brief Creates and controls the player
 */
-class Player : public sf::RectangleShape
+class Player : public Texture
 {
 public:
 	b2Body * body = nullptr; //!< Box2D body
@@ -23,10 +25,13 @@ public:
 	bool grounded;			//!< If the player is grounded
 	bool home;				//!< If the player is home
 	bool dead;				//!< If the player is dead
+	int player;
+	TextureManager *texture;
+	bool run;
 
 public:
 	Player() {};		//!< Default constructor
-	Player(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, int cat, sf::Color col);		//!< Full constructor
+	Player(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, int cat, TextureManager *texMan);		//!< Full constructor
 	void update(float timestep);	//!< Updates entity
 	void setUserData(void* data);		//!< Sets the user data of the body
 

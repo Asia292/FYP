@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, int cat, sf::Color col)
+Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, int cat, TextureManager *texMan)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -23,12 +23,12 @@ Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	body->CreateFixture(&fixtureDef);
 	body->SetFixedRotation(true);
 
-	setPosition(position);
+	/*setPosition(position);
 	setSize(size);
 	setOrigin(size * 0.5f);
 	setRotation(orientation);
 	setFillColor(col);
-	setOutlineThickness(0.f);
+	setOutlineThickness(0.f);*/
 
 
 	fixture = body->GetFixtureList();
@@ -36,15 +36,39 @@ Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	filter.maskBits = 0x0001;
 	fixture->SetFilterData(filter);
 
+	texMan->setTexture("characters", this);
+	setLoop(false);
+	setPos(sf::Vector2f(position.x, position.y - 0.1f));
+	setAnim();
+
+	if (cat == 0x0010)
+	{
+		texMan->getFrames("lightIdle", this);
+		setSize(sf::Vector2f(0.00275f, 0.00275f));
+	}
+	else if (cat == 0x0100)
+	{
+		texMan->getFrames("darkIdle", this);
+		setSize(sf::Vector2f(0.003f, 0.003f));
+	}
+
 	grounded = false;
 	dead = false;
 	home = false;
+	player = cat;
+	texture = texMan;
+	run = false;
 }
 
 void Player::update(float timestep)
 {
+	Texture::update(timestep);
+	currSprite.setScale(sf::Vector2f(0.00275 - (int)flip * 0.0055, 0.00275f));	// 1 - (int)flip * 2
 	b2Vec2 pos = body->GetPosition();
-	setPosition(pos.x, pos.y);
+	if (player == 0x0010)
+		currSprite.setPosition(pos.x, pos.y - 0.3f);
+	else if (player == 0x0100)
+		currSprite.setPosition(pos.x, pos.y - 0.1f);
 }
 
 void Player::setUserData(void * data)
@@ -57,6 +81,20 @@ void Player::moveLeft()
 	b2Vec2 velo = body->GetLinearVelocity();
 	velo.x = -3;
 	body->SetLinearVelocity(velo);
+
+	if (!run && grounded)
+	{
+		run = true;
+		setFrame(0);
+
+		if (player == 0x0010)
+			texture->getFrames("lightRun", this);
+		else if (player == 0x0100)
+			texture->getFrames("darkRun", this);
+
+		setLoop(true);
+	}
+	setFlip(true);
 }
 
 void Player::moveRight()
@@ -64,6 +102,20 @@ void Player::moveRight()
 	b2Vec2 velo = body->GetLinearVelocity();
 	velo.x = 3;
 	body->SetLinearVelocity(velo);
+
+	if (!run && grounded)
+	{
+		run = true;
+		setFrame(0);
+
+		if (player == 0x0010)
+			texture->getFrames("lightRun", this);
+		else if (player == 0x0100)
+			texture->getFrames("darkRun", this);
+
+		setLoop(true);
+	}
+	setFlip(false);
 }
 
 void Player::jump()
@@ -73,6 +125,15 @@ void Player::jump()
 		b2Vec2 velo = body->GetLinearVelocity();
 		velo.y = -4.5;
 		body->SetLinearVelocity(velo);
+
+		setFrame(0);
+
+		if (player == 0x0010)
+			texture->getFrames("lightJump", this);
+		else if (player == 0x0100)
+			texture->getFrames("darkJump", this);
+
+		setLoop(false);
 	}
 }
 
@@ -81,6 +142,16 @@ void Player::idle()
 	b2Vec2 velo = body->GetLinearVelocity();
 	velo.x = 0;
 	body->SetLinearVelocity(velo);
+
+	setFrame(0);
+
+	if (player == 0x0010)
+		texture->getFrames("lightIdle", this);
+	else if (player == 0x0100)
+		texture->getFrames("darkIdle", this);
+
+	setLoop(false);
+	run = false;
 }
 
 void Player::setGrounded(bool ground)

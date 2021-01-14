@@ -5,8 +5,45 @@ TextureManager::TextureManager()
 	//// SET SPRITES ////
 	spritesheets["lvl1"] = loadSprite(".\\assets\\Lvl1.png");
 	spritesheets["all"] = loadSprite(".\\assets\\allSprites.png");
+	spritesheets["characters"] = loadSprite(".\\assets\\allCharacters.png");
 
 	//// SET INT RECS ////
+	//// LIGHT PLAYER ////
+	setFrames("lightIdle", std::vector<sf::IntRect> { sf::IntRect(90, 13, 210, 492) });
+
+	setFrames("lightRun", std::vector<sf::IntRect>
+	{ sf::IntRect(21, 576, 177, 451),
+		sf::IntRect(240, 579, 177, 451),
+		sf::IntRect(468, 579, 177, 451),
+		sf::IntRect(240, 579, 177, 451)});
+
+	setFrames("lightJump", std::vector<sf::IntRect>
+	{ sf::IntRect(915, 601, 192, 442),
+		sf::IntRect(1183, 596, 192, 442),
+		sf::IntRect(1457, 602, 192, 442),
+		sf::IntRect(240, 579, 177, 451),
+		sf::IntRect(1760, 586, 199, 441),
+		sf::IntRect(2026, 585, 199, 441),
+		sf::IntRect(2284, 584, 199, 441)});
+
+	//// DARK PLAYER ////
+	setFrames("darkIdle", std::vector<sf::IntRect> { sf::IntRect(397, 182, 259, 326) });
+
+	setFrames("darkRun", std::vector<sf::IntRect>
+	{ sf::IntRect(23, 1184, 163, 291),
+		sf::IntRect(260, 1183, 163, 291),
+		sf::IntRect(503, 1183, 163, 291),
+		sf::IntRect(260, 1183, 163, 291)});
+
+	setFrames("darkJump", std::vector<sf::IntRect>
+	{ sf::IntRect(931, 1180, 160, 283),
+		sf::IntRect(1169, 1180, 160, 283),
+		sf::IntRect(1421, 1177, 160, 283),
+		sf::IntRect(260, 1183, 169, 228),
+		sf::IntRect(1698, 1180, 165, 291),
+		sf::IntRect(1944, 1178, 165, 291),
+		sf::IntRect(2190, 1180, 165, 291)});
+
 	//// DOORS //// 
 	setFrames("lightDoor", std::vector<sf::IntRect> { sf::IntRect(24, 24, 67, 92) });
 	setFrames("darkDoor", std::vector<sf::IntRect> { sf::IntRect(108, 24, 67, 92) });
@@ -30,7 +67,7 @@ TextureManager::TextureManager()
 	setFrames("blueButton", std::vector<sf::IntRect> { sf::IntRect(885, 243, 82, 28) });
 	setFrames("greenButton", std::vector<sf::IntRect> { sf::IntRect(885, 291, 82, 28) });
 
-	//// LEVERS //// reverse for other way?
+	//// LEVERS ////
 	setFrames("yellowLever", std::vector<sf::IntRect>
 	{ sf::IntRect(486, 51, 86, 79),
 		sf::IntRect(387, 52, 86, 79),
@@ -81,6 +118,10 @@ TextureManager::TextureManager()
 	animTime["greenLeverReverse"] = 0.3f;
 	animTime["purpleLever"] = 0.3f;
 	animTime["purpleLeverReverse"] = 0.3f;
+
+	animTime["darkRun"] = 0.5f;
+	animTime["lightRun"] = 0.5f;
+	animTime["darkJump"] = 1.f;
 }
 
 

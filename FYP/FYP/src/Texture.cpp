@@ -81,7 +81,7 @@ void Texture::update(float timestep)
 		//std::cout << aTime / frames.size() << std::endl;
 		currSprite.setTexture(*spriteSheet, true);
 		currSprite.setTextureRect(frames[currFrame]);
-		//currSprite.setScale(sf::Vector2f(0.01 - (int)flip * 0.02, 0.01f));	// 1 - (int)flip * 2
+		//currSprite.setScale(sf::Vector2f(0.00275 - (int)flip * 0.0055, 0.00275f));	// 1 - (int)flip * 2
 		currSprite.setOrigin(frames[currFrame].width / 2, frames[currFrame].height / 2);
 	}
 	else if (!animated && !background)

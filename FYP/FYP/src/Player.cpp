@@ -44,7 +44,7 @@ Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	if (cat == 0x0010)
 	{
 		texMan->getFrames("lightIdle", this);
-		setSize(sf::Vector2f(0.00275f, 0.00275f));
+		setSize(sf::Vector2f(0.0025f, 0.0025f));
 	}
 	else if (cat == 0x0100)
 	{
@@ -66,7 +66,7 @@ void Player::update(float timestep)
 	currSprite.setScale(sf::Vector2f(0.00275 - (int)flip * 0.0055, 0.00275f));	// 1 - (int)flip * 2
 	b2Vec2 pos = body->GetPosition();
 	if (player == 0x0010)
-		currSprite.setPosition(pos.x, pos.y - 0.3f);
+		currSprite.setPosition(pos.x, pos.y - 0.2f);
 	else if (player == 0x0100)
 		currSprite.setPosition(pos.x, pos.y - 0.1f);
 }

@@ -9,25 +9,25 @@ TextureManager::TextureManager()
 
 	//// SET INT RECS ////
 	//// LIGHT PLAYER ////
-	setFrames("lightIdle", std::vector<sf::IntRect> { sf::IntRect(90, 13, 210, 492) });
+	setFrames("lightIdle", std::vector<sf::IntRect> { sf::IntRect(108, 123, 153, 382) });
 
 	setFrames("lightRun", std::vector<sf::IntRect>
-	{ sf::IntRect(21, 576, 177, 451),
-		sf::IntRect(240, 579, 177, 451),
-		sf::IntRect(468, 579, 177, 451),
-		sf::IntRect(240, 579, 177, 451)});
+	{ sf::IntRect(49, 656, 124, 370),
+		sf::IntRect(270, 658, 124, 370),
+		sf::IntRect(495, 656, 124, 370),
+		sf::IntRect(270, 658, 124, 370)});
 
 	setFrames("lightJump", std::vector<sf::IntRect>
-	{ sf::IntRect(915, 601, 192, 442),
-		sf::IntRect(1183, 596, 192, 442),
-		sf::IntRect(1457, 602, 192, 442),
-		sf::IntRect(240, 579, 177, 451),
-		sf::IntRect(1760, 586, 199, 441),
-		sf::IntRect(2026, 585, 199, 441),
-		sf::IntRect(2284, 584, 199, 441)});
+	{ sf::IntRect(945, 682, 137, 359),
+		sf::IntRect(1224, 675, 137, 361),
+		sf::IntRect(1501, 678, 138, 361),
+		sf::IntRect(270, 658, 124, 370),
+		sf::IntRect(1790, 665, 138, 361),
+		sf::IntRect(2055, 664, 138, 361),
+		sf::IntRect(2319, 663, 137, 361)});
 
 	//// DARK PLAYER ////
-	setFrames("darkIdle", std::vector<sf::IntRect> { sf::IntRect(397, 182, 259, 326) });
+	setFrames("darkIdle", std::vector<sf::IntRect> { sf::IntRect(406, 197, 231, 309) });
 
 	setFrames("darkRun", std::vector<sf::IntRect>
 	{ sf::IntRect(23, 1184, 163, 291),
@@ -39,7 +39,7 @@ TextureManager::TextureManager()
 	{ sf::IntRect(931, 1180, 160, 283),
 		sf::IntRect(1169, 1180, 160, 283),
 		sf::IntRect(1421, 1177, 160, 283),
-		sf::IntRect(260, 1183, 169, 228),
+		sf::IntRect(260, 1183, 169, 291),
 		sf::IntRect(1698, 1180, 165, 291),
 		sf::IntRect(1944, 1178, 165, 291),
 		sf::IntRect(2190, 1180, 165, 291)});

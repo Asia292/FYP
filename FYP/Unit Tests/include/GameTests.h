@@ -3,7 +3,7 @@
 
 #define private public
 #define protected public
-#include "game.h"
+#include "Game.h"
 
 TEST(GameInternals, ToggleDebug)
 {
@@ -31,19 +31,20 @@ TEST(GameInternals, Tab)
 //// PLAYER FUNCTIONS ////
 TEST(LightPlayerFunctions, PlayerLeft)
 {
-	Game game;
+	Game game(1);
+	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
-	Player * player = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, sf::Color::White);
+	Player * player = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, texManager);
 
 	float velBefore = player->body->GetLinearVelocity().x;
 	player->moveLeft();
 	float velAfter = player->body->GetLinearVelocity().x;
 
-	float velKeyBefore = game.lightPlayer->body->GetLinearVelocity().x;
+	float velKeyBefore = game.currLevel->lightPlayer->body->GetLinearVelocity().x;
 	sf::Keyboard::Key key = sf::Keyboard::A;
 	game.processKeyPress(key);
 	game.update(0.5f);
-	float velKeyAfter = game.lightPlayer->body->GetLinearVelocity().x;
+	float velKeyAfter = game.currLevel->lightPlayer->body->GetLinearVelocity().x;
 
 	EXPECT_GT(velBefore, velAfter);
 	EXPECT_GT(velKeyBefore, velKeyAfter);
@@ -51,38 +52,43 @@ TEST(LightPlayerFunctions, PlayerLeft)
 
 TEST(LightPlayerFunctions, PlayerRight)
 {
-	Game game;
+	Game game(1);
+	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
-	Player * player = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, sf::Color::White);
+	Player * player = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, texManager);
 
 	float velBefore = player->body->GetLinearVelocity().x;
 	player->moveRight();
 	float velAfter = player->body->GetLinearVelocity().x;
 
-	float velKeyBefore = game.lightPlayer->body->GetLinearVelocity().x;
+	float velKeyBefore = game.currLevel->lightPlayer->body->GetLinearVelocity().x;
 	sf::Keyboard::Key key = sf::Keyboard::D;
 	game.processKeyPress(key);
 	game.update(0.5f);
-	float velKeyAfter = game.lightPlayer->body->GetLinearVelocity().x;
+	float velKeyAfter = game.currLevel->lightPlayer->body->GetLinearVelocity().x;
 
 	EXPECT_LT(velBefore, velAfter);
 	EXPECT_LT(velKeyBefore, velKeyAfter);
 }
 
-TEST(LightPlayerFunctions, PlayerJump)
+TEST(LightPlayerFunctions, PlayerJumpGrounded)
 {
-	Game game;
+	Game game(1);
+	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
-	Player * player = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, sf::Color::White);
+	Player * player = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, texManager);
+
+	game.currLevel->lightPlayer->setGrounded(true);
+	player->setGrounded(true);
 
 	float velBefore = player->body->GetLinearVelocity().y;
 	player->jump();
 	float velAfter = player->body->GetLinearVelocity().y;
 
-	float velKeyBefore = game.lightPlayer->body->GetLinearVelocity().y;
+	float velKeyBefore = game.currLevel->lightPlayer->body->GetLinearVelocity().y;
 	sf::Keyboard::Key key = sf::Keyboard::W;
 	game.processKeyPress(key);
-	float velKeyAfter = game.lightPlayer->body->GetLinearVelocity().y;
+	float velKeyAfter = game.currLevel->lightPlayer->body->GetLinearVelocity().y;
 
 	EXPECT_GT(velBefore, velAfter);
 	EXPECT_GT(velKeyBefore, velKeyAfter);
@@ -90,19 +96,20 @@ TEST(LightPlayerFunctions, PlayerJump)
 
 TEST(DarkPlayerFunctions, PlayerLeft)
 {
-	Game game;
+	Game game(1);
+	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
-	Player * player = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, sf::Color::Black);
+	Player * player = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, texManager);
 
 	float velBefore = player->body->GetLinearVelocity().x;
 	player->moveLeft();
 	float velAfter = player->body->GetLinearVelocity().x;
 
-	float velKeyBefore = game.darkPlayer->body->GetLinearVelocity().x;
+	float velKeyBefore = game.currLevel->darkPlayer->body->GetLinearVelocity().x;
 	sf::Keyboard::Key key = sf::Keyboard::Left;
 	game.processKeyPress(key);
 	game.update(0.5f);
-	float velKeyAfter = game.darkPlayer->body->GetLinearVelocity().x;
+	float velKeyAfter = game.currLevel->darkPlayer->body->GetLinearVelocity().x;
 
 	EXPECT_GT(velBefore, velAfter);
 	EXPECT_GT(velKeyBefore, velKeyAfter);
@@ -110,38 +117,43 @@ TEST(DarkPlayerFunctions, PlayerLeft)
 
 TEST(DarkPlayerFunctions, PlayerRight)
 {
-	Game game;
+	Game game(1);
+	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
-	Player * player = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, sf::Color::Black);
+	Player * player = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, texManager);
 
 	float velBefore = player->body->GetLinearVelocity().x;
 	player->moveRight();
 	float velAfter = player->body->GetLinearVelocity().x;
 
-	float velKeyBefore = game.darkPlayer->body->GetLinearVelocity().x;
+	float velKeyBefore = game.currLevel->darkPlayer->body->GetLinearVelocity().x;
 	sf::Keyboard::Key key = sf::Keyboard::Right;
 	game.processKeyPress(key);
 	game.update(0.5f);
-	float velKeyAfter = game.darkPlayer->body->GetLinearVelocity().x;
+	float velKeyAfter = game.currLevel->darkPlayer->body->GetLinearVelocity().x;
 
 	EXPECT_LT(velBefore, velAfter);
 	EXPECT_LT(velKeyBefore, velKeyAfter);
 }
 
-TEST(DarkPlayerFunctions, PlayerJump)
+TEST(DarkPlayerFunctions, PlayerJumpGrounded)
 {
-	Game game;
+	Game game(1);
+	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
-	Player * player = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, sf::Color::Black);
+	Player * player = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, texManager);
+
+	game.currLevel->darkPlayer->setGrounded(true);
+	player->setGrounded(true);
 
 	float velBefore = player->body->GetLinearVelocity().y;
 	player->jump();
 	float velAfter = player->body->GetLinearVelocity().y;
 
-	float velKeyBefore = game.darkPlayer->body->GetLinearVelocity().y;
+	float velKeyBefore = game.currLevel->darkPlayer->body->GetLinearVelocity().y;
 	sf::Keyboard::Key key = sf::Keyboard::Up;
 	game.processKeyPress(key);
-	float velKeyAfter = game.darkPlayer->body->GetLinearVelocity().y;
+	float velKeyAfter = game.currLevel->darkPlayer->body->GetLinearVelocity().y;
 
 	EXPECT_GT(velBefore, velAfter);
 	EXPECT_GT(velKeyBefore, velKeyAfter);
@@ -151,10 +163,11 @@ TEST(DarkPlayerFunctions, PlayerJump)
 TEST(SensorButton, OnAction)
 {
 	b2World * world = new b2World(b2Vec2(0, 9.81));
+	TextureManager * texManager = TextureManager::getInstance();
 	DoorPlat * door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
-	MovingPlat *move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f));
-	Button * button = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), door);
-	Button * buttonMove = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), move);
+	MovingPlat *move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f), texManager, "yellowPlat", "yellowGlow");
+	Button * button = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), door, texManager, "yellowLever");
+	Button * buttonMove = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), move, texManager, "yellowButton");
 
 	int stateBefore = (int)door->state;
 	button->onAction(door->door);
@@ -173,10 +186,11 @@ TEST(SensorButton, OnAction)
 TEST(SensorButton, OffAction)
 {
 	b2World * world = new b2World(b2Vec2(0, 9.81));
+	TextureManager * texManager = TextureManager::getInstance();
 	DoorPlat * door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
-	MovingPlat *move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f));
-	Button * button = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), door);
-	Button * buttonMove = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), move);
+	MovingPlat *move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f), texManager, "yellowPlat", "yellowGlow");
+	Button * button = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), door, texManager, "yellowLever");
+	Button * buttonMove = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), move, texManager, "yellowButton");
 
 	button->onAction(door->door);
 	int stateBefore = (int)door->state;
@@ -249,8 +263,9 @@ TEST(SensorLever, OnActionRight)
 TEST(SensorPickUp, OnAction)
 {
 	b2World * world = new b2World(b2Vec2(0, 9.81));
-	PickUp *lightPickUp = new PickUp(world, sf::Vector2f(1.2f, 0.5f), sf::Vector2f(0.1f, 0.1f), 0x0100);
-	Player * player = new Player(world, sf::Vector2f(8.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, sf::Color::White);
+	TextureManager * texManager = TextureManager::getInstance();
+	PickUp *lightPickUp = new PickUp(world, sf::Vector2f(1.2f, 0.5f), sf::Vector2f(0.1f, 0.1f), 0x0100, texManager);
+	Player * player = new Player(world, sf::Vector2f(8.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, texManager);
 
 	bool delBefore = lightPickUp->getDel();
 	lightPickUp->onAction(player->body);

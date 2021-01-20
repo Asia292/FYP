@@ -6,14 +6,19 @@
 #include <Box2D/Box2D.h>
 
 #include <SFML/Graphics.hpp>
-#include "Game.h"
+#include "MenuState.h"
+#include <stack>
 
 void main() /** Entry point for the application */
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 800), "FYP"); // Open main window
 
-	Game game;
+	//Game game;
+	State *currState;
 
+	std::stack<State *> states;
+	states.push(new MenuState());
+	currState = states.top();
 	float fFrameTime = 1.f / 60.f;
 
 	// Start a clock to provide time for the physics
@@ -31,11 +36,11 @@ void main() /** Entry point for the application */
 
 			if (event.type == sf::Event::KeyPressed)
 			{
-				game.processKeyPress(event.key.code);
+				//game.processKeyPress(event.key.code);
 			}
 			if (event.type == sf::Event::KeyReleased)
 			{
-				game.processKeyRelease(event.key.code);
+				//game.processKeyRelease(event.key.code);
 			}
 		}
 
@@ -44,13 +49,16 @@ void main() /** Entry point for the application */
 		// If a frame has past the update the physics
 		if (m_fElapsedTime > fFrameTime)
 		{
-			game.update(m_fElapsedTime);
+			currState = states.top();
+			currState->update(m_fElapsedTime);
+			//game.update(m_fElapsedTime);
 			clock.restart();
 		}
 
 		window.clear(sf::Color(120, 120, 120));
 
-		window.draw(game);
+		//window.draw(game);
+		window.draw(*currState);
 
 		window.display();
 	}

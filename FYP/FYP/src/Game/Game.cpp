@@ -18,6 +18,7 @@ Game::Game(int level)
 			X Game over
 			X Level complete
 			X Level class
+			- Game over return confirmation
 	*/
 	view.setCenter(7.f, 5.2f);
 	view.setSize(worldSize);

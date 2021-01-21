@@ -3,9 +3,6 @@
 \file Game.h
 */
 
-/*! \class Game
-\brief Creates the world and controls the gameplay
-*/
 #include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
 
@@ -16,6 +13,9 @@
 #include <memory>
 
 
+/*! \class Game
+\brief Creates the world and controls the gameplay
+*/
 class Game : public sf::Drawable
 {
 private:
@@ -46,14 +46,15 @@ protected:
 	TextureManager * texManager = TextureManager::getInstance();	//!< The texture manager
 
 public:
-	Game() {};
-	Game(int level); //!< Constructor which sets up the game
+	Game() {};		//!< Default constructor
+	Game(int level); //!< Full constructor which sets up the game
 	~Game(); //!< Destructor which cleans all the pointer memory up
 	void update(float timestep); //!< Update the game with give timestep
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const; //!< Draw the game to the render context
 	void toggleDebug() { debug = !debug; }; //!< Toggle for debug drawing
 	void processKeyPress(sf::Keyboard::Key code);		//!< Decides what to do on key press
 	void processKeyRelease(sf::Keyboard::Key code);		//!< Decides what to do on key release
+	bool getOver() { return over; }
 
 	ContactListener listener;	//!< The contact listener
 };

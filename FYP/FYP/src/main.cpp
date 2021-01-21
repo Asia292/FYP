@@ -7,7 +7,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "MenuState.h"
-#include <stack>
 
 void main() /** Entry point for the application */
 {
@@ -17,7 +16,7 @@ void main() /** Entry point for the application */
 	State *currState;
 
 	std::stack<State *> states;
-	states.push(new MenuState());
+	states.push(new MenuState(/*window.getSize().x, window.getSize().y,*/ &states));
 	currState = states.top();
 	float fFrameTime = 1.f / 60.f;
 
@@ -36,10 +35,12 @@ void main() /** Entry point for the application */
 
 			if (event.type == sf::Event::KeyPressed)
 			{
+				currState->processKeyPress(event.key.code);
 				//game.processKeyPress(event.key.code);
 			}
 			if (event.type == sf::Event::KeyReleased)
 			{
+				currState->processKeyRelease(event.key.code);
 				//game.processKeyRelease(event.key.code);
 			}
 		}
@@ -49,8 +50,22 @@ void main() /** Entry point for the application */
 		// If a frame has past the update the physics
 		if (m_fElapsedTime > fFrameTime)
 		{
-			currState = states.top();
-			currState->update(m_fElapsedTime);
+			if (!states.empty())
+			{
+				currState = states.top();
+				currState->update(m_fElapsedTime);
+
+				if (currState->getQuit())
+				{
+					delete states.top();
+					states.pop();
+
+					if (!states.empty())
+						currState = states.top();
+					else
+						window.close();
+				}
+			}
 			//game.update(m_fElapsedTime);
 			clock.restart();
 		}

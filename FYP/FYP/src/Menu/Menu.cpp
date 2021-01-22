@@ -27,7 +27,6 @@ Menu::Menu(float width, float height)
 
 	font.loadFromFile(".\\assets\\neuropol.ttf");
 
-
 	menue[0].setFont(font);
 	menue[0].setFillColor(sf::Color(100, 32, 188));
 	menue[0].setOutlineColor(sf::Color::Black);

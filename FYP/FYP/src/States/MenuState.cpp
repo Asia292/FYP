@@ -5,6 +5,9 @@ MenuState::MenuState(float Height, float Width, std::stack<State *>* States)
 	states = States;
 	quit = false;
 	menu = new Menu(Width, Height);
+
+	height = Height;
+	width = Width;
 }
 
 MenuState::~MenuState()
@@ -21,7 +24,7 @@ void MenuState::update(float timestep)
 
 	if (menu->getPlay())
 	{
-		states->push(new GameState(1, states));
+		states->push(new LevelSelectState(width, height, states));
 		menu->setPlay(false);
 	}
 	

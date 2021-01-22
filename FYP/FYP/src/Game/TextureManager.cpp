@@ -4,9 +4,17 @@ TextureManager::TextureManager()
 {
 	//// SET SPRITES ////
 	spritesheets["menu"] = loadSprite(".\\assets\\menuBG.png");
+	spritesheets["levelSelect"] = loadSprite(".\\assets\\select.png");
 	spritesheets["lvl1"] = loadSprite(".\\assets\\Lvl1.png");
 	spritesheets["all"] = loadSprite(".\\assets\\allSprites.png");
 	spritesheets["characters"] = loadSprite(".\\assets\\allCharacters.png");
+
+	//// LEVEL PREVIEWS ////
+	spritesheets["onePreview"] = loadSprite(".\\assets\\levelPreview\\1Preview.png");
+	spritesheets["twoPreview"] = loadSprite(".\\assets\\levelPreview\\2PlaceHolder.jpg");
+	spritesheets["threePreview"] = loadSprite(".\\assets\\levelPreview\\3PlaceHolder.jpg");
+	spritesheets["fourPreview"] = loadSprite(".\\assets\\levelPreview\\4PlaceHolder.jpg");
+	spritesheets["fivePreview"] = loadSprite(".\\assets\\levelPreview\\5PlaceHolder.jpg");
 
 	//// SET INT RECS ////
 	//// LIGHT PLAYER ////

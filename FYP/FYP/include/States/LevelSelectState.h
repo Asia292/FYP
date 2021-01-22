@@ -1,25 +1,23 @@
 #pragma once
 /*!
-\file MenuState.h
+\file LevelSelectState.h
 */
 
-#include "LevelSelectState.h"
-#include "Menu.h"
+#include "GameState.h"
+#include "LevelSelect.h"
 
-/*! \class MenuState
-\brief The state which holds the main menu
+/*! \class LevelSelectState
+\brief The state which holds the level select screen
 */
-class MenuState : public State
+class LevelSelectState : public State
 {
 private:
 	bool quit;		//!< If the state should quit
-	Menu *menu;		//!< Pointer to the main menu
-
-	int height, width;
+	LevelSelect * levelSelect;
 
 public:
-	MenuState(float Height, float Width, std::stack<State *>* States);		//!< Constructior
-	virtual ~MenuState() override;		//!< Overrides base deconstructor
+	LevelSelectState(float Height, float Width, std::stack<State *>* States);		//!< Constructior
+	virtual ~LevelSelectState() override;		//!< Overrides base deconstructor
 	virtual void update(float timestep) override;		//!< Overrides base update
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;		//!< Overrides base draw
 	virtual void processKeyPress(sf::Keyboard::Key code) override;		//!< Overrides base key press

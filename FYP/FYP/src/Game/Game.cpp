@@ -19,6 +19,7 @@ Game::Game(int level)
 			X Level complete
 			X Level class
 			- Game over return confirmation
+			- Level score
 	*/
 	view.setCenter(7.f, 5.2f);
 	view.setSize(worldSize);
@@ -30,7 +31,13 @@ Game::Game(int level)
 
 	font.loadFromFile(".\\assets\\neuropol.ttf");
 
-	currLevel = new Lvl1(texManager, world);
+	switch (level)
+	{
+	case 0:
+		currLevel = new Lvl1(texManager, world);
+		break;
+	}
+	
 	hud = new HUD(texManager, font);
 
 	debug = false;

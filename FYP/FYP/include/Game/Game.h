@@ -39,8 +39,12 @@ private:
 	bool darkLeft;		//!< If dark player should be moving left
 
 	sf::Text finish;	//!< Text that displays on game over
+	sf::Text select[2];
 	sf::Font font;		//!< Font used
+	Texture backing;
 	bool over;			//!< If the game is over
+	int back;
+	bool levelSelect;
 
 protected:
 	TextureManager * texManager = TextureManager::getInstance();	//!< The texture manager
@@ -55,6 +59,10 @@ public:
 	void processKeyPress(sf::Keyboard::Key code);		//!< Decides what to do on key press
 	void processKeyRelease(sf::Keyboard::Key code);		//!< Decides what to do on key release
 	bool getOver() { return over; }
+	bool getBack() { return levelSelect; }
+	void moveLeft();
+	void moveRight();
+	void selected();
 
 	ContactListener listener;	//!< The contact listener
 };

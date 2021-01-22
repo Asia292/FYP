@@ -5,15 +5,15 @@ Menu::Menu(float width, float height)
 	/*
 	TO DO
 		X Background
-		- Text
+		X Text
 			X Co-op play
 			X Network play
 			X Quit
 		- Key select or mouse?
 			X Key
-		- Scene/state transition
+		X Scene/state transition
 			X Quit
-			- Level select
+			X Level select
 	*/
 	texManager->setTexture("menu", this);
 	setBg();

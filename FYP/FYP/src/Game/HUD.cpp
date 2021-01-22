@@ -2,6 +2,15 @@
 
 HUD::HUD(TextureManager * texMan, sf::Font & font)
 {
+	/*
+	TO DO
+		- Time using clock
+		- Game over
+			- Box
+			- Text
+				- Level selct
+				- Retry?
+	*/
 	eTime = 0;
 	min = 0;
 	sec = 0;
@@ -37,6 +46,7 @@ void HUD::update(float timestep)
 		eTime = 0;
 		//std::cout << min << ":" << sec << std::endl;
 	}
+
 	if (sec < 10)
 		time.setString(std::to_string(min) + ":0" + std::to_string(sec));
 	else

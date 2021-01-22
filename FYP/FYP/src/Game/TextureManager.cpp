@@ -8,6 +8,7 @@ TextureManager::TextureManager()
 	spritesheets["lvl1"] = loadSprite(".\\assets\\Lvl1.png");
 	spritesheets["all"] = loadSprite(".\\assets\\allSprites.png");
 	spritesheets["characters"] = loadSprite(".\\assets\\allCharacters.png");
+	spritesheets["over"] = loadSprite(".\\assets\\over.png");
 
 	//// LEVEL PREVIEWS ////
 	spritesheets["onePreview"] = loadSprite(".\\assets\\levelPreview\\1Preview.png");

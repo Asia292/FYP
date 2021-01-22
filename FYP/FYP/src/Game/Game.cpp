@@ -18,7 +18,7 @@ Game::Game(int level)
 			X Game over
 			X Level complete
 			X Level class
-			- Game over return confirmation
+			X Game over return confirmation
 			- Level score
 	*/
 	view.setCenter(7.f, 5.2f);
@@ -45,13 +45,37 @@ Game::Game(int level)
 	lightLeft = false;
 	darkRight = false;
 	darkLeft = false;
+	back = 0;
+	levelSelect = false;
 
 	finish.setFont(font);
 	finish.setFillColor(sf::Color(35, 179, 241));
 	finish.setOutlineColor(sf::Color::Black);
 	finish.setOutlineThickness(3);
-	finish.setCharacterSize(150);
-	finish.setScale(sf::Vector2f(0.005f, 0.005f));
+	finish.setCharacterSize(45);
+	finish.setScale(sf::Vector2f(0.01f, 0.01f));
+
+	select[0].setFont(font);
+	select[0].setFillColor(sf::Color(100, 32, 188));
+	select[0].setOutlineColor(sf::Color::Black);
+	select[0].setOutlineThickness(3);
+	select[0].setCharacterSize(45);
+	select[0].setScale(sf::Vector2f(0.01f, 0.01f));
+	select[0].setString("RETRY");
+	select[0].setPosition(4.3f, 5.7f);
+
+	select[1].setFont(font);
+	select[1].setFillColor(sf::Color(255, 222, 0));
+	select[1].setOutlineColor(sf::Color::Black);
+	select[1].setOutlineThickness(3);
+	select[1].setCharacterSize(45);
+	select[1].setScale(sf::Vector2f(0.01f, 0.01f));
+	select[1].setString("LEVELS");
+	select[1].setPosition(7.3f, 5.7f);
+
+	texManager->setTexture("over", &backing);
+	backing.setBg();
+	backing.setPos(sf::Vector2f(190.f, 250.f));
 
 	over = false;
 }
@@ -76,11 +100,14 @@ void Game::update(float timestep)
 	// Update the world
 	world->Step(timestep, velIterations, posIterations);
 	
+	backing.update(timestep);
+	backing.setPos(sf::Vector2f(3.30f, 3.0f));
+
 	if (currLevel->darkPlayer->getHome() && currLevel->lightPlayer->getHome())
 	{
 		over = true;
-		finish.setString("	 LEVEL \n COMPLETE");
-		finish.setPosition(3.7f, 4.2f);
+		finish.setString("LEVEL COMPLETE");
+		finish.setPosition(4.2f, 3.7f);
 	}
 	else if (!currLevel->darkPlayer->getDead() && !currLevel->lightPlayer->getDead())
 	{
@@ -105,7 +132,7 @@ void Game::update(float timestep)
 	{
 		over = true;
 		finish.setString("GAME OVER");
-		finish.setPosition(4.f, 4.7f);
+		finish.setPosition(5.f, 3.7f);
 	}
 	// Delete debug shapes
 	if (debug) debugDraw.clear();
@@ -119,8 +146,13 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	currLevel->draw(target, sf::RenderStates::Default);
 	hud->draw(target, sf::RenderStates::Default);
 
-	if(over)
+	if (over)
+	{
+		backing.draw(target, states);
 		target.draw(finish);
+		target.draw(select[0]);
+		target.draw(select[1]);
+	}
 
 	// Debug Draw
 	if (debug) target.draw(debugDraw);
@@ -143,13 +175,23 @@ void Game::processKeyPress(sf::Keyboard::Key code)
 		currLevel->lightPlayer->jump();
 		break;
 	case sf::Keyboard::Right:
-		darkRight = true;
+		if (over)
+			moveRight();
+		else
+			darkRight = true;
 		break;
 	case sf::Keyboard::Left:
-		darkLeft = true;
+		if (over)
+			moveLeft();
+		else
+			darkLeft = true;
 		break;
 	case sf::Keyboard::Up:
 		currLevel->darkPlayer->jump();
+		break;
+	case sf::Keyboard::Return:
+		if (over)
+			selected();
 		break;
 	}
 
@@ -170,6 +212,39 @@ void Game::processKeyRelease(sf::Keyboard::Key code)
 		break;
 	case sf::Keyboard::Left:
 		darkLeft = false;
+		break;
+	}
+}
+
+void Game::moveLeft()
+{
+	if (back - 1 >= 0)
+	{
+		select[back].setFillColor(sf::Color(255, 222, 0));
+		back--;
+		select[back].setFillColor(sf::Color(100, 32, 188));
+	}
+}
+
+void Game::moveRight()
+{
+	if (back + 1 < 2)
+	{
+		select[back].setFillColor(sf::Color(255, 222, 0));
+		back++;
+		select[back].setFillColor(sf::Color(100, 32, 188));
+	}
+}
+
+void Game::selected()
+{
+	switch (back)
+	{
+	case 0:
+		std::cout << "RETRY NOT YET IMPLEMENTED" << std::endl;
+		break;
+	case 1:
+		levelSelect = true;
 		break;
 	}
 }

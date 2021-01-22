@@ -17,6 +17,7 @@ void main() /** Entry point for the application */
 
 	std::stack<State *> states;
 	states.push(new MenuState(window.getSize().x, window.getSize().y, &states));
+	//states.push(new GameState(0, &states));
 	currState = states.top();
 	float fFrameTime = 1.f / 60.f;
 
@@ -82,3 +83,4 @@ void main() /** Entry point for the application */
 		window.display();
 	}
 }
+

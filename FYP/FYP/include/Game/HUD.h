@@ -14,14 +14,6 @@
 
 class HUD : public Texture
 {
-	/*
-	NEED
-		- Background banner
-		- Life sprites
-		- Score count
-		- Coin count (count down from set total needed)
-		- Time(?)
-	*/
 private:
 	float eTime;	//<! Elapsed time
 	int min;	//!< Minutes of display time
@@ -31,6 +23,7 @@ private:
 
 	sf::Font passed;	//!< The font passed in
 	sf::Text time;		//!< Time text
+
 	
 public:
 	HUD(TextureManager *texMan, sf::Font &font);	//!< Constructor

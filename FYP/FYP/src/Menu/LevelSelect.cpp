@@ -5,17 +5,17 @@ LevelSelect::LevelSelect(float width, float height)
 	/*
 	TO DO
 		X Background
-		- Text
-			- Each level
-				- Level number
+		X Text
+			X Each level
+				X Level number
 				- Score if already done?
-		- Boxes to contain each level
-		- Move up/down
+		X Boxes to contain each level
+		X Move up/down
 		- Scroll list with move up/down
-		- Scene/state transition
-			- Return to menu
-			- Load correct level
-		- Level preview?
+		X Scene/state transition
+			X Return to menu
+			X Load correct level
+		X Level preview?
 	*/
 
 	texManager->setTexture("levelSelect", this);
@@ -140,7 +140,7 @@ void LevelSelect::setPlay(bool Play)
 
 void LevelSelect::moveUp()
 {
-	if (selectedLevel - 1 >= 0)
+	if (selectedLevel - 1 >= 0 && back == 0)
 	{
 		backing[selectedLevel].setFillColor(sf::Color(255, 255, 204));
 		selectedLevel--;
@@ -150,7 +150,7 @@ void LevelSelect::moveUp()
 
 void LevelSelect::moveDown()
 {
-	if (selectedLevel + 1 < 5)
+	if (selectedLevel + 1 < 5 && back == 0)
 	{
 		backing[selectedLevel].setFillColor(sf::Color(255, 255, 204));
 		selectedLevel++;

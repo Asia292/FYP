@@ -19,7 +19,7 @@ void GameState::update(float timestep)
 {
 	game->update(timestep);
 
-	if (game->getOver())
+	if (game->getBack())
 		quit = true;
 }
 

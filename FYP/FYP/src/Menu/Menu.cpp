@@ -1,18 +1,22 @@
 #include "Menu.h"
 
-Menu::Menu(/*float width, float height*/)
+Menu::Menu(float width, float height)
 {
 	/*
 	TO DO
-		- Background
+		X Background
 		- Text
-			- Co-op play
-			- Network play
-			- Quit
+			X Co-op play
+			X Network play
+			X Quit
 		- Key select or mouse?
+			X Key
 		- Scene/state transition
-			- Delay/confirmation
+			X Quit
+			- Level select
 	*/
+	texManager->setTexture("menu", this);
+	setBg();
 
 	play = false;
 	close = false;
@@ -25,22 +29,28 @@ Menu::Menu(/*float width, float height*/)
 
 
 	menue[0].setFont(font);
-	menue[0].setFillColor(sf::Color::Red);
+	menue[0].setFillColor(sf::Color(100, 32, 188));
 	menue[0].setOutlineColor(sf::Color::Black);
 	menue[0].setOutlineThickness(3);
-	menue[0].setCharacterSize(150);
-	menue[0].setScale(sf::Vector2f(0.5f, 0.5f));
-	menue[0].setString("PLAY");
-	menue[0].setPosition(sf::Vector2f(1024 / 2, 800 / (3 + 1) * 1));	//380, 250
+	menue[0].setCharacterSize(50);
+	menue[0].setString("LOCAL PLAY");
+	menue[0].setPosition(sf::Vector2f((width / 2) - 100.f, height / (3 + 1) * 1));
 		
 	menue[1].setFont(font);
-	menue[1].setFillColor(sf::Color(35, 179, 241));
+	menue[1].setFillColor(sf::Color(255, 222, 0));
 	menue[1].setOutlineColor(sf::Color::Black);
 	menue[1].setOutlineThickness(3);
-	menue[1].setCharacterSize(150);
-	menue[1].setScale(sf::Vector2f(0.5f, 0.5f));
-	menue[1].setString("QUIT");
-	menue[1].setPosition(sf::Vector2f(1024 / 2, 800 / (3 + 1) * 2));	//380, 250
+	menue[1].setCharacterSize(50);
+	menue[1].setString("NETWORK PLAY");
+	menue[1].setPosition(sf::Vector2f((width / 2) - 150.f, height / (4.5 + 1) * 2));
+
+	menue[2].setFont(font);
+	menue[2].setFillColor(sf::Color(255, 222, 0));
+	menue[2].setOutlineColor(sf::Color::Black);
+	menue[2].setOutlineThickness(3);
+	menue[2].setCharacterSize(50);
+	menue[2].setString("QUIT");
+	menue[2].setPosition(sf::Vector2f((width / 2) + 40.f, height / (5 + 1) * 3));
 }
 
 /*Menu::~Menu()
@@ -49,12 +59,15 @@ Menu::Menu(/*float width, float height*/)
 
 void Menu::update(float timestep)
 {
+	Texture::update(timestep);
+	currSprite.setScale(sf::Vector2f(1.0f, 1.0f));
 }
 
 void Menu::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.setView(view);
-	for (int i = 0; i < 2; i++)
+	target.draw(currSprite, states);
+	for (int i = 0; i < 3; i++)
 	{
 		target.draw(menue[i]);
 		//std::cout << "Drawing: " << menue[i].getString().getData() << std::endl;
@@ -86,26 +99,34 @@ void Menu::moveUp()
 {
 	if (selectedItemIndex - 1 >= 0)
 	{
-		menue[selectedItemIndex].setColor(sf::Color(35, 179, 241));
+		menue[selectedItemIndex].setColor(sf::Color(255, 222, 0));
 		selectedItemIndex--;
-		menue[selectedItemIndex].setColor(sf::Color::Red);
+		menue[selectedItemIndex].setColor(sf::Color(100, 32, 188));
 	}
 }
 
 void Menu::moveDown()
 {
-	if (selectedItemIndex + 1 < 2)
+	if (selectedItemIndex + 1 < 3)
 	{
-		menue[selectedItemIndex].setColor(sf::Color(35, 179, 241));
+		menue[selectedItemIndex].setColor(sf::Color(255, 222, 0));
 		selectedItemIndex++;
-		menue[selectedItemIndex].setColor(sf::Color::Red);
+		menue[selectedItemIndex].setColor(sf::Color(100, 32, 188));
 	}
 }
 
 void Menu::selected()
 {
-	if (selectedItemIndex == 0)
+	switch (selectedItemIndex)
+	{
+	case 0:
 		play = true;
-	else if (selectedItemIndex == 1)
+		break;
+	case 1:
+		std::cout << "NETWORK NOT YET IMPLEMENTED" << std::endl;
+		break;
+	case 2:
 		close = true;
+		break;
+	}
 }

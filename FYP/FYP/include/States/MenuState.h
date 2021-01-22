@@ -7,10 +7,10 @@ class MenuState : public State
 {
 private:
 	bool quit;
-	Menu menu;
+	Menu *menu;
 
 public:
-	MenuState(/*float Height, float Width,*/ std::stack<State *>* States);
+	MenuState(float Height, float Width, std::stack<State *>* States);
 	virtual ~MenuState() override;		//!< Deconstructor
 	virtual void update(float timestep) override;		//!< Updates all game elements
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;		//!< Draws all game elements

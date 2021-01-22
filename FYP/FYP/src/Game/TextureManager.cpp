@@ -3,6 +3,7 @@
 TextureManager::TextureManager()
 {
 	//// SET SPRITES ////
+	spritesheets["menu"] = loadSprite(".\\assets\\menuBG.png");
 	spritesheets["lvl1"] = loadSprite(".\\assets\\Lvl1.png");
 	spritesheets["all"] = loadSprite(".\\assets\\allSprites.png");
 	spritesheets["characters"] = loadSprite(".\\assets\\allCharacters.png");

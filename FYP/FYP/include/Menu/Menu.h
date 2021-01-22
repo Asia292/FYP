@@ -3,21 +3,26 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-class Menu : public sf::Drawable
+#include "TextureManager.h"
+
+class Menu : public Texture
 {
 private:
 	bool play;
 	bool close;
 	int selectedItemIndex;
 
-	sf::Text menue[2];	//!< Text that displays on game over
+	sf::Text menue[3];	//!< Text that displays on game over
 	sf::Font font;		//!< Font used
 
 	sf::View view;
 
+protected:
+	TextureManager * texManager = TextureManager::getInstance();	//!< The texture manager
+
 public:
-	//Menu() {};
-	Menu(/*float width, float height*/);		//!< Constructor
+	Menu() {};
+	Menu(float width, float height);		//!< Constructor
 	//~Menu();	//!< Deconstructor
 	void update(float timestep); //!< Update the game with give timestep
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const; //!< Draw the game to the render context

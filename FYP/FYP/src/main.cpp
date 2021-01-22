@@ -16,7 +16,7 @@ void main() /** Entry point for the application */
 	State *currState;
 
 	std::stack<State *> states;
-	states.push(new MenuState(/*window.getSize().x, window.getSize().y,*/ &states));
+	states.push(new MenuState(window.getSize().x, window.getSize().y, &states));
 	currState = states.top();
 	float fFrameTime = 1.f / 60.f;
 
@@ -63,7 +63,11 @@ void main() /** Entry point for the application */
 					if (!states.empty())
 						currState = states.top();
 					else
+					{
+						currState = nullptr;
+						delete currState;
 						window.close();
+					}
 				}
 			}
 			//game.update(m_fElapsedTime);
@@ -72,8 +76,8 @@ void main() /** Entry point for the application */
 
 		window.clear(sf::Color(120, 120, 120));
 
-		//window.draw(game);
-		window.draw(*currState);
+		if (currState != nullptr)
+			window.draw(*currState);
 
 		window.display();
 	}

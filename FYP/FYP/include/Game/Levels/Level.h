@@ -34,4 +34,5 @@ public:
 	virtual ~Level() = default;
 	virtual void update(float timestep) = 0;
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const = 0;
+	virtual int score(float time) = 0;
 };

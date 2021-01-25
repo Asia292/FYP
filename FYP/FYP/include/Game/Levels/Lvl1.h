@@ -31,10 +31,13 @@ protected:
 	HomeSensor *lightHome;
 	HomeSensor *darkHome;
 
+	bool lEmpty, dEmpty;
+
 public:
 
 	Lvl1(TextureManager * textMan, b2World * world);		//!< Constructor
 	virtual ~Lvl1() override;		//!< Deconstructor
 	virtual void update(float timestep) override;		//!< Updates all game elements
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;		//!< Draws all game elements
+	virtual int score(float time) override;		//!< Calculates level score
 };

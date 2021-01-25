@@ -20,7 +20,7 @@ void LevelSelectState::update(float timestep)
 
 	if (levelSelect->getPlay())
 	{
-		states->push(new GameState(levelSelect->getLevel(), states));
+		states->push(new GameState(levelSelect->getLevel(), &(levelSelect->score[levelSelect->getLevel()]), states));
 		levelSelect->setPlay(false);
 	}
 

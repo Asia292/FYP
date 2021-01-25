@@ -42,16 +42,20 @@ private:
 	sf::Text select[2];
 	sf::Font font;		//!< Font used
 	Texture backing;
+	Texture star;
 	bool over;			//!< If the game is over
-	int back;
+	int back, score;
 	bool levelSelect;
+	bool won;
+	float time;
+	int *lvl;
 
 protected:
 	TextureManager * texManager = TextureManager::getInstance();	//!< The texture manager
 
 public:
 	Game() {};		//!< Default constructor
-	Game(int level); //!< Full constructor which sets up the game
+	Game(int level, int *levelScore); //!< Full constructor which sets up the game
 	~Game(); //!< Destructor which cleans all the pointer memory up
 	void update(float timestep); //!< Update the game with given timestep
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const; //!< Draw the game to the render context
@@ -60,6 +64,7 @@ public:
 	void processKeyRelease(sf::Keyboard::Key code);		//!< Decides what to do on key release
 	bool getOver() { return over; }
 	bool getBack() { return levelSelect; }
+	int getScore() { return score; }
 	void moveLeft();
 	void moveRight();
 	void selected();

@@ -16,6 +16,7 @@ void main() /** Entry point for the application */
 	State *currState;
 
 	std::stack<State *> states;
+	std::list<Level *> levels;
 	states.push(new MenuState(window.getSize().x, window.getSize().y, &states));
 	//states.push(new GameState(0, &states));
 	currState = states.top();

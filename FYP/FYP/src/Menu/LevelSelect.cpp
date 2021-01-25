@@ -9,6 +9,8 @@ LevelSelect::LevelSelect(float width, float height)
 			X Each level
 				X Level number
 				- Score if already done?
+					- External file?
+					- Class?
 		X Boxes to contain each level
 		X Move up/down
 		- Scroll list with move up/down
@@ -46,6 +48,12 @@ LevelSelect::LevelSelect(float width, float height)
 		levels[i].setCharacterSize(35);
 		levels[i].setString("LEVEL " + std::to_string(i + 1));
 		levels[i].setPosition(sf::Vector2f(backing[i].getPosition().x + 20.f, backing[i].getPosition().y + 20.f));
+
+		texManager->setTexture("all", &star[i]);
+		texManager->getFrames("Empty", &star[i]);
+
+		//lvlScore.score[i] = 0;
+		//score[i] = -1;
 	}
 	backing[0].setFillColor(sf::Color(229, 204, 255));
 
@@ -63,8 +71,6 @@ LevelSelect::LevelSelect(float width, float height)
 
 	texManager->setTexture("onePreview", &preview);
 	preview.setBg();
-	preview.setSize(sf::Vector2f(345.f, 290.f));
-	preview.setPos(sf::Vector2f(615.f, 125.f));
 	
 }
 
@@ -95,6 +101,29 @@ void LevelSelect::update(float timestep)
 	preview.update(timestep);
 	preview.setSize(sf::Vector2f(0.4f, 0.4f));
 	preview.setPos(sf::Vector2f(570.f, 120.f));
+
+	for (int i = 0; i < 5; i++)
+	{
+		//score[i] = lvlScore.score[i];
+
+		star[i].update(timestep);
+		switch (score[i])
+		{
+		case 0:
+			texManager->getFrames("Empty", &star[i]);
+			break;
+		case 1:
+			texManager->getFrames("Red", &star[i]);
+			break;
+		case 2:
+			texManager->getFrames("Orange", &star[i]);
+			break;
+		case 3:
+			texManager->getFrames("Green", &star[i]);
+			break;
+		}
+		star[i].setPos(sf::Vector2f(backing[i].getPosition().x + 420.f, backing[i].getPosition().y + 40.f));
+	}
 }
 
 void LevelSelect::draw(sf::RenderTarget & target, sf::RenderStates states) const
@@ -105,6 +134,7 @@ void LevelSelect::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	{
 		target.draw(backing[i]);
 		target.draw(levels[i]);
+		target.draw(star[i]);
 	}
 	target.draw(menuBox);
 	target.draw(menu);

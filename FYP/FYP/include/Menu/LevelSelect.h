@@ -20,9 +20,12 @@ private:
 	int back;
 	float y;
 
+	//int score[5];
+
 	sf::RectangleShape menuBox;
 	sf::RectangleShape backing[5];
 	Texture preview;
+	Texture star[5];
 	sf::Text menu;
 	sf::Text levels[5];	//!< Level text
 	sf::Font font;		//!< Font used
@@ -42,10 +45,14 @@ public:
 	bool getPlay() { return play; }		//!< Returns the play bool
 	bool getClose() { return close; }	//!< Returns the close bool
 	int getLevel() { return selectedLevel; }	//!< Returns the selected level
+	int getScore(int level) { return score[level]; }
+	void setScore(int level, int Score) { score[level] = Score; }
 	void setPlay(bool Play);		//!< Sets the play bool
 	void moveUp();		//!< Move up in the index (text options)
 	void moveDown();	//!< Move down in the index (text options)
 	void moveLeft();	//!< Move left in the index (text options)
 	void moveRight();	//!< Move right in the index (text options)
 	void selected();	//!< What to do when an option is selected
+
+	int score[5];
 };

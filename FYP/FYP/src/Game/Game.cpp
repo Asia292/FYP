@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(int level)
+Game::Game(int level, int *levelScore)
 {
 	/*
 	TO DO
@@ -19,7 +19,7 @@ Game::Game(int level)
 			X Level complete
 			X Level class
 			X Game over return confirmation
-			- Level score
+			X Level score
 	*/
 	view.setCenter(7.f, 5.2f);
 	view.setSize(worldSize);
@@ -30,6 +30,9 @@ Game::Game(int level)
 	debugDraw.setWorld(world);
 
 	font.loadFromFile(".\\assets\\neuropol.ttf");
+
+	//lvl = level;
+	lvl = levelScore;
 
 	switch (level)
 	{
@@ -47,6 +50,8 @@ Game::Game(int level)
 	darkLeft = false;
 	back = 0;
 	levelSelect = false;
+	won = false;
+	time = 0;
 
 	finish.setFont(font);
 	finish.setFillColor(sf::Color(35, 179, 241));
@@ -62,7 +67,7 @@ Game::Game(int level)
 	select[0].setCharacterSize(45);
 	select[0].setScale(sf::Vector2f(0.01f, 0.01f));
 	select[0].setString("RETRY");
-	select[0].setPosition(4.3f, 5.7f);
+	select[0].setPosition(4.3f, 5.9f);
 
 	select[1].setFont(font);
 	select[1].setFillColor(sf::Color(255, 222, 0));
@@ -71,11 +76,13 @@ Game::Game(int level)
 	select[1].setCharacterSize(45);
 	select[1].setScale(sf::Vector2f(0.01f, 0.01f));
 	select[1].setString("LEVELS");
-	select[1].setPosition(7.3f, 5.7f);
+	select[1].setPosition(7.3f, 5.9f);
 
 	texManager->setTexture("over", &backing);
 	backing.setBg();
 	backing.setPos(sf::Vector2f(190.f, 250.f));
+
+	texManager->setTexture("all", &star);
 
 	over = false;
 }
@@ -102,38 +109,70 @@ void Game::update(float timestep)
 	
 	backing.update(timestep);
 	backing.setPos(sf::Vector2f(3.30f, 3.0f));
-
-	if (currLevel->darkPlayer->getHome() && currLevel->lightPlayer->getHome())
+	if (!over)
 	{
-		over = true;
-		finish.setString("LEVEL COMPLETE");
-		finish.setPosition(4.2f, 3.7f);
-	}
-	else if (!currLevel->darkPlayer->getDead() && !currLevel->lightPlayer->getDead())
-	{
-		if (lightLeft)
-			currLevel->lightPlayer->moveLeft();
-		else if (lightRight)
-			currLevel->lightPlayer->moveRight();
-		else
-			currLevel->lightPlayer->idle();
+		time += timestep;
 
-		if (darkRight)
-			currLevel->darkPlayer->moveRight();
-		else if (darkLeft)
-			currLevel->darkPlayer->moveLeft();
-		else
-			currLevel->darkPlayer->idle();
+		if (currLevel->darkPlayer->getHome() && currLevel->lightPlayer->getHome())
+		{
+			over = true;
+			won = true;
+			finish.setString("LEVEL COMPLETE");
+			finish.setPosition(4.2f, 3.7f);
+		}
+		else if (!currLevel->darkPlayer->getDead() && !currLevel->lightPlayer->getDead())
+		{
+			if (lightLeft)
+				currLevel->lightPlayer->moveLeft();
+			else if (lightRight)
+				currLevel->lightPlayer->moveRight();
+			else
+				currLevel->lightPlayer->idle();
 
-		currLevel->update(timestep);
-		hud->update(timestep);
+			if (darkRight)
+				currLevel->darkPlayer->moveRight();
+			else if (darkLeft)
+				currLevel->darkPlayer->moveLeft();
+			else
+				currLevel->darkPlayer->idle();
+
+			currLevel->update(timestep);
+			hud->update(timestep);
+		}
+		else
+		{
+			over = true;
+			finish.setString("GAME OVER");
+			finish.setPosition(5.f, 3.7f);
+		}
 	}
 	else
 	{
-		over = true;
-		finish.setString("GAME OVER");
-		finish.setPosition(5.f, 3.7f);
+		if (won)
+		{
+			score = currLevel->score(time);
+
+			*lvl = score;
+
+			switch (score)
+			{
+			case 1:
+				texManager->getFrames("Red", &star);
+				break;
+			case 2:
+				texManager->getFrames("Orange", &star);
+				break;
+			case 3:
+				texManager->getFrames("Green", &star);
+				break;
+			}
+
+			star.update(timestep);
+			star.setSize(sf::Vector2f(0.02f, 0.02f));
+			star.setPos(sf::Vector2f(7.0f, 5.0f));
+		}
 	}
+	
 	// Delete debug shapes
 	if (debug) debugDraw.clear();
 }
@@ -152,6 +191,7 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 		target.draw(finish);
 		target.draw(select[0]);
 		target.draw(select[1]);
+		star.draw(target, states);
 	}
 
 	// Debug Draw

@@ -5,6 +5,9 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world)
 	textMan->setTexture("lvl1", this);
 	setBg();
 
+	lEmpty = true;
+	dEmpty = true;
+
 	//// PLAYERS ////
 	lightPlayer = new Player(world, sf::Vector2f(1.00f, 8.14f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0010, textMan);
 	darkPlayer = new Player(world, sf::Vector2f(1.00f, 9.62f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0100, textMan);
@@ -283,4 +286,25 @@ void Lvl1::draw(sf::RenderTarget & target, sf::RenderStates states) const
 
 	target.draw(*lightPlayer);
 	target.draw(*darkPlayer);
+}
+
+int Lvl1::score(float time)
+{
+	for (PickUp *item : lightPickUps)
+	{
+		if (item != nullptr)
+			lEmpty = false;
+	}
+	for (PickUp *item : darkPickUps)
+	{
+		if (item != nullptr)
+			dEmpty = false;
+	}
+
+	if (lEmpty && dEmpty && (time < 60.f))
+		return 3;
+	else if (!lEmpty && !dEmpty && (time > 60.f))
+		return 1;
+	else
+		return 2;
 }

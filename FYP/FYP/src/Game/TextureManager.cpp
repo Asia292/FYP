@@ -112,12 +112,15 @@ TextureManager::TextureManager()
 		sf::IntRect(421, 255, 86, 79)});
 
 	//// PICKUPS ////
-	setFrames("lightPickUp", std::vector<sf::IntRect> { sf::IntRect(793, 59, 69, 67) });
-	setFrames("darkPickUp", std::vector<sf::IntRect> { sf::IntRect(892, 58, 70, 67) });
+	setFrames("lightPickUp", std::vector<sf::IntRect> { sf::IntRect(847, 53, 70, 67) });
+	setFrames("darkPickUp", std::vector<sf::IntRect> { sf::IntRect(924, 53, 70, 66) });
 
 	//// MISC ////
 	setFrames("Block", std::vector<sf::IntRect> { sf::IntRect(193, 40, 76, 76) });
-
+	setFrames("Green", std::vector<sf::IntRect> { sf::IntRect(770, 53, 70, 66) });
+	setFrames("Orange", std::vector<sf::IntRect> { sf::IntRect(610, 53, 70, 66) });
+	setFrames("Red", std::vector<sf::IntRect> { sf::IntRect(691, 53, 70, 66) });
+	setFrames("Empty", std::vector<sf::IntRect> { sf::IntRect(624, 143, 27, 24) });
 
 	//// SET ANIM TIME ////
 	animTime["yellowLever"] = 0.3f;

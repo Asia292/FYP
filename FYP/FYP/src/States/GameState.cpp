@@ -1,9 +1,9 @@
 #include "GameState.h"
 
-GameState::GameState(int level, std::stack<State *>* States)
+GameState::GameState(int level, int *levelScore, std::stack<State *>* States)
 {
 	states = States;
-	game = new Game(level);
+	game = new Game(level, levelScore);
 	quit = false;
 }
 

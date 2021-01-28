@@ -14,6 +14,8 @@ class GameState : public State
 private:
 	Game *game;		//!< Pointer to the game
 	bool quit;		//!< If game scene should close
+	int lvl;
+	int *lvlScore;
 
 public:
 	GameState(int level, int *levelScore, std::stack<State *>* States);		//!< Constructor

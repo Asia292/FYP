@@ -6,7 +6,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <stack>
-#include <list>
 
 /*! \class Level
 \brief Base class for all states

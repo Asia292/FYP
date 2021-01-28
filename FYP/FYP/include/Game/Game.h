@@ -39,16 +39,18 @@ private:
 	bool darkLeft;		//!< If dark player should be moving left
 
 	sf::Text finish;	//!< Text that displays on game over
-	sf::Text select[2];
+	sf::Text select[2];		//!< Menu select text - retry or return to levels
 	sf::Font font;		//!< Font used
-	Texture backing;
-	Texture star;
+	Texture backing;	//!< Backing for game over box
+	Texture star;		//!< Star to show level score
 	bool over;			//!< If the game is over
-	int back, score;
-	bool levelSelect;
-	bool won;
-	float time;
-	int *lvl;
+	int back;			//!< Which back text was selected
+	int score;			//!< Level score
+	bool levelSelect;		//!< Return to level select
+	bool won;			//!< Game won
+	bool retry;
+	float time;			//!< Elapsed game time
+	int *lvlScore;			//!< Pointer to the level integer passed in for score
 
 protected:
 	TextureManager * texManager = TextureManager::getInstance();	//!< The texture manager
@@ -62,12 +64,13 @@ public:
 	void toggleDebug() { debug = !debug; }; //!< Toggle for debug drawing
 	void processKeyPress(sf::Keyboard::Key code);		//!< Decides what to do on key press
 	void processKeyRelease(sf::Keyboard::Key code);		//!< Decides what to do on key release
-	bool getOver() { return over; }
-	bool getBack() { return levelSelect; }
-	int getScore() { return score; }
-	void moveLeft();
-	void moveRight();
-	void selected();
-
+	bool getOver() { return over; }						//!< Returns game over bool
+	bool getBack() { return levelSelect; }				//!< Returns level select bool
+	bool getRetry() { return retry; }					//!< Returns retry bool
+	int getScore() { return score; }					//!< Returns the score
+	void moveLeft();									//!< Moves the selection left for menu/game over screen
+	void moveRight();									//!< Moves the selection right for menu/game over screen
+	void selected();									//!< What to do with selected item
+	
 	ContactListener listener;	//!< The contact listener
 };

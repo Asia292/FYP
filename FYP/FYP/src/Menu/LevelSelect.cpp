@@ -8,9 +8,7 @@ LevelSelect::LevelSelect(float width, float height)
 		X Text
 			X Each level
 				X Level number
-				- Score if already done?
-					- External file?
-					- Class?
+				X Score if already done?
 		X Boxes to contain each level
 		X Move up/down
 		- Scroll list with move up/down
@@ -34,7 +32,7 @@ LevelSelect::LevelSelect(float width, float height)
 	font.loadFromFile(".\\assets\\neuropol.ttf");
 
 	y = 100.f;
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < MAX_LEVELS; i++)
 	{
 		backing[i].setSize(sf::Vector2f(500.f, 90.f));
 		backing[i].setFillColor(sf::Color(255, 255, 204));
@@ -102,7 +100,7 @@ void LevelSelect::update(float timestep)
 	preview.setSize(sf::Vector2f(0.4f, 0.4f));
 	preview.setPos(sf::Vector2f(570.f, 120.f));
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < MAX_LEVELS; i++)
 	{
 		//score[i] = lvlScore.score[i];
 
@@ -130,7 +128,7 @@ void LevelSelect::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.setView(view);
 	target.draw(currSprite, states);
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < MAX_LEVELS; i++)
 	{
 		target.draw(backing[i]);
 		target.draw(levels[i]);
@@ -180,7 +178,7 @@ void LevelSelect::moveUp()
 
 void LevelSelect::moveDown()
 {
-	if (selectedLevel + 1 < 5 && back == 0)
+	if (selectedLevel + 1 < MAX_LEVELS && back == 0)
 	{
 		backing[selectedLevel].setFillColor(sf::Color(255, 255, 204));
 		selectedLevel++;

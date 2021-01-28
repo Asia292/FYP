@@ -5,6 +5,8 @@ GameState::GameState(int level, int *levelScore, std::stack<State *>* States)
 	states = States;
 	game = new Game(level, levelScore);
 	quit = false;
+	lvl = level;
+	lvlScore = levelScore;
 }
 
 GameState::~GameState()
@@ -18,6 +20,12 @@ GameState::~GameState()
 void GameState::update(float timestep)
 {
 	game->update(timestep);
+
+	if (game->getRetry())
+	{
+		game->~Game();
+		game = new Game(lvl, lvlScore);
+	}
 
 	if (game->getBack())
 		quit = true;

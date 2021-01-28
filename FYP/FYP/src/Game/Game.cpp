@@ -20,6 +20,7 @@ Game::Game(int level, int *levelScore)
 			X Level class
 			X Game over return confirmation
 			X Level score
+			- Retry
 	*/
 	view.setCenter(7.f, 5.2f);
 	view.setSize(worldSize);
@@ -32,7 +33,7 @@ Game::Game(int level, int *levelScore)
 	font.loadFromFile(".\\assets\\neuropol.ttf");
 
 	//lvl = level;
-	lvl = levelScore;
+	lvlScore = levelScore;
 
 	switch (level)
 	{
@@ -51,6 +52,7 @@ Game::Game(int level, int *levelScore)
 	back = 0;
 	levelSelect = false;
 	won = false;
+	retry = false;
 	time = 0;
 
 	finish.setFont(font);
@@ -152,7 +154,7 @@ void Game::update(float timestep)
 		{
 			score = currLevel->score(time);
 
-			*lvl = score;
+			*lvlScore = score;
 
 			switch (score)
 			{
@@ -281,7 +283,7 @@ void Game::selected()
 	switch (back)
 	{
 	case 0:
-		std::cout << "RETRY NOT YET IMPLEMENTED" << std::endl;
+		retry = true;
 		break;
 	case 1:
 		levelSelect = true;

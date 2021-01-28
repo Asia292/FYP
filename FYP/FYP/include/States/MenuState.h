@@ -15,7 +15,7 @@ private:
 	bool quit;		//!< If the state should quit
 	Menu *menu;		//!< Pointer to the main menu
 
-	int height, width;
+	int height, width;		//!< Height and width of the window
 
 public:
 	MenuState(float Height, float Width, std::stack<State *>* States);		//!< Constructior

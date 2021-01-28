@@ -13,7 +13,7 @@ class LevelSelectState : public State
 {
 private:
 	bool quit;		//!< If the state should quit
-	LevelSelect * levelSelect;
+	LevelSelect * levelSelect;		//!< Pointer to the level select 
 
 public:
 	LevelSelectState(float Height, float Width, std::stack<State *>* States);		//!< Constructior

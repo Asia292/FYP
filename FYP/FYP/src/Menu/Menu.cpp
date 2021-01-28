@@ -9,7 +9,7 @@ Menu::Menu(float width, float height)
 			X Co-op play
 			X Network play
 			X Quit
-		- Key select or mouse?
+		X Key select or mouse?
 			X Key
 		X Scene/state transition
 			X Quit

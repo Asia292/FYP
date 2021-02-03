@@ -1,4 +1,5 @@
 #include "GameTests.h"
+#include "StateTests.h"
 #include <gtest/gtest.h>
 #include <iostream>
 

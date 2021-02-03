@@ -4,7 +4,7 @@
 */
 
 #include "LevelSelectState.h"
-#include "Menu.h"
+#include "..\Menu\Menu.h"
 
 /*! \class MenuState
 \brief The state which holds the main menu

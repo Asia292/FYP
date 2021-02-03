@@ -31,7 +31,8 @@ TEST(GameInternals, Tab)
 //// PLAYER FUNCTIONS ////
 TEST(LightPlayerFunctions, PlayerLeft)
 {
-	Game game(1);
+	int score = 1;
+	Game game(0, &score);
 	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
 	Player * player = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, texManager);
@@ -52,7 +53,8 @@ TEST(LightPlayerFunctions, PlayerLeft)
 
 TEST(LightPlayerFunctions, PlayerRight)
 {
-	Game game(1);
+	int score = 1;
+	Game game(0, &score);
 	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
 	Player * player = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, texManager);
@@ -73,7 +75,8 @@ TEST(LightPlayerFunctions, PlayerRight)
 
 TEST(LightPlayerFunctions, PlayerJumpGrounded)
 {
-	Game game(1);
+	int score = 1;
+	Game game(0, &score);
 	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
 	Player * player = new Player(world, sf::Vector2f(0.5f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, texManager);
@@ -96,7 +99,8 @@ TEST(LightPlayerFunctions, PlayerJumpGrounded)
 
 TEST(DarkPlayerFunctions, PlayerLeft)
 {
-	Game game(1);
+	int score = 1;
+	Game game(0, &score);
 	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
 	Player * player = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, texManager);
@@ -117,7 +121,8 @@ TEST(DarkPlayerFunctions, PlayerLeft)
 
 TEST(DarkPlayerFunctions, PlayerRight)
 {
-	Game game(1);
+	int score = 1;
+	Game game(0, &score);
 	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
 	Player * player = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, texManager);
@@ -138,7 +143,8 @@ TEST(DarkPlayerFunctions, PlayerRight)
 
 TEST(DarkPlayerFunctions, PlayerJumpGrounded)
 {
-	Game game(1);
+	int score = 1;
+	Game game(0, &score);
 	TextureManager * texManager = TextureManager::getInstance();
 	b2World * world = new b2World(b2Vec2(0, 9.81));
 	Player * player = new Player(world, sf::Vector2f(1.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0010, texManager);

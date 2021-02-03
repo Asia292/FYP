@@ -281,3 +281,5 @@ TEST(SensorPickUp, OnAction)
 	EXPECT_EQ(delBefore, false);
 	EXPECT_EQ(delAfter, true);
 }
+
+//// ANIMATION ////

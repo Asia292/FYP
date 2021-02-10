@@ -1,4 +1,4 @@
-//#include "GameTests.h"
+#include "GameTests.h"
 #include "LevelSelectTests.h"
 #include "StateTests.h"
 #include <gtest/gtest.h>

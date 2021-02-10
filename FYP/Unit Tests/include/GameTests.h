@@ -283,3 +283,121 @@ TEST(SensorPickUp, OnAction)
 }
 
 //// ANIMATION ////
+TEST(Animation, LoopNextFrame)
+{
+	TextureManager * texMan = TextureManager::getInstance();
+	Texture * sprite = new Texture();
+
+	sprite->setLoop(true);
+	texMan->setTexture("characters", sprite);
+	texMan->getFrames("lightRun", sprite);
+
+	sf::IntRect frameBefore = sprite->frames[sprite->currFrame];
+	sprite->nextFrame();
+	sf::IntRect frameAfter = sprite->frames[sprite->currFrame];
+
+	EXPECT_NE(frameBefore, frameAfter);
+}
+
+TEST(Animation, LoopResetFrame)
+{
+	TextureManager * texMan = TextureManager::getInstance();
+	Texture * sprite = new Texture();
+
+	sprite->setLoop(true);
+	texMan->setTexture("characters", sprite);
+	texMan->getFrames("lightRun", sprite);
+	sprite->currFrame = 3;
+
+	sf::IntRect frameOne = sprite->frames[0];
+	sprite->nextFrame();
+	sf::IntRect frameAfter = sprite->frames[sprite->currFrame];
+
+	EXPECT_EQ(frameOne, frameAfter);
+}
+
+TEST(Animation, NoLoopNextFrame)
+{
+	TextureManager * texMan = TextureManager::getInstance();
+	Texture * sprite = new Texture();
+
+	sprite->setLoop(false);
+	texMan->setTexture("characters", sprite);
+	texMan->getFrames("lightRun", sprite);
+
+	sf::IntRect frameBefore = sprite->frames[sprite->currFrame];
+	sprite->nextFrame();
+	sf::IntRect frameAfter = sprite->frames[sprite->currFrame];
+
+	EXPECT_NE(frameBefore, frameAfter);
+}
+
+TEST(Animation, NoLoopNoResetFrame)
+{
+	TextureManager * texMan = TextureManager::getInstance();
+	Texture * sprite = new Texture();
+
+	sprite->setLoop(false);
+	texMan->setTexture("characters", sprite);
+	texMan->getFrames("lightRun", sprite);
+	sprite->currFrame = 3;
+
+	sf::IntRect lastFrame = sprite->frames[3];
+	sprite->nextFrame();
+	sf::IntRect frameAfter = sprite->frames[sprite->currFrame];
+
+	EXPECT_EQ(lastFrame, frameAfter);
+}
+
+TEST(Animation, Flip)
+{
+	TextureManager * texMan = TextureManager::getInstance();
+	b2World * world = new b2World(b2Vec2(0, 9.81));
+	Player * player = new Player(world, sf::Vector2f(8.f, -2.0f), sf::Vector2f(0.1f, 0.6f), 0.f, 0x0100, texMan);
+
+	player->setAnim();
+	texMan->setTexture("characters", player);
+	texMan->getFrames("lightRun", player);
+
+	sf::Vector2f scaleBefore = player->currSprite.getScale();
+	player->setFlip(true);
+	player->update(1.f);
+	sf::Vector2f scaleAfter = player->currSprite.getScale();
+
+	EXPECT_NE(scaleBefore.y, scaleAfter.y);
+}
+
+
+//// HUD ////
+TEST(HUDUpdate, TimeSeconds)
+{
+	TextureManager * texMan = TextureManager::getInstance();
+	sf::Font font;
+	HUD *hud = new HUD(texMan, font);
+
+	auto timeBefore = hud->sec;
+	hud->update(1.2f);
+	auto timeAfter = hud->sec;
+
+	EXPECT_LT(timeBefore, timeAfter);
+}
+
+TEST(HUDUpdate, TimeMinutes)
+{
+	TextureManager * texMan = TextureManager::getInstance();
+	sf::Font font;
+	HUD *hud = new HUD(texMan, font);
+
+	hud->sec = 59;
+
+	auto secBefore = hud->sec;
+	auto minBefore = hud->min;
+	hud->update(1.2f);
+	auto secAfter = hud->sec;
+	auto minAfter = hud->min;
+
+	EXPECT_GT(secBefore, secAfter);
+	EXPECT_EQ(secAfter, 0);
+	EXPECT_LT(minBefore, minAfter);
+	EXPECT_EQ(minAfter, 1);
+}

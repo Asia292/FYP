@@ -1,2 +1,12 @@
 ﻿  Main.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(37): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(59): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(81): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(105): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(127): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(149): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(171): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(194): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(271): warning C4305: 'argument': truncation from 'double' to 'float32'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(355): warning C4305: 'argument': truncation from 'double' to 'float32'
   Unit Tests.vcxproj -> C:\Users\Tia-A\Documents\FYP\Student's Cartridge\Development\Code\FYP\FYP\x64\Debug\Unit Tests.exe

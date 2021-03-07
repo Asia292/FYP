@@ -6,7 +6,7 @@
 /*! \class TexManager
 \brief Sets up all texture data - spritesheets, key frames, and animation times
 */
-#include <Box2D/Box2D.h>
+//#include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <memory>

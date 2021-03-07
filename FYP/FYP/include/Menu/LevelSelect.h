@@ -45,6 +45,7 @@ public:
 	bool getPlay() { return play; }		//!< Returns the play bool
 	bool getClose() { return close; }	//!< Returns the close bool
 	int getLevel() { return selectedLevel; }	//!< Returns the selected level
+	void setLevel(int lvl) { selectedLevel = lvl; }
 	void setPlay(bool Play);		//!< Sets the play bool
 	void moveUp();		//!< Move up in the index (text options)
 	void moveDown();	//!< Move down in the index (text options)

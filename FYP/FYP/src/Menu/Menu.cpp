@@ -19,6 +19,7 @@ Menu::Menu(float width, float height)
 	setBg();
 
 	play = false;
+	network = false;
 	close = false;
 	selectedItemIndex = 0;
 
@@ -122,7 +123,7 @@ void Menu::selected()
 		play = true;
 		break;
 	case 1:
-		std::cout << "NETWORK NOT YET IMPLEMENTED" << std::endl;
+		network = true;
 		break;
 	case 2:
 		close = true;

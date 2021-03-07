@@ -15,6 +15,7 @@ class Menu : public Texture
 {
 private:
 	bool play;		//!< If play has been selected
+	bool network;
 	bool close;		//!< If close has been selected
 	int selectedItemIndex;		//!< Which item in the index was selcted
 
@@ -34,8 +35,10 @@ public:
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const; //!< Draw the menu to the render context
 	void processKeyPress(sf::Keyboard::Key code);		//!< Decides what to do on key press
 	bool getPlay() { return play; }		//!< Returns the play bool
+	bool getNetwork() { return network; }
 	bool getClose() { return close; }	//!< Returns the close bool
 	void setPlay(bool Play);		//!< Sets the play bool
+	void setNetwork(bool Network) { network = Network; }
 	void moveUp();		//!< Move up in the index (text options)
 	void moveDown();	//!< Move down in the index (text options)
 	void selected();	//!< What to do when an option is selected

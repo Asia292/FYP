@@ -74,9 +74,9 @@ void main() /** Entry point for the application */
 			//game.update(m_fElapsedTime);
 			clock.restart();
 		}
-
+		
 		window.clear(sf::Color(120, 120, 120));
-
+		
 		if (currState != nullptr)
 			window.draw(*currState);
 

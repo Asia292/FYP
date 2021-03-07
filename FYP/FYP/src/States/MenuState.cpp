@@ -27,6 +27,11 @@ void MenuState::update(float timestep)
 		states->push(new LevelSelectState(width, height, states));
 		menu->setPlay(false);
 	}
+	else if (menu->getNetwork())
+	{
+		states->push(new NetworkState(width, height, states));
+		menu->setNetwork(false);
+	}
 	
 	if (menu->getClose())
 		quit = true;

@@ -3,7 +3,7 @@
 \file MenuState.h
 */
 
-#include "LevelSelectState.h"
+#include "NetworkState.h"
 #include "..\Menu\Menu.h"
 
 /*! \class MenuState

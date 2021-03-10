@@ -2,16 +2,39 @@
 
 void HandlePacket(const PacketID & id, sf::Packet & packet, Client * client)
 {
+	NetworkState state;
+	state.HandlePackets(id, packet, client);
+}
+
+void NetworkState::HandlePackets(const PacketID & id, sf::Packet & packet, Client * client)
+{
 	if ((PacketType)id == PacketType::Message)
 	{
 		std::string message;
 		packet >> message;
 		std::cout << message << std::endl;
 	}
+	else if ((PacketType)id == PacketType::LvlSelectUpdate)
+	{
+		LevelUpdate update;
+		packet >> update;
+		currState->levelUpdate(update.currLevel, update.back);
+	}
+	else if ((PacketType)id == PacketType::PlayerUpdate)
+	{
+		PlayerUpdate update;
+		packet >> update;
+		currState->playerUpdate(update.player, update.texture, update.frame, update.position);
+	}
+	else if ((PacketType)id == PacketType::StateTransition)
+	{
+		bool push;
+		packet >> push;
+		currState->stateTransition(push);
+	}
 	else if ((PacketType)id == PacketType::Disconnect)
 		client->Disconnect();
 }
-
 
 NetworkState::NetworkState(float Height, float Width, std::stack<State*>* States)
 {
@@ -21,13 +44,8 @@ NetworkState::NetworkState(float Height, float Width, std::stack<State*>* States
 	sf::IpAddress ip = "127.0.0.1";
 	PortNumber port = 5600;
 		
-	/*std::cout << "Enter server IP: ";
-	std::cin >> ip;
-	std::cout << "Enter server port: ";
-	std::cin >> port;*/
-	
 	client.SetServerInfo(ip, port);
-	client.Setup(&HandlePacket);
+	client.Setup(&NetworkState::HandlePackets, this);
 	//sf::Thread c(&CommandProcess, &client);
 	//sf::Thread l(&Client::Listen);
 	if (client.Connect())
@@ -53,10 +71,10 @@ void NetworkState::update(float timestep)
 	if (client.IsConnected())
 	{
 		client.Update(clock.restart());
-
-
+		
 		if (!netStates.empty())
 		{
+			//std::cout << "NOT EMPTY!" << std::endl;
 			currState = netStates.top();
 			currState->update(timestep);
 
@@ -70,23 +88,39 @@ void NetworkState::update(float timestep)
 				else
 				{
 					currState = nullptr;
-					delete currState;
-					quit = true;
+					client.Disconnect();
 				}
 			}
 		}
+		else
+			std::cout << "EMPTY!" << std::endl;
+	}
+	else
+	{
+		delete currState;
+		quit = true;
 	}
 }
 
+
 void NetworkState::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
-	currState->draw(target, states);
+	if (currState != nullptr)
+		currState->draw(target, states);
 }
 
 void NetworkState::processKeyPress(sf::Keyboard::Key code)
 {
+	sf::Packet p;
+	StampPacket(PacketType::KeyPress, p);
+	p << code;
+	client.Send(p);
 }
 
 void NetworkState::processKeyRelease(sf::Keyboard::Key code)
 {
+	sf::Packet p;
+	StampPacket(PacketType::KeyRelease, p);
+	p << code;
+	client.Send(p);
 }

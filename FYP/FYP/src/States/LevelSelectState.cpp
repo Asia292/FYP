@@ -1,9 +1,10 @@
 #include "LevelSelectState.h"
 
-LevelSelectState::LevelSelectState(float Height, float Width, std::stack<State*>* States)
+LevelSelectState::LevelSelectState(float Height, float Width, std::stack<State*>* States, Server * l_server)
 {
 	states = States;
 	quit = false;
+	server = l_server;
 
 	levelSelect = new LevelSelect(Width, Height);
 }
@@ -20,7 +21,7 @@ void LevelSelectState::update(float timestep)
 
 	if (levelSelect->getPlay())
 	{
-		states->push(new GameState(levelSelect->getLevel(), &(levelSelect->score[levelSelect->getLevel()]), states));
+		states->push(new GameState(levelSelect->getLevel(), &(levelSelect->score[levelSelect->getLevel()]), states, server));
 		levelSelect->setPlay(false);
 	}
 
@@ -38,6 +39,46 @@ void LevelSelectState::processKeyPress(sf::Keyboard::Key code)
 	levelSelect->processKeyPress(code);
 }
 
-void LevelSelectState::processKeyRelease(sf::Keyboard::Key code)
+void LevelSelectState::processNetworkKeyPress(int code, Server* l_server)
 {
+	levelSelect->processKeyPress((sf::Keyboard::Key)code);
+
+	sf::Packet p;
+
+	if (code != sf::Keyboard::Key::Return)
+	{
+		StampPacket(PacketType::LvlSelectUpdate, p);
+		LevelUpdate update;
+		update.currLevel = levelSelect->getLevel();
+		update.back = levelSelect->getBack();
+		p << update;
+	}
+	else
+	{
+		StampPacket(PacketType::StateTransition, p);
+		bool up;
+
+		if (levelSelect->getPlay())
+			up = true;
+		else if (levelSelect->getClose())
+			up = false;
+
+		p << up;
+	}
+
+	l_server->Broadcast(p);
 }
+
+void LevelSelectState::levelUpdate(int lvl, int back)
+{
+	levelSelect->networkUpdate(lvl, back);
+}
+
+void LevelSelectState::stateTransition(bool push)
+{
+	if (push)
+		levelSelect->setPlay(true);
+	else
+		levelSelect->setClose(true);
+}
+

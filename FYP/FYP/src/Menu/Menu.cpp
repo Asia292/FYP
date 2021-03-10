@@ -1,3 +1,5 @@
+#pragma warning(disable : 4996)
+
 #include "Menu.h"
 
 Menu::Menu(float width, float height)

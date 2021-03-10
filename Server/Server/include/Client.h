@@ -5,7 +5,7 @@
 #define CONNECT_TIMEOUT 5000 //milliseconds
 
 class Client;
-using PacketHandler = std::function<void(const PacketID&, sf::Packet&, Client*)>;
+using CPacketHandler = std::function<void(const PacketID&, sf::Packet&, Client*)>;
 
 class Client
 {
@@ -15,7 +15,7 @@ private:
 	sf::UdpSocket socket;
 	sf::IpAddress serverIP;
 	PortNumber serverPort;
-	PacketHandler packetHandler;
+	CPacketHandler packetHandler;
 	bool connected = false;
 	sf::Time serverTime;
 	sf::Time lastHeartbeat;

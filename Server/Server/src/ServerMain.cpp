@@ -1,7 +1,7 @@
 #include "Server.h"
-#include "LevelSelect.h"
-#include "SFML/Window/Keyboard.hpp"
+#include "LevelSelectState.h"
 
+State *currState;
 
 void Handler(sf::IpAddress& l_ip, const PortNumber& l_port, const PacketID& l_id, sf::Packet& l_packet, Server* l_server)
 { 
@@ -27,31 +27,20 @@ void Handler(sf::IpAddress& l_ip, const PortNumber& l_port, const PacketID& l_id
 			p << message;
 			l_server->Broadcast(p, id); 
 		} 
-		/*else if ((PacketType)l_id == PacketType::KeyPress)
+		else if ((PacketType)l_id == PacketType::KeyPress)
 		{
 			int recieve;
 			l_packet >> recieve;
-			sf::Packet p;
 
-			if (recieve == sf::Keyboard::Up)
-			{
-				if (lvl != 0)
-					lvl--;
+			currState->processNetworkKeyPress(recieve, l_server);
+		}
+		else if ((PacketType)l_id == PacketType::KeyRelease)
+		{
+			int recieve;
+			l_packet >> recieve;
 
-				StampPacket(PacketType::LevelNumber, p);
-				p << lvl;
-			}
-			else if (recieve == sf::Keyboard::Down)
-			{
-				if (lvl != MAX_LEVELS)
-					lvl++;
-
-				StampPacket(PacketType::LevelNumber, p);
-				p << lvl;
-			}
-			
-			l_server->Broadcast(p, id);
-		}*/
+			currState->processNetworkKeyRelease(recieve, l_server);
+		}
 	} 
 	else 
 	{ 
@@ -93,17 +82,47 @@ void CommandProcess(Server* l_server)
 
 int main() 
 { 
-	//lvl = 0;
-	Server server(Handler); 
+	float fFrameTime = 1.f / 60.f;
+	std::stack<State *> states;
+
+	Server server(Handler);
+	states.push(new LevelSelectState(1024, 800, &states, &server));
+	currState = states.top();
 	if (server.Start()) 
 	{ 
-		sf::Thread c(&CommandProcess, &server); 
-		c.launch(); 
-		sf::Clock clock; 
-		clock.restart(); 
+		//sf::Thread c(&CommandProcess, &server); 
+		//c.launch(); 
+		sf::Clock serverClock; 
+		sf::Clock gameClock;
+		//clock.restart(); 
 		while (server.IsRunning()) 
 		{ 
-			server.Update(clock.restart()); 
+			float m_fElapsedTime = gameClock.getElapsedTime().asSeconds();
+			// If a frame has past the update the physics
+			if (m_fElapsedTime > fFrameTime)
+			{
+				if (!states.empty())
+				{
+					currState = states.top();
+					currState->update(m_fElapsedTime);
+
+					if (currState->getQuit())
+					{
+						delete states.top();
+						states.pop();
+
+						if (!states.empty())
+							currState = states.top();
+						else
+						{
+							currState = nullptr;
+							delete currState;
+						}
+					}
+				}
+				gameClock.restart();
+			}
+			server.Update(serverClock.restart());
 		} 
 		std::cout << "Stopping server..." << std::endl; 
 	} 

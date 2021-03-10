@@ -36,8 +36,10 @@ private:
 
 	bool lightRight;	//!< If light player should be moving right
 	bool lightLeft;		//!< If light player should be moving left
+	bool lightJump;
 	bool darkRight;		//!< If dark player should be moving right
 	bool darkLeft;		//!< If dark player should be moving left
+	bool darkJump;
 
 	sf::Text finish;	//!< Text that displays on game over
 	sf::Text select[2];		//!< Menu select text - retry or return to levels
@@ -72,6 +74,18 @@ public:
 	void moveLeft();									//!< Moves the selection left for menu/game over screen
 	void moveRight();									//!< Moves the selection right for menu/game over screen
 	void selected();									//!< What to do with selected item
+	void networkPlayerUpdate(int player, int texture, int frame, sf::Vector2f pos);
 	
+
+	Level * getCurrLvl() { return currLevel; }
+	void setLightJump(bool jump) { lightJump = jump; }
+	void setDarkJump(bool jump) { darkJump = jump; }
+	bool getLightRight() { return lightRight; }
+	bool getLightLeft() { return lightLeft; }
+	bool getLightJump() { return lightJump; }
+	bool getDarkRight() { return darkRight; }
+	bool getDarkLeft() { return darkLeft; }
+	bool getDarkJump() { return darkJump; }
+
 	ContactListener listener;	//!< The contact listener
 };

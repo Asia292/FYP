@@ -1,11 +1,11 @@
 #pragma once
 
-#include <SFML/Network.hpp>
+#include "Overloads.h"
 
 using PacketID = sf::Int8;
 enum class PacketType
 {
-	Disconnect = -1, Connect, Heartbeat, Message, KeyPress, KeyRelease, LevelNumber,
+	Disconnect = -1, Connect, Heartbeat, Message, KeyPress, KeyRelease, LvlSelectUpdate, StateTransition, PlayerUpdate,
 	OutOfBounds // LEAVE ON END
 };
 

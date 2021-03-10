@@ -124,6 +124,7 @@ void Game::update(float timestep)
 		}
 		else if (!currLevel->darkPlayer->getDead() && !currLevel->lightPlayer->getDead())
 		{
+			
 			if (lightLeft)
 				currLevel->lightPlayer->moveLeft();
 			else if (lightRight)
@@ -215,6 +216,7 @@ void Game::processKeyPress(sf::Keyboard::Key code)
 		break;
 	case sf::Keyboard::W:
 		currLevel->lightPlayer->jump();
+		lightJump = true;
 		break;
 	case sf::Keyboard::Right:
 		if (over)
@@ -230,6 +232,7 @@ void Game::processKeyPress(sf::Keyboard::Key code)
 		break;
 	case sf::Keyboard::Up:
 		currLevel->darkPlayer->jump();
+		darkJump = true;
 		break;
 	case sf::Keyboard::Return:
 		if (over)
@@ -289,4 +292,23 @@ void Game::selected()
 		levelSelect = true;
 		break;
 	}
+}
+
+void Game::networkPlayerUpdate(int player, int texture, int frame, sf::Vector2f pos)
+{
+	switch (player)
+	{
+	case 1:
+		currLevel->lightPlayer->setTextures(texture);
+		currLevel->lightPlayer->setFrame(frame);
+		currLevel->lightPlayer->setPos(pos);
+		break;
+		
+	case 2:
+		currLevel->darkPlayer->setTextures(texture);
+		currLevel->darkPlayer->setFrame(frame);
+		currLevel->darkPlayer->setPos(pos);
+		break;
+	}
+
 }

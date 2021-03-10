@@ -28,6 +28,7 @@ public:
 	int player;
 	TextureManager *texture;
 	bool run;
+	int lightTex, darkTex;
 
 public:
 	Player() {};		//!< Default constructor
@@ -44,4 +45,7 @@ public:
 	bool getHome();		//!< Returns the home bool
 	void setDead(bool Dead);		//!< Sets the dead bool
 	bool getDead();		//!< Returns the dead bool
+	int getLightTex() { return lightTex; }
+	int getDarkTex() { return darkTex; }
+	void setTextures(int tex);
 };

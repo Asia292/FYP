@@ -58,6 +58,8 @@ Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	player = cat;
 	texture = texMan;
 	run = false;
+	lightTex = 0;
+	darkTex = 0;
 }
 
 void Player::update(float timestep)
@@ -65,10 +67,10 @@ void Player::update(float timestep)
 	Texture::update(timestep);
 	currSprite.setScale(sf::Vector2f(0.00275 - (int)flip * 0.0055, 0.00275f));	// 1 - (int)flip * 2
 	b2Vec2 pos = body->GetPosition();
-	if (player == 0x0010)
+	/*if (player == 0x0010)
 		currSprite.setPosition(pos.x, pos.y - 0.2f);
 	else if (player == 0x0100)
-		currSprite.setPosition(pos.x, pos.y - 0.1f);
+		currSprite.setPosition(pos.x, pos.y - 0.1f);*/
 }
 
 void Player::setUserData(void * data)
@@ -88,9 +90,15 @@ void Player::moveLeft()
 		setFrame(0);
 
 		if (player == 0x0010)
+		{
 			texture->getFrames("lightRun", this);
+			lightTex = 1;
+		}
 		else if (player == 0x0100)
+		{
 			texture->getFrames("darkRun", this);
+			darkTex = 1;
+		}
 
 		setLoop(true);
 	}
@@ -109,9 +117,15 @@ void Player::moveRight()
 		setFrame(0);
 
 		if (player == 0x0010)
+		{
 			texture->getFrames("lightRun", this);
+			lightTex = 1;
+		}
 		else if (player == 0x0100)
+		{
 			texture->getFrames("darkRun", this);
+			darkTex = 1;
+		}
 
 		setLoop(true);
 	}
@@ -129,9 +143,15 @@ void Player::jump()
 		setFrame(0);
 
 		if (player == 0x0010)
+		{
 			texture->getFrames("lightJump", this);
+			lightTex = 2;
+		}
 		else if (player == 0x0100)
+		{
 			texture->getFrames("darkJump", this);
+			darkTex = 2;
+		}
 
 		setLoop(false);
 	}
@@ -146,9 +166,15 @@ void Player::idle()
 	setFrame(0);
 
 	if (player == 0x0010)
+	{
 		texture->getFrames("lightIdle", this);
+		lightTex = 0;
+	}
 	else if (player == 0x0100)
+	{
 		texture->getFrames("darkIdle", this);
+		darkTex = 0;
+	}
 
 	setLoop(false);
 	run = false;
@@ -177,4 +203,38 @@ void Player::setDead(bool Dead)
 bool Player::getDead()
 {
 	return dead;
+}
+
+void Player::setTextures(int tex)
+{
+	if (player == 0x0010)
+	{
+		switch (tex)
+		{
+		case 0:
+			texture->getFrames("lightIdle", this);
+			break;
+		case 1:
+			texture->getFrames("lightRun", this);
+			break;
+		case 2:
+			texture->getFrames("lightJump", this);
+			break;
+		}
+	}
+	else if (player == 0x0100)
+	{
+		switch (tex)
+		{
+		case 0:
+			texture->getFrames("darkIdle", this);
+			break;
+		case 1:
+			texture->getFrames("darkRun", this);
+			break;
+		case 2:
+			texture->getFrames("darkJump", this);
+			break;
+		}
+	}
 }

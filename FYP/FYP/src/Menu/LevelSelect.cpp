@@ -122,6 +122,28 @@ void LevelSelect::update(float timestep)
 		}
 		star[i].setPos(sf::Vector2f(backing[i].getPosition().x + 420.f, backing[i].getPosition().y + 40.f));
 	}
+	
+	if (back == 0)
+	{
+		for (int i = 0; i < MAX_LEVELS; i++)
+		{
+			if (i != selectedLevel)
+				backing[i].setFillColor(sf::Color(255, 255, 204));
+			else
+				backing[selectedLevel].setFillColor(sf::Color(229, 204, 255));
+		}
+
+		menuBox.setFillColor(sf::Color(255, 255, 204));
+	}
+	else
+	{
+		for (int i = 0; i < MAX_LEVELS; i++)
+		{
+			backing[i].setFillColor(sf::Color(255, 255, 204));
+		}
+
+		menuBox.setFillColor(sf::Color(229, 204, 255));
+	}
 }
 
 void LevelSelect::draw(sf::RenderTarget & target, sf::RenderStates states) const
@@ -161,18 +183,19 @@ void LevelSelect::processKeyPress(sf::Keyboard::Key code)
 	}
 }
 
-void LevelSelect::setPlay(bool Play)
+void LevelSelect::networkUpdate(int lvl, int Back)
 {
-	play = Play;
+	selectedLevel = lvl;
+	back = Back;
 }
 
 void LevelSelect::moveUp()
 {
 	if (selectedLevel - 1 >= 0 && back == 0)
 	{
-		backing[selectedLevel].setFillColor(sf::Color(255, 255, 204));
+		//backing[selectedLevel].setFillColor(sf::Color(255, 255, 204));
 		selectedLevel--;
-		backing[selectedLevel].setFillColor(sf::Color(229, 204, 255));
+		//backing[selectedLevel].setFillColor(sf::Color(229, 204, 255));
 	}
 }
 
@@ -180,9 +203,9 @@ void LevelSelect::moveDown()
 {
 	if (selectedLevel + 1 < MAX_LEVELS && back == 0)
 	{
-		backing[selectedLevel].setFillColor(sf::Color(255, 255, 204));
+		//backing[selectedLevel].setFillColor(sf::Color(255, 255, 204));
 		selectedLevel++;
-		backing[selectedLevel].setFillColor(sf::Color(229, 204, 255));
+		//backing[selectedLevel].setFillColor(sf::Color(229, 204, 255));
 	}
 }
 
@@ -190,9 +213,9 @@ void LevelSelect::moveLeft()
 {
 	if (back - 1 >= 0)
 	{
-		menuBox.setFillColor(sf::Color(255, 255, 204));
+		//menuBox.setFillColor(sf::Color(255, 255, 204));
 		back--;
-		backing[selectedLevel].setFillColor(sf::Color(229, 204, 255));
+		//backing[selectedLevel].setFillColor(sf::Color(229, 204, 255));
 	}
 }
 
@@ -200,9 +223,9 @@ void LevelSelect::moveRight()
 {
 	if (back + 1 < 2)
 	{
-		backing[selectedLevel].setFillColor(sf::Color(255, 255, 204));
+		//backing[selectedLevel].setFillColor(sf::Color(255, 255, 204));
 		back++;
-		menuBox.setFillColor(sf::Color(229, 204, 255));
+		//menuBox.setFillColor(sf::Color(229, 204, 255));
 	}
 }
 

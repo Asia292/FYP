@@ -47,6 +47,4 @@ void MenuState::processKeyPress(sf::Keyboard::Key code)
 	menu->processKeyPress(code);
 }
 
-void MenuState::processKeyRelease(sf::Keyboard::Key code)
-{
-}
+

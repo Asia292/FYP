@@ -36,7 +36,7 @@ struct ClientInfo
 
 using Clients = std::unordered_map<ClientID, ClientInfo>;
 class Server;
-using PacketHandler = std::function<void(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*)>;
+using SPacketHandler = std::function<void(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*)>;
 using TimeoutHandler = std::function<void(const ClientID&)>;
 
 class Server
@@ -48,7 +48,7 @@ private:
 	sf::UdpSocket incoming;
 	sf::UdpSocket outgoing;
 
-	PacketHandler packetHandler;
+	SPacketHandler packetHandler;
 	TimeoutHandler timeoutHandler;
 
 	Clients clients;

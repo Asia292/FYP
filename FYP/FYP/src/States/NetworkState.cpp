@@ -24,7 +24,8 @@ void NetworkState::HandlePackets(const PacketID & id, sf::Packet & packet, Clien
 	{
 		PlayerUpdate update;
 		packet >> update;
-		currState->playerUpdate(update.player, update.texture, update.frame, update.position);
+
+		currState->playerUpdate(update.player, update.texture, update.frame, update.flip, update.dead, update.position);
 	}
 	else if ((PacketType)id == PacketType::StateTransition)
 	{

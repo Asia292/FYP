@@ -17,6 +17,7 @@ private:
 	Server* server;	//!< On the server or not
 	int lvl;
 	int *lvlScore;
+	bool gameOver;
 
 public:
 	GameState(int level, int *levelScore, std::stack<State *>* States, Server* l_server = nullptr);		//!< Constructor
@@ -32,5 +33,5 @@ public:
 	//Function per packet type???
 	virtual void levelUpdate(int lvl, int back) override {};
 	virtual void stateTransition(bool push) override {};
-	virtual void playerUpdate(int player, int texture, int frame, sf::Vector2f pos) override;
+	virtual void playerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos) override;
 };

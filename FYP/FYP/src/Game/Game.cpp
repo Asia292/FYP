@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(int level, int *levelScore)
+Game::Game(int level, int *levelScore, bool onClient)
 {
 	/*
 	TO DO
@@ -54,6 +54,7 @@ Game::Game(int level, int *levelScore)
 	won = false;
 	retry = false;
 	time = 0;
+	client = onClient;
 
 	finish.setFont(font);
 	finish.setFillColor(sf::Color(35, 179, 241));
@@ -124,21 +125,22 @@ void Game::update(float timestep)
 		}
 		else if (!currLevel->darkPlayer->getDead() && !currLevel->lightPlayer->getDead())
 		{
-			
-			if (lightLeft)
-				currLevel->lightPlayer->moveLeft();
-			else if (lightRight)
-				currLevel->lightPlayer->moveRight();
-			else
-				currLevel->lightPlayer->idle();
+			if (!client)
+			{
+				if (lightLeft)
+					currLevel->lightPlayer->moveLeft();
+				else if (lightRight)
+					currLevel->lightPlayer->moveRight();
+				else
+					currLevel->lightPlayer->idle();
 
-			if (darkRight)
-				currLevel->darkPlayer->moveRight();
-			else if (darkLeft)
-				currLevel->darkPlayer->moveLeft();
-			else
-				currLevel->darkPlayer->idle();
-
+				if (darkRight)
+					currLevel->darkPlayer->moveRight();
+				else if (darkLeft)
+					currLevel->darkPlayer->moveLeft();
+				else
+					currLevel->darkPlayer->idle();
+			}
 			currLevel->update(timestep);
 			hud->update(timestep);
 		}
@@ -216,7 +218,6 @@ void Game::processKeyPress(sf::Keyboard::Key code)
 		break;
 	case sf::Keyboard::W:
 		currLevel->lightPlayer->jump();
-		lightJump = true;
 		break;
 	case sf::Keyboard::Right:
 		if (over)
@@ -232,7 +233,6 @@ void Game::processKeyPress(sf::Keyboard::Key code)
 		break;
 	case sf::Keyboard::Up:
 		currLevel->darkPlayer->jump();
-		darkJump = true;
 		break;
 	case sf::Keyboard::Return:
 		if (over)
@@ -294,19 +294,23 @@ void Game::selected()
 	}
 }
 
-void Game::networkPlayerUpdate(int player, int texture, int frame, sf::Vector2f pos)
+void Game::networkPlayerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos)
 {
 	switch (player)
 	{
 	case 1:
 		currLevel->lightPlayer->setTextures(texture);
 		currLevel->lightPlayer->setFrame(frame);
+		currLevel->lightPlayer->setFlip(flip);
+		currLevel->lightPlayer->setDead(dead);
 		currLevel->lightPlayer->setPos(pos);
 		break;
 		
 	case 2:
 		currLevel->darkPlayer->setTextures(texture);
 		currLevel->darkPlayer->setFrame(frame);
+		currLevel->darkPlayer->setFlip(flip);
+		currLevel->darkPlayer->setDead(dead);
 		currLevel->darkPlayer->setPos(pos);
 		break;
 	}

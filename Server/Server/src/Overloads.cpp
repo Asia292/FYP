@@ -22,11 +22,11 @@ sf::Packet & operator>>(sf::Packet & l_packet, LevelUpdate & lvlUpdate)
 
 sf::Packet & operator<<(sf::Packet & l_packet, const PlayerUpdate & playerUpdate)
 {
-	return l_packet << playerUpdate.player << playerUpdate.texture << playerUpdate.frame << playerUpdate.position.x << playerUpdate.position.y;
+	return l_packet << playerUpdate.player << playerUpdate.texture << playerUpdate.frame << playerUpdate.flip << playerUpdate.dead << playerUpdate.position.x << playerUpdate.position.y;
 }
 
 sf::Packet & operator>>(sf::Packet & l_packet, PlayerUpdate & playerUpdate)
 {
-	return l_packet >> playerUpdate.player >> playerUpdate.texture >> playerUpdate.frame >> playerUpdate.position.x >> playerUpdate.position.y;
+	return l_packet >> playerUpdate.player >> playerUpdate.texture >> playerUpdate.frame >> playerUpdate.flip >> playerUpdate.dead >> playerUpdate.position.x >> playerUpdate.position.y;
 }
 

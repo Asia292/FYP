@@ -23,6 +23,8 @@ struct PlayerUpdate
 	int player;
 	int texture;
 	int frame;
+	bool flip;
+	bool dead;
 	sf::Vector2f position;
 };
 

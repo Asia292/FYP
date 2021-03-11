@@ -29,5 +29,5 @@ public:
 	//Function per packet type???
 	virtual void levelUpdate(int lvl, int back) = 0;
 	virtual void stateTransition(bool push) = 0;
-	virtual void playerUpdate(int player, int texture, int frame, sf::Vector2f pos) = 0;
+	virtual void playerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos) = 0;
 };

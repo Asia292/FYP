@@ -36,10 +36,8 @@ private:
 
 	bool lightRight;	//!< If light player should be moving right
 	bool lightLeft;		//!< If light player should be moving left
-	bool lightJump;
 	bool darkRight;		//!< If dark player should be moving right
 	bool darkLeft;		//!< If dark player should be moving left
-	bool darkJump;
 
 	sf::Text finish;	//!< Text that displays on game over
 	sf::Text select[2];		//!< Menu select text - retry or return to levels
@@ -54,13 +52,14 @@ private:
 	bool retry;
 	float time;			//!< Elapsed game time
 	int *lvlScore;			//!< Pointer to the level integer passed in for score
+	bool client;
 
 protected:
 	TextureManager * texManager = TextureManager::getInstance();	//!< The texture manager
 
 public:
 	Game() {};		//!< Default constructor
-	Game(int level, int *levelScore); //!< Full constructor which sets up the game
+	Game(int level, int *levelScore, bool onClient = false); //!< Full constructor which sets up the game
 	~Game(); //!< Destructor which cleans all the pointer memory up
 	void update(float timestep); //!< Update the game with given timestep
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const; //!< Draw the game to the render context
@@ -74,18 +73,10 @@ public:
 	void moveLeft();									//!< Moves the selection left for menu/game over screen
 	void moveRight();									//!< Moves the selection right for menu/game over screen
 	void selected();									//!< What to do with selected item
-	void networkPlayerUpdate(int player, int texture, int frame, sf::Vector2f pos);
+	void networkPlayerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos);
 	
 
 	Level * getCurrLvl() { return currLevel; }
-	void setLightJump(bool jump) { lightJump = jump; }
-	void setDarkJump(bool jump) { darkJump = jump; }
-	bool getLightRight() { return lightRight; }
-	bool getLightLeft() { return lightLeft; }
-	bool getLightJump() { return lightJump; }
-	bool getDarkRight() { return darkRight; }
-	bool getDarkLeft() { return darkLeft; }
-	bool getDarkJump() { return darkJump; }
 
 	ContactListener listener;	//!< The contact listener
 };

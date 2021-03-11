@@ -40,4 +40,5 @@ public:
 	void setFrame(int frame);					//!< Reset frame to 0
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;		//!< Draws the current sprite
 	int getFrame() { return currFrame; }
+	bool getFlip() { return flip; }
 };

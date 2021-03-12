@@ -7,6 +7,7 @@ Lever::Lever(b2World * world, const sf::Vector2f & position, const sf::Vector2f 
 	pos = position;
 	right = Right;
 	flipped = false;
+	revTex = false;
 
 	texture = texMan;
 	forward = col;
@@ -66,6 +67,7 @@ void Lever::onAction(b2Body * other)
 				texture->getFrames(forward, this);
 
 				flipped = true;
+				revTex = false;
 			}
 
 			if (door != nullptr)
@@ -81,6 +83,7 @@ void Lever::onAction(b2Body * other)
 				texture->getFrames(reverse, this);
 
 				flipped = false;
+				revTex = true;
 			}
 
 			if (door != nullptr)
@@ -99,6 +102,7 @@ void Lever::onAction(b2Body * other)
 				texture->getFrames(forward, this);
 
 				flipped = true;
+				revTex = false;
 			}
 
 			if (door != nullptr)
@@ -114,6 +118,7 @@ void Lever::onAction(b2Body * other)
 				texture->getFrames(reverse, this);
 
 				flipped = false;
+				revTex = true;
 			}
 
 			if (door != nullptr)
@@ -127,4 +132,12 @@ void Lever::onAction(b2Body * other)
 void Lever::update(float timestep)
 {
 	Texture::update(timestep);
+}
+
+void Lever::setTexture(bool tex)
+{
+	if (tex)
+		texture->getFrames(reverse, this);
+	else
+		texture->getFrames(forward, this);
 }

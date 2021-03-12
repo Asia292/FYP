@@ -1,6 +1,6 @@
 #include "Block.h"
 
-Block::Block(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, TextureManager *texMan)
+Block::Block(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, TextureManager *texMan, bool onClient)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -27,6 +27,7 @@ Block::Block(b2World * world, const sf::Vector2f & position, const sf::Vector2f 
 	texMan->getFrames("Block", this);
 	setSize(sf::Vector2f(0.0075f, 0.0075f));
 
+	client = onClient;
 	/*setPosition(position);
 	setSize(size);
 	setOrigin(size * 0.5f);
@@ -38,10 +39,13 @@ Block::Block(b2World * world, const sf::Vector2f & position, const sf::Vector2f 
 void Block::update(float timestep)
 {
 	Texture::update(timestep);
-	b2Vec2 pos = body->GetPosition();
-	currSprite.setPosition(pos.x, pos.y); 
-	float angle = body->GetAngle() * 57.29577f;
-	currSprite.setRotation(angle);
+	if (!client)
+	{
+		b2Vec2 pos = body->GetPosition();
+		currSprite.setPosition(pos.x, pos.y);
+		float angle = body->GetAngle() * 57.29577f;
+		currSprite.setRotation(angle);
+	}
 }
 
 void Block::setUserData(void * data)

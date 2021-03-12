@@ -8,16 +8,16 @@ HomeSensor::HomeSensor(b2World * world, const sf::Vector2f& position, sf::Vector
 	setSize(sf::Vector2f(0.01f, 0.01f));
 	setPos(sf::Vector2f(position));
 
-	if (player->filter.categoryBits == 0x0010)
+	if (player->getFilter().categoryBits == 0x0010)
 		texMan->getFrames("lightDoor", this);
-	else if (player->filter.categoryBits == 0x0100)
+	else if (player->getFilter().categoryBits == 0x0100)
 		texMan->getFrames("darkDoor", this);
 
 	fade = false;
 	a = 255;
 
 	fixture = body->GetFixtureList();
-	filter.maskBits = player->filter.categoryBits;
+	filter.maskBits = player->getFilter().categoryBits;
 	fixture->SetFilterData(filter);
 }
 

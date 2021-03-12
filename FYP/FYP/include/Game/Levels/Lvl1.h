@@ -32,12 +32,18 @@ protected:
 	HomeSensor *darkHome;
 
 	bool lEmpty, dEmpty;
+	bool client;
+	int frameBefore;
+	b2Vec2 platPosBefore[2];
+	b2Vec2 blockPosBefore;
 
 public:
 
-	Lvl1(TextureManager * textMan, b2World * world);		//!< Constructor
+	Lvl1(TextureManager * textMan, b2World * world, bool onClient);		//!< Constructor
 	virtual ~Lvl1() override;		//!< Deconstructor
-	virtual void update(float timestep) override;		//!< Updates all game elements
+	virtual void update(float timestep, bool server) override;		//!< Updates all game elements
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;		//!< Draws all game elements
 	virtual int score(float time) override;		//!< Calculates level score
+	virtual void networkFramUpdate(Server * server) override;
+	virtual void networkUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position) override;
 };

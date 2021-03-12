@@ -21,16 +21,20 @@ private:
 
 	b2Vec2 start, end;
 	int xMove, yMove;
-	bool moveEnd;
+	bool moveEnd, glowTex;
 	std::string platform, glow;
+	bool client;
 
 	TextureManager *texture;
 
 public:
 	MovingPlat() {};		//!< Default constructor
-	MovingPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, const sf::Vector2f &End, TextureManager *texMan, const std::string col, const std::string Glow);		//!< Full constructor
+	MovingPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, const sf::Vector2f &End, TextureManager *texMan, const std::string col, const std::string Glow, bool onClient);		//!< Full constructor
 	void setUserData(void* data);		//!< Sets the user data of the body
 	void moveToEnd();
 	void moveToStart();
 	void update(float timestep);
+	b2Body * getBody() { return body; }
+	bool getGlow() { return glowTex; }
+	void setTexture(bool tex);
 };

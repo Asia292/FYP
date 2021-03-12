@@ -27,7 +27,8 @@ public:
 	virtual bool getQuit() = 0;		//!< If the state should quit
 
 	//Function per packet type???
-	virtual void levelUpdate(int lvl, int back) = 0;
+	virtual void levelSelectUpdate(int lvl, int back) = 0;
 	virtual void stateTransition(bool push) = 0;
 	virtual void playerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos) = 0;
+	virtual void levelUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position) = 0;
 };

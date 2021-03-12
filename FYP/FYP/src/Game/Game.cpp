@@ -38,7 +38,7 @@ Game::Game(int level, int *levelScore, bool onClient)
 	switch (level)
 	{
 	case 0:
-		currLevel = new Lvl1(texManager, world);
+		currLevel = new Lvl1(texManager, world, onClient);
 		break;
 	}
 	
@@ -105,7 +105,7 @@ Game::~Game()
 	TextureManager::delInstance();
 }
 
-void Game::update(float timestep)
+void Game::update(float timestep, bool server)
 {
 	// Update the world
 	world->Step(timestep, velIterations, posIterations);
@@ -141,7 +141,7 @@ void Game::update(float timestep)
 				else
 					currLevel->darkPlayer->idle();
 			}
-			currLevel->update(timestep);
+			currLevel->update(timestep, server);
 			hud->update(timestep);
 		}
 		else

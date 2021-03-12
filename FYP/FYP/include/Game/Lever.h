@@ -16,7 +16,7 @@ private:
 	DoorPlat * door;	//!< The door passed in constructor
 	MovingPlat *platform;	//!< The moving platform passed in constructor
 	sf::Vector2f pos;
-	bool right, flipped;
+	bool right, flipped, revTex;
 	std::string reverse, forward;
 
 	TextureManager *texture;
@@ -29,4 +29,6 @@ public:
 	virtual void onAction(b2Body * other) override;		//!< Action to do when sensor is triggered
 	virtual void offAction(b2Body * other) override {};		//!< Action to do when sensor stops being triggered
 	void update(float timestep) override;
+	bool getTexture() { return revTex; }
+	void setTexture(bool tex);
 };

@@ -36,6 +36,7 @@ public:
 	void setKeyFrames(std::vector<sf::IntRect> frams, float time);		//!< Assigns the frames and aTime variables
 	void update(float timestep);		//!< Updates the animation based on bools
 	void setPos(sf::Vector2f(pos));		//!< Sets the position of the sprite
+	void setAngle(float angle);
 	void setSize(sf::Vector2f(size));	//!< Sets the size of the sprite
 	void setFrame(int frame);					//!< Reset frame to 0
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;		//!< Draws the current sprite

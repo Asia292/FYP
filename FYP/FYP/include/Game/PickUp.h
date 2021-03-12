@@ -25,4 +25,5 @@ public:
 	virtual void update(float timestep) override;
 
 	bool getDel();		//!< Return the delete bool
+	void delTrue() { del = true; }
 };

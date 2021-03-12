@@ -12,6 +12,9 @@ GameState::GameState(int level, int * levelScore, std::stack<State*>* States, Se
 	lvl = level;
 	lvlScore = levelScore;
 	gameOver = false;
+	onServer = false;
+	if (l_server != nullptr)
+		onServer = true;
 }
 
 GameState::~GameState()
@@ -24,7 +27,7 @@ GameState::~GameState()
 
 void GameState::update(float timestep)
 {
-	game->update(timestep);
+	game->update(timestep, onServer);
 
 	if (game->getRetry())
 	{
@@ -41,11 +44,11 @@ void GameState::update(float timestep)
 		sf::Packet p;
 		StampPacket(PacketType::PlayerUpdate, p);
 		PlayerUpdate update;
-		float x = game->getCurrLvl()->lightPlayer->body->GetPosition().x;
-		float y = game->getCurrLvl()->lightPlayer->body->GetPosition().y - 0.2f;
+		float x = game->getCurrLvl()->lightPlayer->getBody()->GetPosition().x;
+		float y = game->getCurrLvl()->lightPlayer->getBody()->GetPosition().y - 0.2f;
 
 		update.player = 1;
-		update.texture = game->getCurrLvl()->lightPlayer->lightTex;
+		update.texture = game->getCurrLvl()->lightPlayer->getLightTex();
 		update.frame = game->getCurrLvl()->lightPlayer->getFrame();
 		update.flip = game->getCurrLvl()->lightPlayer->getFlip();
 		update.dead = game->getCurrLvl()->lightPlayer->getDead();
@@ -56,17 +59,19 @@ void GameState::update(float timestep)
 
 		sf::Packet p2;
 		StampPacket(PacketType::PlayerUpdate, p2);
-		x = game->getCurrLvl()->darkPlayer->body->GetPosition().x;
-		y = game->getCurrLvl()->darkPlayer->body->GetPosition().y - 0.1f;
+		x = game->getCurrLvl()->darkPlayer->getBody()->GetPosition().x;
+		y = game->getCurrLvl()->darkPlayer->getBody()->GetPosition().y - 0.1f;
 
 		update.player = 2;
-		update.texture = game->getCurrLvl()->darkPlayer->darkTex;
+		update.texture = game->getCurrLvl()->darkPlayer->getDarkTex();
 		update.frame = game->getCurrLvl()->darkPlayer->getFrame();
 		update.flip = game->getCurrLvl()->darkPlayer->getFlip();
 		update.dead = game->getCurrLvl()->darkPlayer->getDead();
 		update.position = sf::Vector2f(x, y);
 		p2 << update;
 		server->Broadcast(p2);
+
+		game->getCurrLvl()->networkFramUpdate(server);
 
 		if (game->getOver())
 			gameOver = true;
@@ -124,4 +129,9 @@ void GameState::processNetworkKeyRelease(int code, Server* l_server)
 void GameState::playerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos)
 {
 	game->networkPlayerUpdate(player, texture, frame, flip, dead, pos);
+}
+
+void GameState::levelUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position)
+{
+	game->getCurrLvl()->networkUpdate(object, index, texture, frame, angle, position);
 }

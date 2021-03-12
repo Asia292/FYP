@@ -48,7 +48,7 @@ void LevelSelectState::processNetworkKeyPress(int code, Server* l_server)
 	if (code != sf::Keyboard::Key::Return)
 	{
 		StampPacket(PacketType::LvlSelectUpdate, p);
-		LevelUpdate update;
+		LevelSelectUpdate update;
 		update.currLevel = levelSelect->getLevel();
 		update.back = levelSelect->getBack();
 		p << update;
@@ -69,7 +69,7 @@ void LevelSelectState::processNetworkKeyPress(int code, Server* l_server)
 	l_server->Broadcast(p);
 }
 
-void LevelSelectState::levelUpdate(int lvl, int back)
+void LevelSelectState::levelSelectUpdate(int lvl, int back)
 {
 	levelSelect->networkUpdate(lvl, back);
 }

@@ -14,7 +14,7 @@
 */
 class Player : public Texture
 {
-public:
+private:
 	b2Body * body = nullptr; //!< Box2D body
 	const float density = 1.0f; //!< Density of the material - used to give mass
 	const float friction = 1.0f; //!< Friction - only friction from movement, not when static
@@ -29,10 +29,11 @@ public:
 	TextureManager *texture;
 	bool run;
 	int lightTex, darkTex;
+	bool client;
 
 public:
 	Player() {};		//!< Default constructor
-	Player(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, int cat, TextureManager *texMan);		//!< Full constructor
+	Player(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, int cat, TextureManager *texMan, bool onClient);		//!< Full constructor
 	void update(float timestep);	//!< Updates entity
 	void setUserData(void* data);		//!< Sets the user data of the body
 
@@ -48,4 +49,6 @@ public:
 	int getLightTex() { return lightTex; }
 	int getDarkTex() { return darkTex; }
 	void setTextures(int tex);
+	b2Body * getBody() { return body; }
+	b2Filter getFilter() { return filter; }
 };

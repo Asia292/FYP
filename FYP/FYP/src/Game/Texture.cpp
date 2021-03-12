@@ -104,6 +104,11 @@ void Texture::setPos(sf::Vector2f(pos))
 	currSprite.setPosition(pos);
 }
 
+void Texture::setAngle(float angle)
+{
+	currSprite.setRotation(angle);
+}
+
 void Texture::setSize(sf::Vector2f(size))
 {
 	currSprite.setScale(size);

@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include <iostream>
+#include "Server.h"
 
 
 #include "Player.h"
@@ -32,7 +33,9 @@ public:
 	Player *darkPlayer;			//!< The dark player
 
 	virtual ~Level() = default;
-	virtual void update(float timestep) = 0;
+	virtual void update(float timestep, bool server) = 0;
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const = 0;
 	virtual int score(float time) = 0;
+	virtual void networkFramUpdate(Server * server) = 0;
+	virtual void networkUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position) = 0;
 };

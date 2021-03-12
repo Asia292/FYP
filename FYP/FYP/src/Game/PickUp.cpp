@@ -15,6 +15,8 @@ PickUp::PickUp(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	else if (mask == 0x0010)
 		texMan->getFrames("darkPickUp", this);
 
+	del = false;
+
 	//// SFML ////
 	/*setPosition(position);
 	setSize(size);

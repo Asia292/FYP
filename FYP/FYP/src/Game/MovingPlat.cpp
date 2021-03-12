@@ -1,6 +1,6 @@
 #include "MovingPlat.h"
 
-MovingPlat::MovingPlat(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, const sf::Vector2f &End, TextureManager *texMan, const std::string col, const std::string Glow)
+MovingPlat::MovingPlat(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, const sf::Vector2f &End, TextureManager *texMan, const std::string col, const std::string Glow, bool onClient)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -24,8 +24,9 @@ MovingPlat::MovingPlat(b2World * world, const sf::Vector2f & position, const sf:
 
 	texMan->setTexture("all", this);
 	texMan->getFrames(col, this);
-	setSize(sf::Vector2f(0.00575f, 0.00775f));
+	setSize(sf::Vector2f(0.01f, 0.01f));
 	texture = texMan;
+	setPos(sf::Vector2f(position.x, position.y));
 
 	start = b2Vec2(position.x, position.y);
 	end = b2Vec2(End.x, End.y);
@@ -34,6 +35,8 @@ MovingPlat::MovingPlat(b2World * world, const sf::Vector2f & position, const sf:
 	yMove = 0;
 	platform = col;
 	glow = Glow;
+	glowTex = false;
+	client = onClient;
 
 	/*setPosition(position);
 	setSize(size);
@@ -89,37 +92,49 @@ void MovingPlat::moveToStart()
 void MovingPlat::update(float timestep)
 {
 	// Redo with reverse engineering velocity?
-	if (moveEnd)
+	if (!client)
 	{
-		texture->getFrames(glow, this);
-		setSize(sf::Vector2f(0.01f, 0.01f));
-
-		if ((body->GetPosition().x < end.x + 0.1) && (body->GetPosition().x > end.x - 0.1))
+		if (moveEnd)
 		{
-			xMove = 0;
+			texture->getFrames(glow, this);
+			glowTex = true;
 
-			if ((body->GetPosition().y < end.y + 0.1) && (body->GetPosition().y > end.y - 0.1))
-				yMove = 0;
+			if ((body->GetPosition().x < end.x + 0.1) && (body->GetPosition().x > end.x - 0.1))
+			{
+				xMove = 0;
+
+				if ((body->GetPosition().y < end.y + 0.1) && (body->GetPosition().y > end.y - 0.1))
+					yMove = 0;
+			}
 		}
-	}
-	else
-	{
-		texture->getFrames(platform, this);
-		setSize(sf::Vector2f(0.01f, 0.01f));
-
-		if ((body->GetPosition().x < start.x + 0.1) && (body->GetPosition().x > start.x - 0.1))
+		else
 		{
-			xMove = 0;
+			texture->getFrames(platform, this);
+			glowTex = false;
 
-			if ((body->GetPosition().y < start.y + 0.1) && (body->GetPosition().y > start.y - 0.1))
-				yMove = 0;
+			if ((body->GetPosition().x < start.x + 0.1) && (body->GetPosition().x > start.x - 0.1))
+			{
+				xMove = 0;
+
+				if ((body->GetPosition().y < start.y + 0.1) && (body->GetPosition().y > start.y - 0.1))
+					yMove = 0;
+			}
 		}
+
+
+		body->SetLinearVelocity(b2Vec2(xMove, yMove));
 	}
-
-	body->SetLinearVelocity(b2Vec2(xMove, yMove));
-
 
 	Texture::update(timestep);
 	b2Vec2 pos = body->GetPosition();
-	currSprite.setPosition(pos.x, pos.y);
+	if (!client)
+		currSprite.setPosition(pos.x, pos.y);
+}
+
+void MovingPlat::setTexture(bool tex)
+{
+	if (tex)
+		texture->getFrames(glow, this);
+	else
+		texture->getFrames(platform, this);
 }

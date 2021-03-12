@@ -16,16 +16,21 @@ void NetworkState::HandlePackets(const PacketID & id, sf::Packet & packet, Clien
 	}
 	else if ((PacketType)id == PacketType::LvlSelectUpdate)
 	{
-		LevelUpdate update;
+		LevelSelectUpdate update;
 		packet >> update;
-		currState->levelUpdate(update.currLevel, update.back);
+		currState->levelSelectUpdate(update.currLevel, update.back);
 	}
 	else if ((PacketType)id == PacketType::PlayerUpdate)
 	{
 		PlayerUpdate update;
 		packet >> update;
-
 		currState->playerUpdate(update.player, update.texture, update.frame, update.flip, update.dead, update.position);
+	}
+	else if ((PacketType)id == PacketType::LevelUpdate)
+	{
+		LevelUpdate update;
+		packet >> update;
+		currState->levelUpdate(update.object, update.index, update.texture, update.frame, update.angle, update.position);
 	}
 	else if ((PacketType)id == PacketType::StateTransition)
 	{

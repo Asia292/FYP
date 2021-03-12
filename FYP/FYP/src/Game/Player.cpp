@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, int cat, TextureManager *texMan)
+Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, int cat, TextureManager *texMan, bool onClient)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -60,6 +60,7 @@ Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2
 	run = false;
 	lightTex = 0;
 	darkTex = 0;
+	client = onClient;
 }
 
 void Player::update(float timestep)
@@ -67,10 +68,13 @@ void Player::update(float timestep)
 	Texture::update(timestep);
 	currSprite.setScale(sf::Vector2f(0.00275 - (int)flip * 0.0055, 0.00275f));	// 1 - (int)flip * 2
 	b2Vec2 pos = body->GetPosition();
-	/*if (player == 0x0010)
-		currSprite.setPosition(pos.x, pos.y - 0.2f);
-	else if (player == 0x0100)
-		currSprite.setPosition(pos.x, pos.y - 0.1f);*/
+	if (!client)
+	{
+		if (player == 0x0010)
+			currSprite.setPosition(pos.x, pos.y - 0.2f);
+		else if (player == 0x0100)
+			currSprite.setPosition(pos.x, pos.y - 0.1f);
+	}
 }
 
 void Player::setUserData(void * data)

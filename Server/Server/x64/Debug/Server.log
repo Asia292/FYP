@@ -1,4 +1,7 @@
-﻿  GameState.cpp
+﻿  Game.cpp
+  Lvl1.cpp
+  PickUp.cpp
+  GameState.cpp
   LevelSelectState.cpp
   MenuState.cpp
 c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(9): warning C4244: '=': conversion from 'float' to 'int', possible loss of data

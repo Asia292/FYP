@@ -1,16 +1,17 @@
 #include "Lvl1.h"
 
-Lvl1::Lvl1(TextureManager * textMan, b2World * world)
+Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 {
 	textMan->setTexture("lvl1", this);
 	setBg();
 
 	lEmpty = true;
 	dEmpty = true;
+	client = onClient;
 
 	//// PLAYERS ////
-	lightPlayer = new Player(world, sf::Vector2f(1.00f, 8.14f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0010, textMan);
-	darkPlayer = new Player(world, sf::Vector2f(1.00f, 9.62f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0100, textMan);
+	lightPlayer = new Player(world, sf::Vector2f(1.00f, 8.14f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0010, textMan, onClient);
+	darkPlayer = new Player(world, sf::Vector2f(1.00f, 9.62f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0100, textMan, onClient);
 
 	//// HAZARDS ////
 	lightHazard = new Hazard(world, sf::Vector2f(10.25f, 10.18f), sf::Vector2f(1.5f, 0.25f), 0.f, 0x0010);
@@ -18,8 +19,8 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world)
 	bothHazard = new Hazard(world, sf::Vector2f(9.54f, 8.00f), sf::Vector2f(1.5f, 0.25f), 0.f, 0xFFFF);
 
 	//// PLATFORMS ////
-	platforms[0] = new MovingPlat(world, sf::Vector2f(1.09f, 5.55f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(1.09f, 6.60f), textMan, "yellowPlat", "yellowGlow");
-	platforms[1] = new MovingPlat(world, sf::Vector2f(12.96f, 4.24f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(12.96f, 5.60f), textMan, "purplePlat", "purpleGlow");
+	platforms[0] = new MovingPlat(world, sf::Vector2f(1.09f, 5.55f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(1.09f, 6.60f), textMan, "yellowPlat", "yellowGlow", onClient);
+	platforms[1] = new MovingPlat(world, sf::Vector2f(12.96f, 4.24f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(12.96f, 5.60f), textMan, "purplePlat", "purpleGlow", onClient);
 
 	//// LEVERS/BUTTONS ////
 	lever = new Lever(world, sf::Vector2f(3.77f, 7.0f), sf::Vector2f(0.6f, 0.5f), platforms[0], true, textMan, "yellowLever", "yellowLeverReverse");
@@ -36,7 +37,7 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world)
 	lightPickUps[2] = new PickUp(world, sf::Vector2f(1.10f, 2.11f), sf::Vector2f(0.3f, 0.3f), 0x0010, textMan);
 
 	//// MISC ////
-	block = new Block(world, sf::Vector2f(7.56f, 3.04f), sf::Vector2f(0.5f, 0.5f), 0.f, textMan);
+	block = new Block(world, sf::Vector2f(7.56f, 3.04f), sf::Vector2f(0.5f, 0.5f), 0.f, textMan, onClient);
 
 	lightHome = new HomeSensor(world, sf::Vector2f(11.89f, 1.71f), sf::Vector2f(0.68f, 0.92f), lightPlayer, textMan);
 	darkHome = new HomeSensor(world, sf::Vector2f(13.18f, 1.71f), sf::Vector2f(0.68f, 0.92f), darkPlayer, textMan);
@@ -139,6 +140,11 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world)
 	block->setUserData(new std::pair<std::string, void *>(typeid(decltype(*block)).name(), block));
 	lightHome->setUserData(lightHome);
 	darkHome->setUserData(darkHome);
+
+	//// NETWORK BEFORE VALUES	////
+	frameBefore = lever->getFrame();
+	for (int i = 0; i < 2; i++) platPosBefore[i] = platforms[i]->getBody()->GetPosition();
+	blockPosBefore = block->getBody()->GetPosition();
 }
 
 Lvl1::~Lvl1()
@@ -195,7 +201,7 @@ Lvl1::~Lvl1()
 	darkHome = nullptr;
 }
 
-void Lvl1::update(float timestep)
+void Lvl1::update(float timestep, bool server)
 {
 	Texture::update(timestep);
 
@@ -218,7 +224,7 @@ void Lvl1::update(float timestep)
 		{
 			item->update(timestep);
 
-			if (item->getDel() == true)
+			if (item->getDel() && !server)
 			{
 				delete item;
 				lightPickUps[i] = nullptr;
@@ -233,7 +239,7 @@ void Lvl1::update(float timestep)
 		{
 			item->update(timestep);
 
-			if (item->getDel() == true)
+			if (item->getDel() && !server)
 			{
 				delete item;
 				darkPickUps[i] = nullptr;
@@ -307,4 +313,115 @@ int Lvl1::score(float time)
 		return 1;
 	else
 		return 2;
+}
+
+void Lvl1::networkFramUpdate(Server * server)
+{
+	if (lever->getFrame() != frameBefore)
+	{
+		sf::Packet p;
+		StampPacket(PacketType::LevelUpdate, p);
+		LevelUpdate update;
+		update.object = 0;
+		update.texture = lever->getTexture();
+		update.frame = lever->getFrame();
+		p << update;
+		server->Broadcast(p);
+
+		frameBefore = lever->getFrame();
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		if (platforms[i]->getBody()->GetPosition() != platPosBefore[i])
+		{
+			sf::Packet p;
+			StampPacket(PacketType::LevelUpdate, p);
+			LevelUpdate update;
+			float x = platforms[i]->getBody()->GetPosition().x;
+			float y = platforms[i]->getBody()->GetPosition().y;
+			update.object = 1;
+			update.index = i;
+			update.position = sf::Vector2f(x, y);
+			update.texture = platforms[i]->getGlow();
+			p << update;
+			server->Broadcast(p);
+
+			platPosBefore[i] = platforms[i]->getBody()->GetPosition();
+		}
+	}
+
+	if (block->getBody()->GetPosition() != blockPosBefore)
+	{
+		sf::Packet p;
+		StampPacket(PacketType::LevelUpdate, p);
+		LevelUpdate update;
+		float x = block->getBody()->GetPosition().x;
+		float y = block->getBody()->GetPosition().y;
+		update.object = 2;
+		update.position = sf::Vector2f(x, y);
+		update.angle = block->getBody()->GetAngle();
+		p << update;
+		server->Broadcast(p);
+
+		blockPosBefore = block->getBody()->GetPosition();
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		if (lightPickUps[i] != nullptr && lightPickUps[i]->getDel())
+		{
+			delete lightPickUps[i];
+			lightPickUps[i] = nullptr;
+
+			sf::Packet p;
+			StampPacket(PacketType::LevelUpdate, p);
+			LevelUpdate update;
+			update.object = 3;
+			update.index = i;
+			p << update;
+			server->Broadcast(p);
+		}
+
+		if (darkPickUps[i] != nullptr && darkPickUps[i]->getDel())
+		{
+			delete darkPickUps[i];
+			darkPickUps[i] = nullptr;
+
+			sf::Packet p;
+			StampPacket(PacketType::LevelUpdate, p);
+			LevelUpdate update;
+			update.object = 4;
+			update.index = i;
+			p << update;
+			server->Broadcast(p);
+		}
+	}
+}
+
+void Lvl1::networkUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position)
+{
+	float deg;
+	switch (object)
+	{
+	case 0:
+		lever->setTexture(texture);
+		lever->setFrame(frame);
+		break;
+	case 1:
+		platforms[index]->setPos(position);
+		platforms[index]->setTexture(texture);
+		break;
+	case 2:
+		block->setPos(position);
+		deg = angle * 57.29577f;
+		block->setAngle(deg);
+		break;
+	case 3:
+		lightPickUps[index]->delTrue();
+		break;
+	case 4:
+		darkPickUps[index]->delTrue();
+		break;
+	}
 }

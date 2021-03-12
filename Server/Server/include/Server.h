@@ -102,4 +102,6 @@ public:
 	std::string GetClientList();
 
 	sf::Mutex& GetMutex();
+
+	
 };

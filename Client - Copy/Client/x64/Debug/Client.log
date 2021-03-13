@@ -1,6 +1,0 @@
-﻿  ClientMain.cpp
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\client\client\clientmain.cpp(65): warning C4326: return type of 'main' should be 'int' instead of 'void'
-  Client.cpp
-  PacketTypes.cpp
-  Generating Code...
-  Client.vcxproj -> C:\Users\Tia-A\Documents\FYP\Student's Cartridge\Development\Code\FYP\Client - Copy\x64\Debug\Client.exe

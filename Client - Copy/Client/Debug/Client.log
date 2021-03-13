@@ -1,3 +1,0 @@
-﻿  ClientMain.cpp
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\client\client\clientmain.cpp(37): warning C4326: return type of 'main' should be 'int' instead of 'void'
-sfml-system-s-d.lib(Time.cpp.obj) : fatal error LNK1112: module machine type 'x64' conflicts with target machine type 'x86'

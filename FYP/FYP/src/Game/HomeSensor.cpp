@@ -28,8 +28,6 @@ void HomeSensor::onAction(b2Body * other)
 
 void HomeSensor::offAction(b2Body * other)
 {
-	player->setHome(false);
-
 	fade = false;
 }
 
@@ -47,6 +45,7 @@ void HomeSensor::update(float timestep)
 	}
 	else if (!fade && a != 255)
 	{
+		player->setHome(false);
 		a += 5;
 	}
 

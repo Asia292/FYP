@@ -36,6 +36,8 @@ protected:
 	int frameBefore;
 	b2Vec2 platPosBefore[2];
 	b2Vec2 blockPosBefore;
+	bool lightHomeBefore;
+	bool darkHomeBefore;
 
 public:
 

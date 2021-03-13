@@ -176,6 +176,12 @@ void Game::update(float timestep, bool server)
 			star.setSize(sf::Vector2f(0.02f, 0.02f));
 			star.setPos(sf::Vector2f(7.0f, 5.0f));
 		}
+
+		for (int i = 0; i < 2; i++)
+		{
+			select[i].setFillColor(sf::Color(255, 222, 0));
+		}
+		select[back].setFillColor(sf::Color(100, 32, 188));
 	}
 	
 	// Delete debug shapes
@@ -265,9 +271,7 @@ void Game::moveLeft()
 {
 	if (back - 1 >= 0)
 	{
-		select[back].setFillColor(sf::Color(255, 222, 0));
 		back--;
-		select[back].setFillColor(sf::Color(100, 32, 188));
 	}
 }
 
@@ -275,9 +279,7 @@ void Game::moveRight()
 {
 	if (back + 1 < 2)
 	{
-		select[back].setFillColor(sf::Color(255, 222, 0));
 		back++;
-		select[back].setFillColor(sf::Color(100, 32, 188));
 	}
 }
 

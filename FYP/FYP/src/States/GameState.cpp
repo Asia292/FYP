@@ -3,8 +3,12 @@
 GameState::GameState(int level, int * levelScore, std::stack<State*>* States, Server * l_server)
 {
 	states = States;
+	onClient = false;
 	if (states->size() == 1 && l_server == nullptr)
+	{
 		game = new Game(level, levelScore, true);
+		onClient = true;
+	}
 	else
 		game = new Game(level, levelScore);
 	quit = false;
@@ -32,7 +36,11 @@ void GameState::update(float timestep)
 	if (game->getRetry())
 	{
 		game->~Game();
-		game = new Game(lvl, lvlScore);
+		if (onClient)
+			game = new Game(lvl, lvlScore, true);
+		else
+			game = new Game(lvl, lvlScore);
+		gameOver = false;
 	}
 
 	if (game->getBack())
@@ -95,11 +103,14 @@ void GameState::processNetworkKeyPress(int code, Server* l_server)
 
 	sf::Packet p;
 
-	if (code != sf::Keyboard::Key::Return)
+	if (code != sf::Keyboard::Key::Return && game->getOver())
 	{
-		
+		StampPacket(PacketType::LvlSelectUpdate, p);
+		LevelSelectUpdate update;
+		update.currLevel = game->getText();
+		p << update;
 	}
-	else
+	else if (game->getOver())
 	{
 		StampPacket(PacketType::StateTransition, p);
 		bool up;
@@ -124,6 +135,19 @@ void GameState::processNetworkKeyRelease(int code, Server* l_server)
 {
 	game->processKeyRelease((sf::Keyboard::Key)code);
 	
+}
+
+void GameState::levelSelectUpdate(int lvl, int back)
+{
+	game->setText(lvl);
+}
+
+void GameState::stateTransition(bool push)
+{
+	if (push)
+		game->setRetry(true);
+	else
+		game->setLvlSelect(true);
 }
 
 void GameState::playerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos)

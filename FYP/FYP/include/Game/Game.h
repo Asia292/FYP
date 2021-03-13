@@ -74,6 +74,10 @@ public:
 	void moveRight();									//!< Moves the selection right for menu/game over screen
 	void selected();									//!< What to do with selected item
 	void networkPlayerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos);
+	void setText(int txt) { back = txt; }
+	int getText() { return back; }
+	void setRetry(bool Retry) { retry = Retry; }
+	void setLvlSelect(bool select) { levelSelect = select; }
 	
 
 	Level * getCurrLvl() { return currLevel; }

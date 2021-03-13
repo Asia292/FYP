@@ -1,14 +1,2 @@
-﻿  Game.cpp
-  Lvl1.cpp
-  PickUp.cpp
-  GameState.cpp
-  LevelSelectState.cpp
-  MenuState.cpp
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(9): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(10): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  NetworkState.cpp
-  ServerMain.cpp
-  Generating Code...
+﻿  HomeSensor.cpp
   Server.vcxproj -> C:\Users\Tia-A\Documents\FYP\Student's Cartridge\Development\Code\FYP\Server\x64\Debug\Server.exe

@@ -26,4 +26,6 @@ public:
 	void onAction(b2Body * other) override;		//!< Action to do when sensor is triggered
 	void offAction(b2Body * other) override;		//!< Action to do when sensor stops being triggered
 	void update(float timestep) override;
+	bool getFade() { return fade; }
+	void setFade(bool Fade) { fade = Fade; }
 };

@@ -145,6 +145,8 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	frameBefore = lever->getFrame();
 	for (int i = 0; i < 2; i++) platPosBefore[i] = platforms[i]->getBody()->GetPosition();
 	blockPosBefore = block->getBody()->GetPosition();
+	lightHomeBefore = false;
+	darkHomeBefore = false;
 }
 
 Lvl1::~Lvl1()
@@ -397,6 +399,32 @@ void Lvl1::networkFramUpdate(Server * server)
 			server->Broadcast(p);
 		}
 	}
+
+	if (lightHome->getFade() != lightHomeBefore)
+	{
+		sf::Packet p;
+		StampPacket(PacketType::LevelUpdate, p);
+		LevelUpdate update;
+		update.object = 5;
+		update.texture = lightHome->getFade();
+		p << update;
+		server->Broadcast(p);
+
+		lightHomeBefore = lightHome->getFade();
+	}
+
+	if (darkHome->getFade() != darkHomeBefore)
+	{
+		sf::Packet p;
+		StampPacket(PacketType::LevelUpdate, p);
+		LevelUpdate update;
+		update.object = 6;
+		update.texture = darkHome->getFade();
+		p << update;
+		server->Broadcast(p);
+
+		std::cout << darkHomeBefore << std::endl;
+	}
 }
 
 void Lvl1::networkUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position)
@@ -422,6 +450,12 @@ void Lvl1::networkUpdate(int object, int index, bool texture, int frame, float a
 		break;
 	case 4:
 		darkPickUps[index]->delTrue();
+		break;
+	case 5:
+		lightHome->setFade(texture);
+		break;
+	case 6:
+		darkHome->setFade(texture);
 		break;
 	}
 }

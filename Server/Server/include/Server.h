@@ -44,6 +44,8 @@ class Server
 private:
 	void Setup();
 	ClientID lastID;
+	bool ID0Free;
+	bool ID1Free;
 
 	sf::UdpSocket incoming;
 	sf::UdpSocket outgoing;

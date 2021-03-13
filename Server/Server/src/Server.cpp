@@ -3,6 +3,8 @@
 void Server::Setup()
 {
 	lastID = 0;
+	ID0Free = true;
+	ID1Free = true;
 	running = false;
 	totalSent = 0;
 	totalRecieved = 0;
@@ -208,11 +210,22 @@ ClientID Server::AddClient(const sf::IpAddress & ip, const PortNumber & port)
 		if (itr.second.clientIP == ip && itr.second.clientPort == port)
 			return ClientID(Network::NullID);
 	}
-
-	ClientID id = lastID;
+	ClientID id;
+	if (ID0Free)
+	{
+		id = 0;
+		ID0Free = false;
+	}
+	else if (ID1Free)
+	{
+		id = 1;
+		ID1Free = false;
+	}
+	else
+		id = -1;
+	//ClientID id = lastID;
 	ClientInfo info(ip, port, serverTime);
 	clients.insert(std::make_pair(id, info));
-	lastID++;
 	return id;
 }
 
@@ -279,6 +292,11 @@ bool Server::RemoveClient(const sf::IpAddress & ip, const PortNumber& port)
 	{
 		if (itr->second.clientIP == ip && itr->second.clientPort == port)
 		{
+			if (itr->first == 0)
+				ID0Free = true;
+			else if (itr->first == 1)
+				ID1Free = true;
+
 			sf::Packet p;
 			StampPacket(PacketType::Disconnect, p);
 			Send(itr->first, p);

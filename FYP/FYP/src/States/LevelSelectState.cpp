@@ -39,7 +39,7 @@ void LevelSelectState::processKeyPress(sf::Keyboard::Key code)
 	levelSelect->processKeyPress(code);
 }
 
-void LevelSelectState::processNetworkKeyPress(int code, Server* l_server)
+void LevelSelectState::processNetworkKeyPress(int code, Server* l_server, int id)
 {
 	levelSelect->processKeyPress((sf::Keyboard::Key)code);
 

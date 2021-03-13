@@ -27,9 +27,9 @@ public:
 	virtual void update(float timestep) override;		//!< Override base update
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;		//!< Override base draw
 	virtual void processKeyPress(sf::Keyboard::Key code) override;		//!< Overrides base key press
-	virtual void processNetworkKeyPress(int code, Server* l_server) override;		//!< Overrides base network key press
+	virtual void processNetworkKeyPress(int code, Server* l_server, int id) override;		//!< Overrides base network key press
 	virtual void processKeyRelease(sf::Keyboard::Key code) override;		//!< Overrides base key release
-	virtual void processNetworkKeyRelease(int code, Server* l_server) override;		//!< Overrides base network key release
+	virtual void processNetworkKeyRelease(int code, Server* l_server, int id) override;		//!< Overrides base network key release
 	virtual bool getQuit() override { return quit; }		//!< Override base quit - returns quit bool
 
 	//Function per packet type???

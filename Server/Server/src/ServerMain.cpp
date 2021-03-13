@@ -32,14 +32,14 @@ void Handler(sf::IpAddress& l_ip, const PortNumber& l_port, const PacketID& l_id
 			int recieve;
 			l_packet >> recieve;
 
-			currState->processNetworkKeyPress(recieve, l_server);
+			currState->processNetworkKeyPress(recieve, l_server, id);
 		}
 		else if ((PacketType)l_id == PacketType::KeyRelease)
 		{
 			int recieve;
 			l_packet >> recieve;
 
-			currState->processNetworkKeyRelease(recieve, l_server);
+			currState->processNetworkKeyRelease(recieve, l_server, id);
 		}
 	} 
 	else 
@@ -47,9 +47,16 @@ void Handler(sf::IpAddress& l_ip, const PortNumber& l_port, const PacketID& l_id
 		if ((PacketType)l_id == PacketType::Connect) 
 		{ 
 			ClientID id = l_server->AddClient(l_ip, l_port); 
-			sf::Packet packet; 
-			StampPacket(PacketType::Connect, packet); 
-			l_server->Send(id, packet); 
+			if (id != -1)
+			{
+				sf::Packet packet;
+				StampPacket(PacketType::Connect, packet);
+				l_server->Send(id, packet);
+			}
+			else
+			{
+				l_server->RemoveClient(id);
+			}
 		} 
 	} 
 }

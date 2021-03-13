@@ -97,9 +97,15 @@ void GameState::processKeyPress(sf::Keyboard::Key code)
 	game->processKeyPress(code);
 }
 
-void GameState::processNetworkKeyPress(int code, Server* l_server)
+void GameState::processNetworkKeyPress(int code, Server* l_server, int id)
 {
-	game->processKeyPress((sf::Keyboard::Key)code);
+	if (!game->getOver() && id == 0 && code != sf::Keyboard::Key::Up && code != sf::Keyboard::Key::Right && code != sf::Keyboard::Key::Left)
+		game->processKeyPress((sf::Keyboard::Key)code);
+	else if (!game->getOver() && id == 1 && code != sf::Keyboard::Key::W && code != sf::Keyboard::Key::A && code != sf::Keyboard::Key::D)
+		game->processKeyPress((sf::Keyboard::Key)code);
+	else if (game->getOver())
+		game->processKeyPress((sf::Keyboard::Key)code);
+
 
 	sf::Packet p;
 
@@ -131,10 +137,12 @@ void GameState::processKeyRelease(sf::Keyboard::Key code)
 	game->processKeyRelease(code);
 }
 
-void GameState::processNetworkKeyRelease(int code, Server* l_server)
+void GameState::processNetworkKeyRelease(int code, Server* l_server, int id)
 {
-	game->processKeyRelease((sf::Keyboard::Key)code);
-	
+	if (!game->getOver() && id == 0 && code != sf::Keyboard::Key::Up && code != sf::Keyboard::Key::Right && code != sf::Keyboard::Key::Left)
+		game->processKeyRelease((sf::Keyboard::Key)code);
+	else if (!game->getOver() && id == 1 && code != sf::Keyboard::Key::W && code != sf::Keyboard::Key::A && code != sf::Keyboard::Key::D)
+		game->processKeyRelease((sf::Keyboard::Key)code);
 }
 
 void GameState::levelSelectUpdate(int lvl, int back)

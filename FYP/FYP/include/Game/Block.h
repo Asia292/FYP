@@ -22,7 +22,7 @@ private:
 
 public:
 	Block() {};		//!< Default constructor
-	Block(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, TextureManager *texMan, bool onClient);		//!< Full constructor
+	Block(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, TextureManager *texMan, bool onClient = false);		//!< Full constructor
 	void update(float timestep);	//!< Updates entity
 	void setUserData(void* data);		//!< Sets the user data of the body
 	b2Body * getBody() { return body; }

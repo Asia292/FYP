@@ -317,7 +317,7 @@ int Lvl1::score(float time)
 		return 2;
 }
 
-void Lvl1::networkFramUpdate(Server * server)
+void Lvl1::networkFrameUpdate(Server * server)
 {
 	if (lever->getFrame() != frameBefore)
 	{

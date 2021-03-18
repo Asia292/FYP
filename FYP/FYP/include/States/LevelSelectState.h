@@ -4,7 +4,7 @@
 */
 
 #include "GameState.h"
-#include "..\Menu\LevelSelect.h"
+#include "LevelSelect.h"
 
 /*! \class LevelSelectState
 \brief The state which holds the level select screen

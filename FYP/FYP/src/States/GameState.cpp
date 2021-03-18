@@ -79,7 +79,7 @@ void GameState::update(float timestep)
 		p2 << update;
 		server->Broadcast(p2);
 
-		game->getCurrLvl()->networkFramUpdate(server);
+		game->getCurrLvl()->networkFrameUpdate(server);
 
 		if (game->getOver())
 			gameOver = true;

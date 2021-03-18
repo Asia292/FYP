@@ -29,7 +29,7 @@ private:
 
 public:
 	MovingPlat() {};		//!< Default constructor
-	MovingPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, const sf::Vector2f &End, TextureManager *texMan, const std::string col, const std::string Glow, bool onClient);		//!< Full constructor
+	MovingPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, const sf::Vector2f &End, TextureManager *texMan, const std::string col, const std::string Glow, bool onClient = false);		//!< Full constructor
 	void setUserData(void* data);		//!< Sets the user data of the body
 	void moveToEnd();
 	void moveToStart();

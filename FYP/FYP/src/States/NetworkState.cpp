@@ -1,11 +1,5 @@
 #include "NetworkState.h"
 
-void HandlePacket(const PacketID & id, sf::Packet & packet, Client * client)
-{
-	NetworkState state;
-	state.HandlePackets(id, packet, client);
-}
-
 void NetworkState::HandlePackets(const PacketID & id, sf::Packet & packet, Client * client)
 {
 	if ((PacketType)id == PacketType::Message)

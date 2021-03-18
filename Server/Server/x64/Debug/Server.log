@@ -1,2 +1,29 @@
-﻿  ServerMain.cpp
+﻿  Block.cpp
+  Button.cpp
+  ContactListener.cpp
+  Game.cpp
+  HomeSensor.cpp
+  Lvl1.cpp
+  Lever.cpp
+  MovingPlat.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\game\movingplat.cpp(125): warning C4244: 'argument': conversion from 'int' to 'float32', possible loss of data
+  Player.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\game\player.cpp(69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  GameState.cpp
+  LevelSelectState.cpp
+  MenuState.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(9): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(10): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  NetworkState.cpp
+  Client.cpp
+  Server.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\server\server\src\server.cpp(356): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+  ServerMain.cpp
+  Generating Code...
   Server.vcxproj -> C:\Users\Tia-A\Documents\FYP\Student's Cartridge\Development\Code\FYP\Server\x64\Debug\Server.exe

@@ -3,6 +3,7 @@
 #include "PacketTypes.h"
 #include <functional>
 #include <iostream>
+#include <unordered_map>
 
 enum class Network
 {

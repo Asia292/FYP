@@ -31,6 +31,8 @@ public:
 	virtual void processNetworkKeyRelease(int code, Server* l_server, int id) override {};		//!< Overrides base network key release
 	virtual bool getQuit() override { return quit; }	//!< Overrides base quit - returns quit bool
 
+	//void pushGameState() { netStates.push(new LevelSelectState(Width, Height, &netStates)); }
+
 	//Function per packet type???
 	virtual void levelSelectUpdate(int lvl, int back) override {};
 	virtual void stateTransition(bool push) override {};

@@ -33,7 +33,7 @@ private:
 
 public:
 	Player() {};		//!< Default constructor
-	Player(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, int cat, TextureManager *texMan, bool onClient);		//!< Full constructor
+	Player(b2World * world, const sf::Vector2f& position, const sf::Vector2f &size, const float orientation, int cat, TextureManager *texMan, bool onClient = false);		//!< Full constructor
 	void update(float timestep);	//!< Updates entity
 	void setUserData(void* data);		//!< Sets the user data of the body
 

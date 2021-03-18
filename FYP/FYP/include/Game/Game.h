@@ -61,7 +61,7 @@ public:
 	Game() {};		//!< Default constructor
 	Game(int level, int *levelScore, bool onClient = false); //!< Full constructor which sets up the game
 	~Game(); //!< Destructor which cleans all the pointer memory up
-	void update(float timestep, bool server); //!< Update the game with given timestep
+	void update(float timestep, bool server = false); //!< Update the game with given timestep
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const; //!< Draw the game to the render context
 	void toggleDebug() { debug = !debug; }; //!< Toggle for debug drawing
 	void processKeyPress(sf::Keyboard::Key code);		//!< Decides what to do on key press
@@ -79,7 +79,6 @@ public:
 	void setRetry(bool Retry) { retry = Retry; }
 	void setLvlSelect(bool select) { levelSelect = select; }
 	
-
 	Level * getCurrLvl() { return currLevel; }
 
 	ContactListener listener;	//!< The contact listener

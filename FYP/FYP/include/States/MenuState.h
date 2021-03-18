@@ -4,7 +4,7 @@
 */
 
 #include "NetworkState.h"
-#include "..\Menu\Menu.h"
+#include "Menu.h"
 
 /*! \class MenuState
 \brief The state which holds the main menu

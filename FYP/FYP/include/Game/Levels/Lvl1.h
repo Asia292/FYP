@@ -46,6 +46,6 @@ public:
 	virtual void update(float timestep, bool server) override;		//!< Updates all game elements
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;		//!< Draws all game elements
 	virtual int score(float time) override;		//!< Calculates level score
-	virtual void networkFramUpdate(Server * server) override;
+	virtual void networkFrameUpdate(Server * server) override;
 	virtual void networkUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position) override;
 };

@@ -1,26 +1,24 @@
-﻿  LevelSelectState.cpp
-  MenuState.cpp
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(9): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(10): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  Block.cpp
+  Game.cpp
   main.cpp
 c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\main.cpp(19): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
+  GameState.cpp
+  LevelSelectState.cpp
+  MenuState.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(9): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(10): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  NetworkState.cpp
+  Server.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\server\server\src\server.cpp(15): error C2679: binary '=': no operator found which takes a right-hand operand of type 'std::_Binder<std::_Unforced,void (__cdecl *&)(sf::IpAddress &,const PortNumber &,const PacketID &,sf::Packet &,Server *),const std::_Ph<1> &,const std::_Ph<2> &,const std::_Ph<3> &,const std::_Ph<4> &,const std::_Ph<5> &>' (or there is no acceptable conversion)
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\functional(1577): note: could be 'std::function<void (sf::IpAddress &,const PortNumber &,const PacketID &,sf::Packet &,ServerBase *)> &std::function<void (sf::IpAddress &,const PortNumber &,const PacketID &,sf::Packet &,ServerBase *)>::operator =(std::nullptr_t) noexcept'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\functional(1550): note: or       'std::function<void (sf::IpAddress &,const PortNumber &,const PacketID &,sf::Packet &,ServerBase *)> &std::function<void (sf::IpAddress &,const PortNumber &,const PacketID &,sf::Packet &,ServerBase *)>::operator =(std::function<void (sf::IpAddress &,const PortNumber &,const PacketID &,sf::Packet &,ServerBase *)> &&)'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\functional(1531): note: or       'std::function<void (sf::IpAddress &,const PortNumber &,const PacketID &,sf::Packet &,ServerBase *)> &std::function<void (sf::IpAddress &,const PortNumber &,const PacketID &,sf::Packet &,ServerBase *)>::operator =(const std::function<void (sf::IpAddress &,const PortNumber &,const PacketID &,sf::Packet &,ServerBase *)> &)'
+  c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\server\server\src\server.cpp(15): note: while trying to match the argument list '(SPacketHandler, std::_Binder<std::_Unforced,void (__cdecl *&)(sf::IpAddress &,const PortNumber &,const PacketID &,sf::Packet &,Server *),const std::_Ph<1> &,const std::_Ph<2> &,const std::_Ph<3> &,const std::_Ph<4> &,const std::_Ph<5> &>)'
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\server\server\src\server.cpp(356): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
   Generating Code...
-winmm.lib(WINMM.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored
-winmm.lib(WINMM.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-gdi32.lib(GDI32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored
-gdi32.lib(GDI32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-openal32.lib(OpenAL32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored
-openal32.lib(OpenAL32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-vorbis.lib(vorbisenc.obj) : warning LNK4006: vorbis_encode_init already defined in vorbisenc.lib(vorbisenc.obj); second definition ignored
-vorbis.lib(vorbisenc.obj) : warning LNK4006: vorbis_encode_setup_managed already defined in vorbisenc.lib(vorbisenc.obj); second definition ignored
-vorbis.lib(vorbisenc.obj) : warning LNK4006: vorbis_encode_setup_vbr already defined in vorbisenc.lib(vorbisenc.obj); second definition ignored
-vorbis.lib(vorbisenc.obj) : warning LNK4006: vorbis_encode_init_vbr already defined in vorbisenc.lib(vorbisenc.obj); second definition ignored
-vorbis.lib(vorbisenc.obj) : warning LNK4006: vorbis_encode_setup_init already defined in vorbisenc.lib(vorbisenc.obj); second definition ignored
-vorbis.lib(vorbisenc.obj) : warning LNK4006: vorbis_encode_ctl already defined in vorbisenc.lib(vorbisenc.obj); second definition ignored
-vorbis.lib(vorbisenc.obj) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-  Game - lib.vcxproj -> C:\Users\Tia-A\Documents\FYP\Student's Cartridge\Development\Code\FYP\FYP\x64\Debug\Game - lib.lib

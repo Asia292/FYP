@@ -137,7 +137,13 @@ void Lever::update(float timestep)
 void Lever::setTexture(bool tex)
 {
 	if (tex)
+	{
 		texture->getFrames(reverse, this);
+		revTex = true;
+	}
 	else
+	{
 		texture->getFrames(forward, this);
+		revTex = false;
+	}
 }

@@ -217,12 +217,15 @@ void Player::setTextures(int tex)
 		{
 		case 0:
 			texture->getFrames("lightIdle", this);
+			lightTex = 0;
 			break;
 		case 1:
 			texture->getFrames("lightRun", this);
+			lightTex = 1;
 			break;
 		case 2:
 			texture->getFrames("lightJump", this);
+			lightTex = 2;
 			break;
 		}
 	}
@@ -232,12 +235,15 @@ void Player::setTextures(int tex)
 		{
 		case 0:
 			texture->getFrames("darkIdle", this);
+			darkTex = 0;
 			break;
 		case 1:
 			texture->getFrames("darkRun", this);
+			darkTex = 1;
 			break;
 		case 2:
 			texture->getFrames("darkJump", this);
+			darkTex = 2;
 			break;
 		}
 	}

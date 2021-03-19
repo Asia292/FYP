@@ -36,8 +36,8 @@ struct ClientInfo
 };
 
 using Clients = std::unordered_map<ClientID, ClientInfo>;
-class ServerBase;
-using SPacketHandler = std::function<void(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, ServerBase*)>;
+class Server;
+using SPacketHandler = std::function<void(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*)>;
 using TimeoutHandler = std::function<void(const ClientID&)>;
 
 class Server
@@ -71,7 +71,7 @@ public:
 	{
 		packetHandler = std::bind(handler, instance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
 	}
-
+	
 	Server(void(*handler)(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*));
 	virtual ~Server();
 

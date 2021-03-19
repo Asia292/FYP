@@ -59,7 +59,7 @@ TEST(ClientPacketRecieved, UpdateLevelSelectBack)
 	update.currLevel = 0;
 	update.back = 1;
 	p << update;
-
+	
 	state.HandlePackets(5, p, nullptr);
 
 	int level = lvlSelect->levelSelect->getLevel();
@@ -127,7 +127,6 @@ TEST(ClientPacketRecieved, LightPlayerUpdate)
 	state.currState = netStates.top();
 
 	sf::Packet p;
-	StampPacket(PacketType::PlayerUpdate, p);
 	PlayerUpdate update;
 	update.player = 1;
 	update.texture = 2;
@@ -138,8 +137,6 @@ TEST(ClientPacketRecieved, LightPlayerUpdate)
 	p << update;
 
 	state.HandlePackets(7, p, nullptr);
-	// Compare values before and after handle packet
-	// Check they are equal to values sent in packet
 
 	int texture = game->game->currLevel->lightPlayer->getLightTex();
 	int fram = game->game->currLevel->lightPlayer->getFrame();
@@ -165,7 +162,6 @@ TEST(ClientPacketRecieved, DarkPlayerUpdate)
 	state.currState = netStates.top();
 
 	sf::Packet p;
-	StampPacket(PacketType::PlayerUpdate, p);
 	PlayerUpdate update;
 	update.player = 2;
 	update.texture = 2;
@@ -174,10 +170,8 @@ TEST(ClientPacketRecieved, DarkPlayerUpdate)
 	update.dead = false;
 	update.position = sf::Vector2f(0.5f, 1.2f);
 	p << update;
-
+	
 	state.HandlePackets(7, p, nullptr);
-	// Compare values before and after handle packet
-	// Check they are equal to values sent in packet
 
 	int texture = game->game->currLevel->darkPlayer->getDarkTex();
 	int fram = game->game->currLevel->darkPlayer->getFrame();
@@ -203,7 +197,6 @@ TEST(ClientPacketRecieved, LeverLevelUpdate)
 	state.currState = netStates.top();
 
 	sf::Packet p;
-	StampPacket(PacketType::LevelUpdate, p);
 	LevelUpdate update;
 	update.object = 0;
 	update.texture = true;
@@ -214,7 +207,7 @@ TEST(ClientPacketRecieved, LeverLevelUpdate)
 
 	Lvl1 * lvl = (Lvl1*)game->game->currLevel;
 
-	int texture = lvl->lever->getTexture();
+	bool texture = lvl->lever->getTexture();
 	int frame = lvl->lever->getFrame();
 
 	EXPECT_EQ(texture, update.texture);
@@ -231,7 +224,6 @@ TEST(ClientPacketRecieved, PlatformLevelUpdate)
 	state.currState = netStates.top();
 
 	sf::Packet p;
-	StampPacket(PacketType::LevelUpdate, p);
 	LevelUpdate update;
 	update.object = 1;
 	update.index = 0;
@@ -261,7 +253,6 @@ TEST(ClientPacketRecieved, BlockLevelUpdate)
 	state.currState = netStates.top();
 
 	sf::Packet p;
-	StampPacket(PacketType::LevelUpdate, p);
 	LevelUpdate update;
 	update.object = 2;
 	update.position = sf::Vector2f(5.8f, 3.7f);
@@ -290,7 +281,6 @@ TEST(ClientPacketRecieved, LightItemLevelUpdate)
 	state.currState = netStates.top();
 
 	sf::Packet p;
-	StampPacket(PacketType::LevelUpdate, p);
 	LevelUpdate update;
 	update.object = 3;
 	update.index = 2;
@@ -315,7 +305,6 @@ TEST(ClientPacketRecieved, DarkItemLevelUpdate)
 	state.currState = netStates.top();
 
 	sf::Packet p;
-	StampPacket(PacketType::LevelUpdate, p);
 	LevelUpdate update;
 	update.object = 4;
 	update.index = 1;
@@ -340,7 +329,6 @@ TEST(ClientPacketRecieved, LightHomeLevelUpdate)
 	state.currState = netStates.top();
 
 	sf::Packet p;
-	StampPacket(PacketType::LevelUpdate, p);
 	LevelUpdate update;
 	update.object = 5;
 	update.texture = true;
@@ -365,7 +353,6 @@ TEST(ClientPacketRecieved, DarkHomeLevelUpdate)
 	state.currState = netStates.top();
 
 	sf::Packet p;
-	StampPacket(PacketType::LevelUpdate, p);
 	LevelUpdate update;
 	update.object = 6;
 	update.texture = true;

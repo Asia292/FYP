@@ -129,7 +129,8 @@ void GameState::processNetworkKeyPress(int code, Server* l_server, int id)
 		p << up;
 	}
 
-	l_server->Broadcast(p);
+	if(l_server != nullptr)
+		l_server->Broadcast(p);
 }
 
 void GameState::processKeyRelease(sf::Keyboard::Key code)

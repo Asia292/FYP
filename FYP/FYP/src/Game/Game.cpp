@@ -42,7 +42,7 @@ Game::Game(int level, int *levelScore, bool onClient)
 		break;
 	}
 	
-	hud = new HUD(texManager, font);
+	//hud = new HUD(texManager, font);
 
 	debug = false;
 	lightRight = false;
@@ -81,6 +81,14 @@ Game::Game(int level, int *levelScore, bool onClient)
 	select[1].setString("LEVELS");
 	select[1].setPosition(7.3f, 5.9f);
 
+	timeText.setFont(font);
+	timeText.setFillColor(sf::Color::Yellow);
+	timeText.setOutlineColor(sf::Color::Black);
+	timeText.setOutlineThickness(1);
+	timeText.setCharacterSize(40);
+	timeText.setScale(sf::Vector2f(0.01f, 0.01f));
+	timeText.setPosition(sf::Vector2f(6.40f, 0.10f));
+
 	texManager->setTexture("over", &backing);
 	backing.setBg();
 	backing.setPos(sf::Vector2f(190.f, 250.f));
@@ -88,13 +96,16 @@ Game::Game(int level, int *levelScore, bool onClient)
 	texManager->setTexture("all", &star);
 
 	over = false;
+	min = 0;
+	sec = 0;
+	eTime = 0;
 }
 
 Game::~Game()
 {
 	// Clean up all pointers
-	delete hud;
-	hud = nullptr;
+	//delete hud;
+	//hud = nullptr;
 
 	delete currLevel;
 	currLevel = nullptr;
@@ -140,9 +151,14 @@ void Game::update(float timestep, bool server)
 					currLevel->darkPlayer->moveLeft();
 				else
 					currLevel->darkPlayer->idle();
+
+				updateTime(timestep);
 			}
 			currLevel->update(timestep, server);
-			hud->update(timestep);
+			if (sec < 10)
+				timeText.setString(std::to_string(min) + ":0" + std::to_string(sec));
+			else
+				timeText.setString(std::to_string(min) + ":" + std::to_string(sec));
 		}
 		else
 		{
@@ -194,7 +210,8 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	target.setView(view);
 
 	currLevel->draw(target, sf::RenderStates::Default);
-	hud->draw(target, sf::RenderStates::Default);
+	//hud->draw(target, sf::RenderStates::Default);
+	target.draw(timeText);
 
 	if (over)
 	{
@@ -317,4 +334,20 @@ void Game::networkPlayerUpdate(int player, int texture, int frame, bool flip, bo
 		break;
 	}
 
+}
+
+void Game::updateTime(float timestep)
+{
+	eTime += timestep;
+	if (eTime > 1.f)
+	{
+		if (sec != 59)
+			sec++;
+		else
+		{
+			min++;
+			sec = 0;
+		}
+		eTime = 0;
+	}
 }

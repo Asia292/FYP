@@ -5,7 +5,7 @@
 using PacketID = sf::Int8;
 enum class PacketType
 {
-	Disconnect = -1, Connect, Heartbeat, Message, KeyPress, KeyRelease, LvlSelectUpdate, StateTransition, PlayerUpdate, LevelUpdate,
+	Disconnect = -1, Connect, Heartbeat, Message, KeyPress, KeyRelease, LvlSelectUpdate, StateTransition, PlayerUpdate, LevelUpdate, TimeUpdate,
 	OutOfBounds // LEAVE ON END
 };
 

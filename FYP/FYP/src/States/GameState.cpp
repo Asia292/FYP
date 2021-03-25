@@ -79,6 +79,14 @@ void GameState::update(float timestep)
 		p2 << update;
 		server->Broadcast(p2);
 
+		sf::Packet p3;
+		StampPacket(PacketType::TimeUpdate, p3);
+		LevelSelectUpdate time;
+		time.currLevel = game->getMin();
+		time.back = game->getSec();
+		p3 << time;
+		server->Broadcast(p3);
+
 		game->getCurrLvl()->networkFrameUpdate(server);
 
 		if (game->getOver())
@@ -167,4 +175,10 @@ void GameState::playerUpdate(int player, int texture, int frame, bool flip, bool
 void GameState::levelUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position)
 {
 	game->getCurrLvl()->networkUpdate(object, index, texture, frame, angle, position);
+}
+
+void GameState::timeUpdate(int minute, int second)
+{
+	game->setMin(minute);
+	game->setSec(second);
 }

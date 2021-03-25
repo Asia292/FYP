@@ -344,8 +344,86 @@ TEST(ClientPacketRecieved, DarkHomeLevelUpdate)
 	EXPECT_EQ(fade, update.texture);
 }
 
+TEST(ClientPacketRecieved, GameOverMove)
+{
+	NetworkState state;
+	std::stack<State *> netStates = state.netStates;
+	int score = 1;
+	GameState * game = new GameState(0, &score, &netStates);
+	netStates.push(game);
+	state.currState = netStates.top();
+	game->game->over = true;
+
+	int backBefore = game->game->getText();
+
+	sf::Packet p;
+	LevelSelectUpdate update;
+	update.currLevel = 1;
+	p << update;
+
+	state.HandlePackets(5, p, nullptr);
+
+	int back = game->game->getText();
+
+	EXPECT_EQ(backBefore, 0);
+	EXPECT_EQ(back, update.currLevel);
+}
+
+TEST(ClientPacketRecieved, GameOverRetry)
+{
+	NetworkState state;
+	std::stack<State *> netStates = state.netStates;
+	int score = 1;
+	GameState * game = new GameState(0, &score, &netStates);
+	netStates.push(game);
+	state.currState = netStates.top();
+	game->game->over = true;
+
+	sf::Packet p;
+	bool up = true;
+	p << up;
+
+	state.HandlePackets(6, p, nullptr);
+
+	bool retry = game->game->getRetry();
+
+	EXPECT_EQ(retry, true);
+
+	Game * oldGame = game->game;
+	game->update(1.f);
+	Game * newGame = game->game;
+
+	EXPECT_NE(oldGame, newGame);
+}
+
+TEST(ClientPacketRecieved, GameOverReturn)
+{
+	NetworkState state;
+	std::stack<State *> netStates = state.netStates;
+	int score = 1;
+	GameState * game = new GameState(0, &score, &netStates);
+	netStates.push(game);
+	state.currState = netStates.top();
+	game->game->over = true;
+
+	sf::Packet p;
+	bool up = false;
+	p << up;
+
+	state.HandlePackets(6, p, nullptr);
+
+	bool back = game->game->levelSelect;
+
+	EXPECT_EQ(back, true);
+
+	game->update(1.f);
+
+	EXPECT_EQ(game->quit, true);
+}
+
 
 //// SERVER ////
+//// Client 0 Level Select Controls ////
 TEST(Client0ToServer, LevelSelectDown)
 {
 	LevelSelectState state(1024, 800, nullptr, nullptr);
@@ -420,6 +498,52 @@ TEST(Client0ToServer, LevelSelectLeft)
 	EXPECT_EQ(backBefore, 1);
 }
 
+TEST(Client0ToServer, EnterLevel)
+{
+	std::stack<State *> states;
+	LevelSelectState * lvlSelect = new LevelSelectState(1024, 800, &states);
+	states.push(lvlSelect);
+
+	bool playBefore = lvlSelect->levelSelect->getPlay();
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Return;
+
+	mockHandler(3, p, 0, lvlSelect);
+
+	bool play = lvlSelect->levelSelect->getPlay();
+	lvlSelect->update(1.f);
+
+	EXPECT_EQ(playBefore, false);
+	EXPECT_EQ(play, true);
+	EXPECT_NE(states.top(), lvlSelect);
+	EXPECT_EQ(states.size(), 2);
+}
+
+TEST(Client0ToServer, EnterMenu)
+{
+	std::stack<State *> states;
+	LevelSelectState * lvlSelect = new LevelSelectState(1024, 800, &states);
+	states.push(lvlSelect);
+	lvlSelect->levelSelect->back = 1;
+
+	bool backBefore = lvlSelect->levelSelect->getClose();
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Return;
+
+	mockHandler(3, p, 0, lvlSelect);
+
+	bool back = lvlSelect->levelSelect->getClose();
+	lvlSelect->update(1.f);
+
+	EXPECT_EQ(backBefore, false);
+	EXPECT_EQ(back, true);
+	EXPECT_EQ(lvlSelect->getQuit(), true);
+}
+
+
+//// Client 1 Level Select Controls ////
 TEST(Client1ToServer, LevelSelectDown)
 {
 	LevelSelectState state(1024, 800, nullptr, nullptr);
@@ -431,8 +555,6 @@ TEST(Client1ToServer, LevelSelectDown)
 
 	mockHandler(3, p, 1, &state);
 
-	//state.processNetworkKeyPress(74, nullptr, 0);	// Down key, null server, client 0
-	// Get packet somehow?
 	int lvl = state.levelSelect->getLevel();
 
 	EXPECT_EQ(lvl, 1);
@@ -494,6 +616,51 @@ TEST(Client1ToServer, LevelSelectLeft)
 	EXPECT_EQ(backBefore, 1);
 }
 
+TEST(Client1ToServer, EnterLevel)
+{
+	std::stack<State *> states;
+	LevelSelectState * lvlSelect = new LevelSelectState(1024, 800, &states);
+	states.push(lvlSelect);
+
+	bool playBefore = lvlSelect->levelSelect->getPlay();
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Return;
+
+	mockHandler(3, p, 1, lvlSelect);
+
+	bool play = lvlSelect->levelSelect->getPlay();
+	lvlSelect->update(1.f);
+
+	EXPECT_EQ(playBefore, false);
+	EXPECT_EQ(play, true);
+	EXPECT_NE(states.top(), lvlSelect);
+	EXPECT_EQ(states.size(), 2);
+}
+
+TEST(Client1ToServer, EnterMenu)
+{
+	std::stack<State *> states;
+	LevelSelectState * lvlSelect = new LevelSelectState(1024, 800, &states);
+	states.push(lvlSelect);
+	lvlSelect->levelSelect->back = 1;
+
+	bool backBefore = lvlSelect->levelSelect->getClose();
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Return;
+
+	mockHandler(3, p, 1, lvlSelect);
+
+	bool back = lvlSelect->levelSelect->getClose();
+	lvlSelect->update(1.f);
+
+	EXPECT_EQ(backBefore, false);
+	EXPECT_EQ(back, true);
+	EXPECT_EQ(lvlSelect->getQuit(), true);
+}
+
+//// Client 1 Game Controls ////
 TEST(Client1ToServer, GameLeft)
 {
 	std::stack<State *> netStates;
@@ -545,7 +712,6 @@ TEST(Client1ToServer, GameUp)
 	p << sf::Keyboard::Key::Up;
 
 	mockHandler(3, p, 1, &state);
-	//for (int i = 0; i < 5; i++) state.game->update(1.f, true);
 
 	b2Vec2 dark = state.game->currLevel->darkPlayer->body->GetLinearVelocity();
 
@@ -609,7 +775,7 @@ TEST(Client1ToServer, GameKeyW)
 	EXPECT_EQ(lightBefore.y, light.y);
 }
 
-
+//// Client 0 Game Controls ////
 TEST(Client0ToServer, GameLeft)
 {
 	std::stack<State *> netStates;
@@ -659,7 +825,6 @@ TEST(Client0ToServer, GameUp)
 	p << sf::Keyboard::Key::Up;
 
 	mockHandler(3, p, 0, &state);
-	//for (int i = 0; i < 5; i++) state.game->update(1.f, true);
 
 	b2Vec2 dark = state.game->currLevel->darkPlayer->body->GetLinearVelocity();
 
@@ -723,4 +888,159 @@ TEST(Client0ToServer, GameKeyW)
 
 	EXPECT_EQ(lightBefore.x, light.x);
 	EXPECT_GT(lightBefore.y, light.y);
+}
+
+//// GAME OVER ////
+TEST(Client1ToServer, GameOverLeft)
+{
+	std::stack<State *> netStates;
+	int score = 1;
+	GameState state(0, &score, &netStates, nullptr);
+	state.game->over = true;
+	state.game->back = 1;
+
+	int backBefore = state.game->back;
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Left;
+
+	mockHandler(3, p, 1, &state);
+
+	int back = state.game->back;
+
+	EXPECT_EQ(backBefore, 1);
+	EXPECT_EQ(back, 0);
+}
+
+TEST(Client1ToServer, GameOverRight)
+{
+	std::stack<State *> netStates;
+	int score = 1;
+	GameState state(0, &score, &netStates, nullptr);
+	state.game->over = true;
+
+	int backBefore = state.game->back;
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Right;
+
+	mockHandler(3, p, 1, &state);
+
+	int back = state.game->back;
+
+	EXPECT_EQ(backBefore, 0);
+	EXPECT_EQ(back, 1);
+}
+
+TEST(Client1ToServer, GameOverRetry)
+{
+	std::stack<State *> netStates;
+	int score = 1;
+	GameState state(0, &score, &netStates, nullptr);
+	state.game->over = true;
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Return;
+
+	mockHandler(3, p, 1, &state);
+
+	bool retry = state.game->retry;
+
+	EXPECT_EQ(retry, true);
+}
+
+TEST(Client1ToServer, GameOverReturn)
+{
+	std::stack<State *> netStates;
+	int score = 1;
+	GameState state(0, &score, &netStates, nullptr);
+	state.game->over = true;
+
+	state.game->back = 1;
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Return;
+
+	mockHandler(3, p, 1, &state);
+
+	bool back = state.game->levelSelect;
+
+	EXPECT_EQ(back, true);
+}
+
+TEST(Client0ToServer, GameOverLeft)
+{
+	std::stack<State *> netStates;
+	int score = 1;
+	GameState state(0, &score, &netStates, nullptr);
+	state.game->over = true;
+	state.game->back = 1;
+
+	int backBefore = state.game->back;
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Left;
+
+	mockHandler(3, p, 0, &state);
+
+	int back = state.game->back;
+
+	EXPECT_EQ(backBefore, 1);
+	EXPECT_EQ(back, 0);
+}
+
+TEST(Client0ToServer, GameOverRight)
+{
+	std::stack<State *> netStates;
+	int score = 1;
+	GameState state(0, &score, &netStates, nullptr);
+	state.game->over = true;
+
+	int backBefore = state.game->back;
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Right;
+
+	mockHandler(3, p, 0, &state);
+
+	int back = state.game->back;
+
+	EXPECT_EQ(backBefore, 0);
+	EXPECT_EQ(back, 1);
+}
+
+TEST(Client0ToServer, GameOverRetry)
+{
+	std::stack<State *> netStates;
+	int score = 1;
+	GameState state(0, &score, &netStates, nullptr);
+	state.game->over = true;
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Return;
+
+	mockHandler(3, p, 0, &state);
+
+	bool retry = state.game->retry;
+
+	EXPECT_EQ(retry, true);
+}
+
+TEST(Client0ToServer, GameOverReturn)
+{
+	std::stack<State *> netStates;
+	int score = 1;
+	GameState state(0, &score, &netStates, nullptr);
+	state.game->over = true;
+
+	state.game->back = 1;
+
+	sf::Packet p;
+	p << sf::Keyboard::Key::Return;
+
+	mockHandler(3, p, 0, &state);
+
+	bool back = state.game->levelSelect;
+
+	EXPECT_EQ(back, true);
 }

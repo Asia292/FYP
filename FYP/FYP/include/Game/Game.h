@@ -32,7 +32,7 @@ private:
 	SFMLDebugDraw debugDraw; //!< Box2D debug drawing
 
 	Level *currLevel;	//!< Pointer to the current level
-	HUD *hud;			//!< Instance of HUD
+	//HUD *hud;			//!< Instance of HUD
 
 	bool lightRight;	//!< If light player should be moving right
 	bool lightLeft;		//!< If light player should be moving left
@@ -41,6 +41,7 @@ private:
 
 	sf::Text finish;	//!< Text that displays on game over
 	sf::Text select[2];		//!< Menu select text - retry or return to levels
+	sf::Text timeText;		//!< Time text
 	sf::Font font;		//!< Font used
 	Texture backing;	//!< Backing for game over box
 	Texture star;		//!< Star to show level score
@@ -53,6 +54,9 @@ private:
 	float time;			//!< Elapsed game time
 	int *lvlScore;			//!< Pointer to the level integer passed in for score
 	bool client;
+	float eTime;	//<! Elapsed time
+	int min;	//!< Minutes of display time
+	int sec;	//!< Seconds of display time
 
 protected:
 	TextureManager * texManager = TextureManager::getInstance();	//!< The texture manager
@@ -78,6 +82,11 @@ public:
 	int getText() { return back; }
 	void setRetry(bool Retry) { retry = Retry; }
 	void setLvlSelect(bool select) { levelSelect = select; }
+	void updateTime(float timestep);
+	int getMin() { return min; }
+	int getSec() { return sec; }
+	void setMin(int time) { min = time; }
+	void setSec(int time) { sec = time; }
 	
 	Level * getCurrLvl() { return currLevel; }
 

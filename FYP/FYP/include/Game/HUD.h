@@ -19,7 +19,7 @@ private:
 	int min;	//!< Minutes of display time
 	int sec;	//!< Seconds of display time
 
-	sf::Vector2f timeOffset;		//!< Time position relative to player
+	sf::Vector2f timeOffset;		//!< Time position
 
 	sf::Font passed;	//!< The font passed in
 	sf::Text time;		//!< Time text
@@ -30,4 +30,8 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;		//!< Draws everything
 	void update(float timestep);		//!< Updates the textures and score, coin count and time text
 
+	int getMin() { return min; }
+	int getSec() { return sec; }
+	void setMin(int time) { min = time; }
+	void setSec(int time) { sec = time; }
 };

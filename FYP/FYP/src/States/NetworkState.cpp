@@ -32,6 +32,12 @@ void NetworkState::HandlePackets(const PacketID & id, sf::Packet & packet, Clien
 		packet >> push;
 		currState->stateTransition(push);
 	}
+	else if ((PacketType)id == PacketType::TimeUpdate)
+	{
+		LevelSelectUpdate time;
+		packet >> time;
+		currState->timeUpdate(time.currLevel, time.back);
+	}
 	else if ((PacketType)id == PacketType::Disconnect)
 		client->Disconnect();
 }

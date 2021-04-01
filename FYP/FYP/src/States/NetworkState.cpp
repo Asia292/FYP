@@ -42,14 +42,21 @@ void NetworkState::HandlePackets(const PacketID & id, sf::Packet & packet, Clien
 		client->Disconnect();
 }
 
-NetworkState::NetworkState(float Height, float Width, std::stack<State*>* States)
+NetworkState::NetworkState(float Height, float Width, std::stack<State*>* States, bool host)
 {
 	states = States;
 	quit = false;
+	isHost = host;
+	none = nullptr;
 
 	sf::IpAddress ip = "127.0.0.1";
 	PortNumber port = 5600;
-		
+	
+	if (host)
+	{
+		// Start server
+	}
+
 	client.SetServerInfo(ip, port);
 	client.Setup(&NetworkState::HandlePackets, this);
 	//sf::Thread c(&CommandProcess, &client);
@@ -64,12 +71,30 @@ NetworkState::NetworkState(float Height, float Width, std::stack<State*>* States
 		currState = netStates.top();
 	}
 	else
+	{
+		noServer();
 		std::cout << "Failed to connect." << std::endl;
+	}
 }
 
 NetworkState::~NetworkState()
 {
+	if (isHost)
+	{
+		// Shut down server
+	}
 
+	if (currState != nullptr)
+	{
+		delete currState;
+		currState = nullptr;
+	}
+
+	if (none != nullptr)
+	{
+		delete none;
+		none = nullptr;
+	}
 }
 
 void NetworkState::update(float timestep)
@@ -77,7 +102,7 @@ void NetworkState::update(float timestep)
 	if (client.IsConnected())
 	{
 		client.Update(clock.restart());
-		
+
 		if (!netStates.empty())
 		{
 			//std::cout << "NOT EMPTY!" << std::endl;
@@ -101,11 +126,8 @@ void NetworkState::update(float timestep)
 		else
 			std::cout << "EMPTY!" << std::endl;
 	}
-	else
-	{
-		delete currState;
-		quit = true;
-	}
+	else if (none != nullptr)
+		none->update(timestep);
 }
 
 
@@ -113,20 +135,38 @@ void NetworkState::draw(sf::RenderTarget & target, sf::RenderStates states) cons
 {
 	if (currState != nullptr)
 		currState->draw(target, states);
+
+	if (none != nullptr)
+		none->draw(target, states);
 }
 
 void NetworkState::processKeyPress(sf::Keyboard::Key code)
 {
-	sf::Packet p;
-	StampPacket(PacketType::KeyPress, p);
-	p << code;
-	client.Send(p);
+	if (client.IsConnected())
+	{
+		sf::Packet p;
+		StampPacket(PacketType::KeyPress, p);
+		p << code;
+		client.Send(p);
+	}
+	else if (code == sf::Keyboard::Key::Return)
+		quit = true;
 }
 
 void NetworkState::processKeyRelease(sf::Keyboard::Key code)
 {
-	sf::Packet p;
-	StampPacket(PacketType::KeyRelease, p);
-	p << code;
-	client.Send(p);
+	if (client.IsConnected())
+	{
+		sf::Packet p;
+		StampPacket(PacketType::KeyRelease, p);
+		p << code;
+		client.Send(p);
+	}
+}
+
+void NetworkState::noServer()
+{
+	currState = nullptr;
+
+	none = new noConnection();
 }

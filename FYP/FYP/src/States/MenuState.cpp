@@ -29,7 +29,7 @@ void MenuState::update(float timestep)
 	}
 	else if (menu->getNetwork())
 	{
-		states->push(new NetworkState(width, height, states));
+		states->push(new NetworkState(width, height, states, menu->getHost()));
 		menu->setNetwork(false);
 	}
 	

@@ -2,7 +2,7 @@
 
 #include "Menu.h"
 
-Menu::Menu(float width, float height)
+Menu::Menu(float Width, float Height)
 {
 	/*
 	TO DO
@@ -22,8 +22,11 @@ Menu::Menu(float width, float height)
 
 	play = false;
 	network = false;
+	net = false;
 	close = false;
 	selectedItemIndex = 0;
+	width = Width;
+	height = Height;
 
 	view.setSize(sf::Vector2f(1024.f, 800.f));
 	view.setCenter(sf::Vector2f(512.f, 400.f));
@@ -63,6 +66,31 @@ void Menu::update(float timestep)
 {
 	Texture::update(timestep);
 	currSprite.setScale(sf::Vector2f(1.0f, 1.0f));
+
+	for (int i = 0; i < 3; i++)
+	{
+		menue[i].setColor(sf::Color(255, 222, 0));
+	}
+	menue[selectedItemIndex].setColor(sf::Color(100, 32, 188));
+
+	if (net)
+	{
+		menue[0].setString("HOST");
+		menue[0].setPosition(sf::Vector2f((width / 2) + 35.f, height / (3 + 1) * 1));
+		menue[1].setString("JOIN");
+		menue[1].setPosition(sf::Vector2f((width / 2) + 40.f, height / (4.5 + 1) * 2));
+		menue[2].setString("BACK");
+		menue[2].setPosition(sf::Vector2f((width / 2) + 30.f, height / (5 + 1) * 3));
+	}
+	else
+	{
+		menue[0].setString("LOCAL PLAY");
+		menue[0].setPosition(sf::Vector2f((width / 2) - 100.f, height / (3 + 1) * 1));
+		menue[1].setString("NETWORK PLAY");
+		menue[1].setPosition(sf::Vector2f((width / 2) - 150.f, height / (4.5 + 1) * 2));
+		menue[2].setString("QUIT");
+		menue[2].setPosition(sf::Vector2f((width / 2) + 40.f, height / (5 + 1) * 3));
+	}
 }
 
 void Menu::draw(sf::RenderTarget & target, sf::RenderStates states) const
@@ -101,9 +129,7 @@ void Menu::moveUp()
 {
 	if (selectedItemIndex - 1 >= 0)
 	{
-		menue[selectedItemIndex].setColor(sf::Color(255, 222, 0));
 		selectedItemIndex--;
-		menue[selectedItemIndex].setColor(sf::Color(100, 32, 188));
 	}
 }
 
@@ -111,9 +137,7 @@ void Menu::moveDown()
 {
 	if (selectedItemIndex + 1 < 3)
 	{
-		menue[selectedItemIndex].setColor(sf::Color(255, 222, 0));
 		selectedItemIndex++;
-		menue[selectedItemIndex].setColor(sf::Color(100, 32, 188));
 	}
 }
 
@@ -122,13 +146,34 @@ void Menu::selected()
 	switch (selectedItemIndex)
 	{
 	case 0:
-		play = true;
+		if(!net)
+			play = true;
+		else
+		{
+			network = true;
+			host = true;
+		}
 		break;
 	case 1:
-		network = true;
+		if (!net)
+		{
+			net = true;
+			selectedItemIndex = 0;
+		}
+		else
+		{
+			network = true;
+			host = false;
+		}
 		break;
 	case 2:
-		close = true;
+		if (!net)
+			close = true;
+		else
+		{
+			net = false;
+			selectedItemIndex = 0;
+		}
 		break;
 	}
 }

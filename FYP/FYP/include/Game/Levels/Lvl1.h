@@ -12,9 +12,10 @@ class Lvl1 : public Level
 {
 protected:
 
-	Hazard *lightHazard;		//!< Hazard to light player
+	/*Hazard *lightHazard;		//!< Hazard to light player
 	Hazard *darkHazard;			//!< Hazard to dark player
-	Hazard *bothHazard;			//!< Hazard to both players
+	Hazard *bothHazard;	*/		//!< Hazard to both players
+	Hazard *hazards[3];
 
 	PickUp *lightPickUps[3];		//!< Array of light pickups
 	PickUp *darkPickUps[3];		//!< Array of dark pickups
@@ -38,6 +39,8 @@ protected:
 	b2Vec2 blockPosBefore;
 	bool lightHomeBefore;
 	bool darkHomeBefore;
+
+	pugi::xml_document doc;
 
 public:
 

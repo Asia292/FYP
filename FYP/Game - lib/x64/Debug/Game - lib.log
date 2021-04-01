@@ -1,4 +1,20 @@
-﻿  GameState.cpp
+﻿  Game.cpp
+  Lvl1.cpp
+  GameState.cpp
+  LevelSelectState.cpp
+  MenuState.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(9): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(10): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  NetworkState.cpp
+  main.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\main.cpp(19): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+  Generating Code...
 winmm.lib(WINMM.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored
 winmm.lib(WINMM.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 gdi32.lib(GDI32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored

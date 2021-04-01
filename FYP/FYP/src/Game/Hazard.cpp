@@ -8,7 +8,7 @@ Hazard::Hazard(b2World * world, const sf::Vector2f & position, const sf::Vector2
 
 	bodyDef.position.Set(position.x, position.y);
 	bodyDef.angle = orientation;
-	bodyDef.type = b2_kinematicBody;
+	bodyDef.type = b2_staticBody;
 
 	body = world->CreateBody(&bodyDef);
 

@@ -1,6 +1,6 @@
 #include "DoorPlat.h"
 
-DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const float orientation)
+DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const float orientation, TextureManager *texMan, const std::string plat, const std::string Cover)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -19,17 +19,20 @@ DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const float or
 	fixtureDef.restitution = restitution;
 	fixtureDef.shape = &shape;
 
-	//// DOOR ////
-	shape.SetAsBox(0.5f * 0.5f, 0.16f * 0.5f, b2Vec2(-0.25f, 0.f), 0.f);
+	//// DOOR ////1.47f, 0.26f 0.5,0.16
+	shape.SetAsBox(1.47f * 0.5f, 0.26f * 0.5f, b2Vec2(-0.75f, 0.f), 0.f);
 	door->CreateFixture(&fixtureDef);
-	//// ANCHOR/SIDE ////
-	shape.SetAsBox(0.7f * 0.5f, 0.04f * 0.5f, b2Vec2(-0.85f, -0.10f), 0.f);
-	top->CreateFixture(&fixtureDef);
-	shape.SetAsBox(0.7f * 0.5f, 0.04f * 0.5f, b2Vec2(-0.85f, 0.10f), 0.f);
-	top->CreateFixture(&fixtureDef);
-	shape.SetAsBox(0.18f * 0.5f, 0.18f * 0.5f, b2Vec2(-1.11f, 0.f), 0.f);
-	top->CreateFixture(&fixtureDef);
+	platform = new Texture();
 
+	//// ANCHOR/SIDE ////
+	shape.SetAsBox(1.5f * 0.5f, 0.04f * 0.5f, b2Vec2(-2.2f, -0.15f), 0.f);
+	top->CreateFixture(&fixtureDef);
+	shape.SetAsBox(1.5f * 0.5f, 0.04f * 0.5f, b2Vec2(-2.2f, 0.15f), 0.f);
+	top->CreateFixture(&fixtureDef);
+	shape.SetAsBox(0.18f * 0.5f, 0.28f * 0.5f, b2Vec2(-2.87f, 0.f), 0.f);
+	top->CreateFixture(&fixtureDef);
+	cover = new Texture();
+	
 	//// JOINT ////
 	door->SetType(b2BodyType::b2_dynamicBody);
 	b2MotorJointDef jointDef;
@@ -38,18 +41,30 @@ DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const float or
 	jointDef.maxTorque = 1000.0f; // Avoid rotation with high torque
 	motor = (b2MotorJoint*)world->CreateJoint(&jointDef);
 
+	texMan->setTexture("all", platform);
+	texMan->getFrames(plat, platform);
+	platform->setPos(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
+	platform->setSize(sf::Vector2f(0.01f, 0.01f));
+	platform->setAngle(orientation * 57.29577f);
+
+	texMan->setTexture("all", cover);
+	texMan->getFrames(Cover, cover);
+	cover->setPos(sf::Vector2f(top->GetPosition().x - 2.2f, top->GetPosition().y));
+	cover->setSize(sf::Vector2f(0.01f, 0.01f));
+	cover->setAngle(orientation * 57.29577f);
+
 	//// SFML ////
-	Top.setPosition(sf::Vector2f(top->GetPosition().x - 0.85, top->GetPosition().y));
-	Top.setSize(sf::Vector2f(0.7f, 0.2f));
+	/*Top.setPosition(sf::Vector2f(top->GetPosition().x - 2.2f, top->GetPosition().y));
+	Top.setSize(sf::Vector2f(1.5f, 0.3f));
 	Top.setOrigin(Top.getSize() * 0.5f);
 	Top.setFillColor(sf::Color(60, 60, 60));
 	Top.setOutlineThickness(0.f);
 
 	Door.setPosition(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
-	Door.setSize(sf::Vector2f(0.5f, 0.16f));
+	Door.setSize(sf::Vector2f(1.47f, 0.26f));
 	Door.setOrigin(Door.getSize() * 0.5f);
 	Door.setFillColor(sf::Color(90, 45, 0));
-	Door.setOutlineThickness(0.f);
+	Door.setOutlineThickness(0.f);*/
 	
 
 	mTime = 1.5f;
@@ -58,8 +73,8 @@ DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const float or
 
 void DoorPlat::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
-	target.draw(Door);
-	target.draw(Top);
+	platform->draw(target, states);
+	cover->draw(target, states);
 }
 
 void DoorPlat::setUserData(void *data)
@@ -70,7 +85,6 @@ void DoorPlat::setUserData(void *data)
 
 void DoorPlat::update(float timestep)
 {
-
 	if (state == OPENING)
 	{
 		eTime += timestep;
@@ -79,10 +93,10 @@ void DoorPlat::update(float timestep)
 		float dist;
 
 		if (t < 1.0f)
-			dist = t * -0.5f;
+			dist = t * -1.47f;
 		else
 		{
-			dist = -0.5f;
+			dist = -1.47f;
 			state = OPEN;
 		}
 
@@ -97,7 +111,7 @@ void DoorPlat::update(float timestep)
 		float dist;
 
 		if (t < 1.0f)
-			dist = (1.0f - t)*-0.5f;
+			dist = (1.0f - t)*-1.47f;
 		else
 		{
 			dist = 0.0f;
@@ -107,7 +121,7 @@ void DoorPlat::update(float timestep)
 		motor->SetLinearOffset(b2Vec2(dist, 0));
 	}
 
-	Door.setPosition(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
+	platform->setPos(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
 }
 
 void DoorPlat::open()

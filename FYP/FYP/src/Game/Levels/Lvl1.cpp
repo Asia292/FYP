@@ -9,43 +9,132 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	dEmpty = true;
 	client = onClient;
 
+	doc.load_file(".\\assets\\xml\\Level1.xml");
+	pugi::xml_node lvl = doc.child("Level1");
+
 	//// PLAYERS ////
 	lightPlayer = new Player(world, sf::Vector2f(1.00f, 8.14f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0010, textMan, onClient);
 	darkPlayer = new Player(world, sf::Vector2f(1.00f, 9.62f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0100, textMan, onClient);
 
 	//// HAZARDS ////
-	lightHazard = new Hazard(world, sf::Vector2f(10.25f, 10.18f), sf::Vector2f(1.5f, 0.25f), 0.f, 0x0010);
+	/*lightHazard = new Hazard(world, sf::Vector2f(10.25f, 10.18f), sf::Vector2f(1.5f, 0.25f), 0.f, 0x0010);
 	darkHazard = new Hazard(world, sf::Vector2f(7.39f, 10.18f), sf::Vector2f(1.5f, 0.25f), 0.f, 0x0100);
-	bothHazard = new Hazard(world, sf::Vector2f(9.54f, 8.00f), sf::Vector2f(1.5f, 0.25f), 0.f, 0xFFFF);
+	bothHazard = new Hazard(world, sf::Vector2f(9.54f, 8.00f), sf::Vector2f(1.5f, 0.25f), 0.f, 0xFFFF);*/
+	
+	int i = 0;
+	for (pugi::xml_node curr = lvl.child("hazard"); curr; curr = curr.next_sibling("hazard"))
+	{
+		pugi::xml_node pos = curr.child("position");
+		pugi::xml_node size = curr.child("size");
+
+		hazards[i++] = new Hazard(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()),
+			0.f, curr.attribute("mask").as_uint());
+	}
 
 	//// PLATFORMS ////
-	platforms[0] = new MovingPlat(world, sf::Vector2f(1.09f, 5.55f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(1.09f, 6.60f), textMan, "yellowPlat", "yellowGlow", onClient);
-	platforms[1] = new MovingPlat(world, sf::Vector2f(12.96f, 4.24f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(12.96f, 5.60f), textMan, "purplePlat", "purpleGlow", onClient);
+	//platforms[0] = new MovingPlat(world, sf::Vector2f(1.09f, 5.55f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(1.09f, 6.60f), textMan, "yellowPlat", "yellowGlow", onClient);
+	//platforms[1] = new MovingPlat(world, sf::Vector2f(12.96f, 4.24f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(12.96f, 5.60f), textMan, "purplePlat", "purpleGlow", onClient);
+
+	i = 0;
+	for (pugi::xml_node curr = lvl.child("platform"); curr; curr = curr.next_sibling("platform"))
+	{
+		pugi::xml_node pos = curr.child("position");
+		pugi::xml_node size = curr.child("size");
+		pugi::xml_node end = curr.child("end");
+
+		platforms[i++] = new MovingPlat(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()),
+			curr.attribute("orientation").as_float(), 
+			sf::Vector2f(end.attribute("x").as_float(), end.attribute("y").as_float()),
+			textMan, curr.attribute("colour").as_string(), curr.attribute("glow").as_string(), onClient);
+	}
 
 	//// LEVERS/BUTTONS ////
-	lever = new Lever(world, sf::Vector2f(3.77f, 7.0f), sf::Vector2f(0.6f, 0.5f), platforms[0], true, textMan, "yellowLever", "yellowLeverReverse");
+	/*lever = new Lever(world, sf::Vector2f(3.77f, 7.0f), sf::Vector2f(0.6f, 0.5f), platforms[0], true, textMan, "yellowLever", "yellowLeverReverse");
 	buttons[0] = new Button(world, sf::Vector2f(5.42f, 5.31f), sf::Vector2f(0.6f, 0.3f), platforms[1], textMan, "purpleButton");
 	buttons[1] = new Button(world, sf::Vector2f(11.16f, 3.85f), sf::Vector2f(0.6f, 0.3f), platforms[1], textMan, "purpleButton");
+	*/
+	pugi::xml_node curr = lvl.child("lever");
+	pugi::xml_node pos = curr.child("position");
+	pugi::xml_node size = curr.child("size");
+	lever = new Lever(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+		sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()),
+		platforms[curr.attribute("platform").as_int()], curr.attribute("right").as_bool(), textMan,
+		curr.attribute("colour").as_string(), curr.attribute("back").as_string());
+
+	i = 0;
+	for (pugi::xml_node curr = lvl.child("button"); curr; curr = curr.next_sibling("button"))
+	{
+		pugi::xml_node pos = curr.child("position");
+		pugi::xml_node size = curr.child("size");
+
+		buttons[i++] = new Button(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()),
+			platforms[curr.attribute("platform").as_int()], textMan, curr.attribute("colour").as_string());
+	}
 
 	//// ITEMS ////
-	darkPickUps[0] = new PickUp(world, sf::Vector2f(7.39f, 9.00f), sf::Vector2f(0.3f, 0.3f), 0x0100, textMan);
+	/*darkPickUps[0] = new PickUp(world, sf::Vector2f(7.39f, 9.00f), sf::Vector2f(0.3f, 0.3f), 0x0100, textMan);
 	darkPickUps[1] = new PickUp(world, sf::Vector2f(5.23f, 6.81f), sf::Vector2f(0.3f, 0.3f), 0x0100, textMan);
 	darkPickUps[2] = new PickUp(world, sf::Vector2f(4.36f, 1.04f), sf::Vector2f(0.3f, 0.3f), 0x0100, textMan);
 
 	lightPickUps[0] = new PickUp(world, sf::Vector2f(10.25f, 9.00f), sf::Vector2f(0.3f, 0.3f), 0x0010, textMan);
 	lightPickUps[1] = new PickUp(world, sf::Vector2f(3.60f, 5.04f), sf::Vector2f(0.3f, 0.3f), 0x0010, textMan);
-	lightPickUps[2] = new PickUp(world, sf::Vector2f(1.10f, 2.11f), sf::Vector2f(0.3f, 0.3f), 0x0010, textMan);
+	lightPickUps[2] = new PickUp(world, sf::Vector2f(1.10f, 2.11f), sf::Vector2f(0.3f, 0.3f), 0x0010, textMan);*/
+
+	i = 0;
+	for (pugi::xml_node curr = lvl.child("darkPickUp"); curr; curr = curr.next_sibling("darkPickUp"))
+	{
+		pugi::xml_node pos = curr.child("position");
+		pugi::xml_node size = curr.child("size");
+
+		darkPickUps[i++] = new PickUp(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), 0x0100, textMan);
+	}
+
+	i = 0;
+	for (pugi::xml_node curr = lvl.child("lightPickUp"); curr; curr = curr.next_sibling("lightPickUp"))
+	{
+		pugi::xml_node pos = curr.child("position");
+		pugi::xml_node size = curr.child("size");
+
+		lightPickUps[i++] = new PickUp(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), 0x0010, textMan);
+	}
 
 	//// MISC ////
-	block = new Block(world, sf::Vector2f(7.56f, 3.04f), sf::Vector2f(0.5f, 0.5f), 0.f, textMan, onClient);
+	/*block = new Block(world, sf::Vector2f(7.56f, 3.04f), sf::Vector2f(0.5f, 0.5f), 0.f, textMan, onClient);
 
 	lightHome = new HomeSensor(world, sf::Vector2f(11.89f, 1.71f), sf::Vector2f(0.68f, 0.92f), lightPlayer, textMan);
 	darkHome = new HomeSensor(world, sf::Vector2f(13.18f, 1.71f), sf::Vector2f(0.68f, 0.92f), darkPlayer, textMan);
+	*/
+	curr = lvl.child("block");
+	pos = curr.child("position");
+	size = curr.child("size");
+	block = new Block(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+		sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), 0.f, textMan, onClient);
 
+	curr = lvl.child("lightHome");
+	pos = curr.child("position");
+	size = curr.child("size");
+	lightHome = new HomeSensor(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+		sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), lightPlayer, textMan);
 
+	curr = lvl.child("darkHome");
+	pos = curr.child("position");
+	size = curr.child("size");
+	darkHome = new HomeSensor(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+		sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), darkPlayer, textMan);
 
 	//// FLOOR/OUTLINE ////
-	outline[0].Set(0.33f, 0.31f);
+	i = 0;
+	for (pugi::xml_node curr = lvl.child("outline").child("coord"); curr; curr = curr.next_sibling("coord"))
+	{
+		outline[i++].Set(curr.attribute("x").as_float(), curr.attribute("y").as_float());
+	}
+
+	/*outline[0].Set(0.33f, 0.31f);
 	outline[1].Set(13.71f, 0.31f);
 	outline[2].Set(13.71f, 2.18f);
 	outline[3].Set(5.81f, 2.16f);
@@ -115,7 +204,7 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	outline[61].Set(2.14f, 3.96f);
 	outline[62].Set(2.14f, 2.51f);
 	outline[63].Set(0.33f, 2.51f);
-	outline[64].Set(0.33f, 0.31f);
+	outline[64].Set(0.33f, 0.31f);*/
 
 	floor = new Floor(outline, 65, world);
 
@@ -126,9 +215,12 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	lightPlayer->setUserData(new std::pair<std::string, void *>(typeid(decltype(*lightPlayer)).name(), lightPlayer));
 	darkPlayer->setUserData(new std::pair<std::string, void *>(typeid(decltype(*darkPlayer)).name(), darkPlayer));
 
-	lightHazard->setUserData(new std::pair<std::string, void *>(typeid(decltype(*lightHazard)).name(), lightHazard));
+	/*lightHazard->setUserData(new std::pair<std::string, void *>(typeid(decltype(*lightHazard)).name(), lightHazard));
 	darkHazard->setUserData(new std::pair<std::string, void *>(typeid(decltype(*darkHazard)).name(), darkHazard));
 	bothHazard->setUserData(new std::pair<std::string, void *>(typeid(decltype(*bothHazard)).name(), bothHazard));
+	*/
+	for (Hazard *haz : hazards) haz->setUserData(new std::pair<std::string, void *>(typeid(decltype(*haz)).name(), haz));
+
 
 	lever->setUserData(lever);
 	for (Button *button : buttons) button->setUserData(button);
@@ -156,12 +248,16 @@ Lvl1::~Lvl1()
 	delete darkPlayer;
 	darkPlayer = nullptr;
 
-	delete lightHazard;
+	/*delete lightHazard;
 	lightHazard = nullptr;
 	delete darkHazard;
-	darkHazard = nullptr;
-	delete bothHazard;
-	bothHazard = nullptr;
+	darkHazard = nullptr;*/
+
+	for (Hazard *haz : hazards)
+	{
+		delete haz;
+		haz = nullptr;
+	}
 
 	delete lever;
 	lever = nullptr;
@@ -262,9 +358,14 @@ void Lvl1::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.draw(currSprite, states);
 
-	target.draw(*lightHazard);
+	/*target.draw(*lightHazard);
 	target.draw(*darkHazard);
-	target.draw(*bothHazard);
+	target.draw(*bothHazard);*/
+
+	for (Hazard *haz : hazards)
+	{
+		target.draw(*haz);
+	}
 
 	target.draw(*lever);
 

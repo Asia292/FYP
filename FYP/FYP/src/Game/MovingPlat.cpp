@@ -54,9 +54,9 @@ void MovingPlat::setUserData(void * data)
 void MovingPlat::moveToEnd()
 {
 	if (end.x > start.x)
-		xMove = -1;
-	else if (end.x < start.x)
 		xMove = 1;
+	else if (end.x < start.x)
+		xMove = -1;
 	else
 		xMove = 0;
 
@@ -73,9 +73,9 @@ void MovingPlat::moveToEnd()
 void MovingPlat::moveToStart()
 {
 	if (end.x > start.x)
-		xMove = 1;
-	else if (end.x < start.x)
 		xMove = -1;
+	else if (end.x < start.x)
+		xMove = 1;
 	else
 		xMove = 0;
 
@@ -123,12 +123,12 @@ void MovingPlat::update(float timestep)
 
 
 		body->SetLinearVelocity(b2Vec2(xMove, yMove));
+
+		b2Vec2 pos = body->GetPosition();
+		currSprite.setPosition(pos.x, pos.y);
 	}
 
 	Texture::update(timestep);
-	b2Vec2 pos = body->GetPosition();
-	if (!client)
-		currSprite.setPosition(pos.x, pos.y);
 }
 
 void MovingPlat::setTexture(bool tex)

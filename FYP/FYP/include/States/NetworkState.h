@@ -4,6 +4,7 @@
 */
 
 #include "LevelSelectState.h"
+#include "noConnection.h"
 #include "Client.h"
 
 /*! \class LevelSelectState
@@ -13,14 +14,17 @@ class NetworkState : public State
 {
 private:
 	bool quit;		//!< If the state should quit
+	bool isHost;
 	Client client;
 	sf::Clock clock;
 	std::stack<State *> netStates;
 	State *currState;
 
+	noConnection *none;
+
 public:
 	NetworkState() {};
-	NetworkState(float Height, float Width, std::stack<State *>* States);		//!< Constructior
+	NetworkState(float Height, float Width, std::stack<State *>* States, bool host);		//!< Constructior
 	virtual ~NetworkState() override;		//!< Overrides base deconstructor
 	virtual void update(float timestep) override;		//!< Overrides base update
 	void HandlePackets(const PacketID & id, sf::Packet & packet, Client * client);
@@ -31,7 +35,7 @@ public:
 	virtual void processNetworkKeyRelease(int code, Server* l_server, int id) override {};		//!< Overrides base network key release
 	virtual bool getQuit() override { return quit; }	//!< Overrides base quit - returns quit bool
 
-	//void pushGameState() { netStates.push(new LevelSelectState(Width, Height, &netStates)); }
+	virtual void noServer();
 
 	//Function per packet type???
 	virtual void levelSelectUpdate(int lvl, int back) override {};

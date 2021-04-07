@@ -6,13 +6,14 @@ TextureManager::TextureManager()
 	spritesheets["menu"] = loadSprite(".\\assets\\menuBG.png");
 	spritesheets["levelSelect"] = loadSprite(".\\assets\\select.png");
 	spritesheets["lvl1"] = loadSprite(".\\assets\\Lvl1.png");
+	spritesheets["lvl2"] = loadSprite(".\\assets\\Lvl2.png");
 	spritesheets["all"] = loadSprite(".\\assets\\allSprites.png");
 	spritesheets["characters"] = loadSprite(".\\assets\\allCharacters.png");
 	spritesheets["over"] = loadSprite(".\\assets\\over.png");
 
 	//// LEVEL PREVIEWS ////
 	spritesheets["onePreview"] = loadSprite(".\\assets\\levelPreview\\1Preview.png");
-	spritesheets["twoPreview"] = loadSprite(".\\assets\\levelPreview\\2PlaceHolder.jpg");
+	spritesheets["twoPreview"] = loadSprite(".\\assets\\levelPreview\\2Preview.png");
 	spritesheets["threePreview"] = loadSprite(".\\assets\\levelPreview\\3PlaceHolder.jpg");
 	spritesheets["fourPreview"] = loadSprite(".\\assets\\levelPreview\\4PlaceHolder.jpg");
 	spritesheets["fivePreview"] = loadSprite(".\\assets\\levelPreview\\5PlaceHolder.jpg");
@@ -60,11 +61,12 @@ TextureManager::TextureManager()
 
 	//// PLATFORMS ////
 	setFrames("tiltingPlat", std::vector<sf::IntRect> { sf::IntRect(256, 6, 625, 43) });
+	setFrames("lvl2Tilt", std::vector<sf::IntRect> { sf::IntRect(32, 376, 128, 27) });
 
 	setFrames("yellowGlow", std::vector<sf::IntRect> { sf::IntRect(538, 239, 150, 35) });
 	setFrames("purpleGlow", std::vector<sf::IntRect> { sf::IntRect(711, 239, 150, 35) });
 	setFrames("blueGlow", std::vector<sf::IntRect> { sf::IntRect(540, 295, 150, 35) });
-	setFrames("greenGlow", std::vector<sf::IntRect> { sf::IntRect(712, 204, 150, 35) });
+	setFrames("greenGlow", std::vector<sf::IntRect> { sf::IntRect(711, 295, 150, 35) });
 
 	setFrames("yellowPlat", std::vector<sf::IntRect> { sf::IntRect(23, 144, 150, 35) });
 	setFrames("purplePlat", std::vector<sf::IntRect> { sf::IntRect(23, 200, 150, 35) });
@@ -121,6 +123,8 @@ TextureManager::TextureManager()
 	setFrames("Orange", std::vector<sf::IntRect> { sf::IntRect(610, 53, 70, 66) });
 	setFrames("Red", std::vector<sf::IntRect> { sf::IntRect(691, 53, 70, 66) });
 	setFrames("Empty", std::vector<sf::IntRect> { sf::IntRect(624, 143, 27, 24) });
+	setFrames("lvl2Cover1", std::vector<sf::IntRect> { sf::IntRect(15, 438, 204, 46) });
+	setFrames("lvl2Cover2", std::vector<sf::IntRect> { sf::IntRect(267, 361, 48, 178) });
 
 	//// SET ANIM TIME ////
 	animTime["yellowLever"] = 0.3f;

@@ -10,6 +10,7 @@
 #include "SFMLDebugDraw.h"
 #include "ContactListener.h"
 #include "Lvl1.h"
+#include "Lvl2.h"
 #include "HUD.h"
 #include <memory>
 

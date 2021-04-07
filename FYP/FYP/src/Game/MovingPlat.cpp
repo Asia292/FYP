@@ -26,7 +26,7 @@ MovingPlat::MovingPlat(b2World * world, const sf::Vector2f & position, const sf:
 	texMan->getFrames(col, this);
 	setSize(sf::Vector2f(0.01f, 0.01f));
 	texture = texMan;
-	setPos(sf::Vector2f(position.x, position.y));
+	setPos(position);
 
 	start = b2Vec2(position.x, position.y);
 	end = b2Vec2(End.x, End.y);

@@ -28,7 +28,6 @@ void ContactListener::BeginContact(b2Contact * contact)
 	{
 		if (typeid(Hazard).name() == dataB->first)
 		{
-			std::cout << "Hit" << std::endl;
 			Player * player = static_cast<Player*>(dataA->second);
 			player->setDead(true);
 		}
@@ -67,7 +66,6 @@ void ContactListener::BeginContact(b2Contact * contact)
 	{
 		if (typeid(Player).name() == dataB->first)
 		{
-			std::cout << "Hit" << std::endl;
 			Player * player = static_cast<Player*>(dataA->second);
 			player->setDead(true);
 		}

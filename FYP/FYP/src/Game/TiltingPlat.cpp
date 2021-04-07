@@ -1,6 +1,6 @@
 #include "TiltingPlat.h"
 
-TiltingPlat::TiltingPlat(b2World * world, sf::Vector2f position, sf::Vector2f size, sf::Vector2f Anchor, float orientation, sf::Color colour)
+TiltingPlat::TiltingPlat(b2World * world, sf::Vector2f position, sf::Vector2f size, sf::Vector2f Anchor, float orientation, TextureManager *texMan, const std::string tex)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -42,26 +42,26 @@ TiltingPlat::TiltingPlat(b2World * world, sf::Vector2f position, sf::Vector2f si
 	jointDef.localAnchorB.Set(Anchor.x, Anchor.y); // from constructor
 	hinge = (b2RevoluteJoint*)world->CreateJoint(&jointDef);
 
+	texMan->setTexture("all", this);
+	texMan->getFrames(tex, this);
+	setSize(sf::Vector2f(0.01f, 0.01f));
+	setPos(position);
+
 	//// SFML ////
-	rectangle.setPosition(position);
+	/*rectangle.setPosition(position);
 	rectangle.setSize(size);
 	rectangle.setOrigin(size * 0.5f);
 	rectangle.setRotation(orientation);
 	rectangle.setFillColor(colour);
-	rectangle.setOutlineThickness(0.f);
-}
-
-void TiltingPlat::draw(sf::RenderTarget & target, sf::RenderStates states) const
-{
-	target.draw(rectangle);
+	rectangle.setOutlineThickness(0.f);*/
 }
 
 void TiltingPlat::update(float timestep)
 {
-	b2Vec2 pos = body->GetPosition();
-	rectangle.setPosition(pos.x, pos.y);
+	Texture::update(timestep);
+
 	float angle = body->GetAngle() * 57.29577f;
-	rectangle.setRotation(angle);
+	currSprite.setRotation(angle);
 }
 
 void TiltingPlat::setUserData(void * data)

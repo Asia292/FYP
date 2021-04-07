@@ -40,6 +40,9 @@ Game::Game(int level, int *levelScore, bool onClient)
 	case 0:
 		currLevel = new Lvl1(texManager, world, onClient);
 		break;
+	case 1:
+		currLevel = new Lvl2(texManager, world, onClient);
+		break;
 	}
 	
 	//hud = new HUD(texManager, font);

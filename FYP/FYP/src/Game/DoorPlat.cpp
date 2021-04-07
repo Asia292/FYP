@@ -1,6 +1,6 @@
 #include "DoorPlat.h"
 
-DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const float orientation, TextureManager *texMan, const std::string plat, const std::string Cover)
+DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Vector2f& coverPos, const float orientation, bool close, TextureManager *texMan, const std::string plat, const std::string Cover)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -20,18 +20,32 @@ DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const float or
 	fixtureDef.shape = &shape;
 
 	//// DOOR ////1.47f, 0.26f 0.5,0.16
-	shape.SetAsBox(1.47f * 0.5f, 0.26f * 0.5f, b2Vec2(-0.75f, 0.f), 0.f);
+	shape.SetAsBox(size.x * 0.5f, size.y * 0.5f, b2Vec2(-0.75f, 0.f), 0.f);
 	door->CreateFixture(&fixtureDef);
 	platform = new Texture();
 
+	fixture = door->GetFixtureList();
+	filter.maskBits = 0x0110;
+	fixture->SetFilterData(filter);
+
 	//// ANCHOR/SIDE ////
-	shape.SetAsBox(1.5f * 0.5f, 0.04f * 0.5f, b2Vec2(-2.2f, -0.15f), 0.f);
+	shape.SetAsBox(size.x * 0.5f, 0.04f * 0.5f, b2Vec2(-(size.x * 1.4f), -((size.y / 2) + 0.02)), 0.f);
 	top->CreateFixture(&fixtureDef);
-	shape.SetAsBox(1.5f * 0.5f, 0.04f * 0.5f, b2Vec2(-2.2f, 0.15f), 0.f);
+	fixture = top->GetFixtureList();
+	filter.maskBits = 0x1000;
+	fixture->SetFilterData(filter);
+	shape.SetAsBox(size.x * 0.5f, 0.04f * 0.5f, b2Vec2(-(size.x * 1.4f), ((size.y / 2) + 0.02)), 0.f);
 	top->CreateFixture(&fixtureDef);
-	shape.SetAsBox(0.18f * 0.5f, 0.28f * 0.5f, b2Vec2(-2.87f, 0.f), 0.f);
+	fixture = top->GetFixtureList();
+	filter.maskBits = 0x1000;
+	fixture->SetFilterData(filter);
+	shape.SetAsBox(0.18f * 0.5f, size.y * 0.5f, b2Vec2(-(size.x * 1.9f), 0.f), 0.f);
 	top->CreateFixture(&fixtureDef);
 	cover = new Texture();
+
+	fixture = top->GetFixtureList();
+	filter.maskBits = 0x1000;
+	fixture->SetFilterData(filter);
 	
 	//// JOINT ////
 	door->SetType(b2BodyType::b2_dynamicBody);
@@ -43,15 +57,23 @@ DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const float or
 
 	texMan->setTexture("all", platform);
 	texMan->getFrames(plat, platform);
-	platform->setPos(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
+	if (orientation == 0 || (orientation > 3.141 && orientation < 3.142))
+	{
+		rot = false;
+		platform->setPos(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
+	}
+	else
+	{
+		rot = true;
+		platform->setPos(sf::Vector2f(door->GetPosition().x, door->GetFixtureList()->GetAABB(0).GetCenter().y));
+	}
 	platform->setSize(sf::Vector2f(0.01f, 0.01f));
 	platform->setAngle(orientation * 57.29577f);
 
 	texMan->setTexture("all", cover);
 	texMan->getFrames(Cover, cover);
-	cover->setPos(sf::Vector2f(top->GetPosition().x - 2.2f, top->GetPosition().y));
+	cover->setPos(coverPos);
 	cover->setSize(sf::Vector2f(0.01f, 0.01f));
-	cover->setAngle(orientation * 57.29577f);
 
 	//// SFML ////
 	/*Top.setPosition(sf::Vector2f(top->GetPosition().x - 2.2f, top->GetPosition().y));
@@ -68,7 +90,16 @@ DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const float or
 	
 
 	mTime = 1.5f;
-	state = CLOSED;
+	if (close)
+		state = CLOSED;
+	else
+	{
+		state = OPEN;
+		motor->SetLinearOffset(b2Vec2(-size.x, 0));
+	}
+
+	closed = close;
+	length = size.x;
 }
 
 void DoorPlat::draw(sf::RenderTarget & target, sf::RenderStates states) const
@@ -85,6 +116,9 @@ void DoorPlat::setUserData(void *data)
 
 void DoorPlat::update(float timestep)
 {
+	platform->update(timestep);
+	cover->update(timestep);
+
 	if (state == OPENING)
 	{
 		eTime += timestep;
@@ -93,10 +127,10 @@ void DoorPlat::update(float timestep)
 		float dist;
 
 		if (t < 1.0f)
-			dist = t * -1.47f;
+			dist = t * -length;
 		else
 		{
-			dist = -1.47f;
+			dist = -length;
 			state = OPEN;
 		}
 
@@ -111,7 +145,7 @@ void DoorPlat::update(float timestep)
 		float dist;
 
 		if (t < 1.0f)
-			dist = (1.0f - t)*-1.47f;
+			dist = (1.0f - t)*-length;
 		else
 		{
 			dist = 0.0f;
@@ -121,35 +155,69 @@ void DoorPlat::update(float timestep)
 		motor->SetLinearOffset(b2Vec2(dist, 0));
 	}
 
-	platform->setPos(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
+	//platform->setPos(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
+	if (!rot)
+		platform->setPos(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
+	else
+		platform->setPos(sf::Vector2f(door->GetPosition().x, door->GetFixtureList()->GetAABB(0).GetCenter().y));
 }
 
 void DoorPlat::open()
 {
-	//std::cout << "Opening" << std::endl;
-	if (state == CLOSED)
+	if (closed)
 	{
-		eTime = 0.f;
-		state = OPENING;
+		if (state == CLOSED)
+		{
+			eTime = 0.f;
+			state = OPENING;
+		}
+		if (state == CLOSING)
+		{
+			eTime = mTime - eTime;
+			state = OPENING;
+		}
 	}
-	if (state == CLOSING)
+	else
 	{
-		eTime = mTime - eTime;
-		state = OPENING;
+		if (state == OPEN)
+		{
+			eTime = 0.f;
+			state = CLOSING;
+		}
+		if (state == OPENING)
+		{
+			eTime = mTime - eTime;
+			state == CLOSING;
+		}
 	}
 }
 
 void DoorPlat::close()
 {
-	//std::cout << "Closing" << std::endl;
-	if (state == OPEN)
+	if (closed)
 	{
-		eTime = 0.f;
-		state = CLOSING;
+		if (state == OPEN)
+		{
+			eTime = 0.f;
+			state = CLOSING;
+		}
+		if (state == OPENING)
+		{
+			eTime = mTime - eTime;
+			state == CLOSING;
+		}
 	}
-	if (state == OPENING)
+	else
 	{
-		eTime = mTime - eTime;
-		state == CLOSING;
+		if (state == CLOSED)
+		{
+			eTime = 0.f;
+			state = OPENING;
+		}
+		if (state == CLOSING)
+		{
+			eTime = mTime - eTime;
+			state = OPENING;
+		}
 	}
 }

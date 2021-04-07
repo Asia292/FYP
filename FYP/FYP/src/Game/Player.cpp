@@ -141,7 +141,7 @@ void Player::jump()
 	if (grounded)
 	{
 		b2Vec2 velo = body->GetLinearVelocity();
-		velo.y = -4.5;
+		velo.y = -5;
 		body->SetLinearVelocity(velo);
 
 		setFrame(0);

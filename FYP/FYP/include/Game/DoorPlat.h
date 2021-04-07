@@ -17,6 +17,8 @@ private:
 	b2Body * top = nullptr;		//!< What the door is attatched to - the top of it
 	b2Body * door = nullptr;		//!< The door itself
 	b2MotorJoint * motor = nullptr;		//!< The motor joint that controls the door
+	b2Fixture *fixture;
+	b2Filter filter;
 
 	const float density = 1.0f; //!< Density of the material - used to give mass
 	const float friction = 0.4f; //!< Friction - only friction from movement, not when static
@@ -25,7 +27,10 @@ private:
 	enum { CLOSED, OPEN, CLOSING, OPENING } state;		//!< Enum that defines the states the door can be in
 	float eTime;	//!< Elapsed time
 	float mTime;	//!< Motion time
-	
+	float length;
+	bool closed;
+	bool rot;
+
 	Texture *cover;
 	Texture *platform;
 	
@@ -34,7 +39,7 @@ private:
 
 public:
 	DoorPlat() {};		//!< Default constructor
-	DoorPlat(b2World * world, const sf::Vector2f& position, const float orientation, TextureManager *texMan, const std::string plat, const std::string Cover);		//!< Full constructor
+	DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Vector2f& coverPos, const float orientation, bool close, TextureManager *texMan, const std::string plat, const std::string Cover);		//!< Full constructor
 
 	void setUserData(void* data);		//!< Sets the user data of the bodies
 	void update(float timestep);		//!< Updates the textures and moves the door as required if state is opening or closing

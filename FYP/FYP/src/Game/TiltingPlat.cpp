@@ -1,6 +1,6 @@
 #include "TiltingPlat.h"
 
-TiltingPlat::TiltingPlat(b2World * world, sf::Vector2f position, sf::Vector2f size, sf::Vector2f Anchor, float orientation, TextureManager *texMan, const std::string tex)
+TiltingPlat::TiltingPlat(b2World * world, sf::Vector2f position, sf::Vector2f size, sf::Vector2f Anchor, float orientation, TextureManager *texMan, const std::string tex, bool onClient)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -47,6 +47,7 @@ TiltingPlat::TiltingPlat(b2World * world, sf::Vector2f position, sf::Vector2f si
 	setSize(sf::Vector2f(0.01f, 0.01f));
 	setPos(position);
 
+	client = onClient;
 	//// SFML ////
 	/*rectangle.setPosition(position);
 	rectangle.setSize(size);
@@ -60,8 +61,11 @@ void TiltingPlat::update(float timestep)
 {
 	Texture::update(timestep);
 
-	float angle = body->GetAngle() * 57.29577f;
-	currSprite.setRotation(angle);
+	if (!client)
+	{
+		float angle = body->GetAngle() * 57.29577f;
+		currSprite.setRotation(angle);
+	}
 }
 
 void TiltingPlat::setUserData(void * data)

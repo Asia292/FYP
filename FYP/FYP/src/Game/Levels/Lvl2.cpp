@@ -37,7 +37,7 @@ Lvl2::Lvl2(TextureManager * textMan, b2World * world, bool onClient)
 
 		tilt[i++] = new TiltingPlat(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
 			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()),
-			sf::Vector2f(0.f, 0.f), 0.f, textMan, "lvl2Tilt");
+			sf::Vector2f(0.f, 0.f), 0.f, textMan, "lvl2Tilt", onClient);
 	}
 
 	//// DOOR/SLIDING PLATS ////
@@ -52,7 +52,7 @@ Lvl2::Lvl2(TextureManager * textMan, b2World * world, bool onClient)
 			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()),
 			sf::Vector2f(cover.attribute("x").as_float(), cover.attribute("y").as_float()),
 			curr.attribute("orientation").as_float(), curr.attribute("close").as_bool(), textMan,
-			curr.attribute("glow").as_string(), curr.attribute("cover").as_string());
+			curr.attribute("glow").as_string(), curr.attribute("cover").as_string(), onClient);
 	}
 
 	//// BUTTONS ////
@@ -147,6 +147,12 @@ Lvl2::Lvl2(TextureManager * textMan, b2World * world, bool onClient)
 
 	lightHome->setUserData(lightHome);
 	darkHome->setUserData(darkHome);
+
+	//// NETWORK BEFORE VALUES ////
+	for (int i = 0; i < 2; i++) doorPosBefore[i] = slide[i]->getPlatPos();
+	for (int i = 0; i < 2; i++) tiltAngleBefore[i] = tilt[i]->getBody()->GetAngle();
+	lightHomeBefore = false;
+	darkHomeBefore = false;
 }
 
 Lvl2::~Lvl2()
@@ -320,8 +326,123 @@ int Lvl2::score(float time)
 
 void Lvl2::networkFrameUpdate(Server * server)
 {
+	for (int i = 0; i < 2; i++)
+	{
+		if (tilt[i]->getBody()->GetAngle() != tiltAngleBefore[i])
+		{
+			sf::Packet p;
+			StampPacket(PacketType::LevelUpdate, p);
+			LevelUpdate update;
+			update.object = 0;
+			update.index = i;
+			update.angle = tilt[i]->getBody()->GetAngle();
+			p << update;
+			server->Broadcast(p);
+
+			tiltAngleBefore[i] = tilt[i]->getBody()->GetAngle();
+		}
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		if (slide[i]->getPlatPos() != doorPosBefore[i])
+		{
+			sf::Packet p;
+			StampPacket(PacketType::LevelUpdate, p);
+			LevelUpdate update;
+			float x = slide[i]->getPlatPos().x;
+			float y = slide[i]->getPlatPos().y;
+			update.object = 1;
+			update.index = i;
+			update.position = sf::Vector2f(x, y);
+			p << update;
+			server->Broadcast(p);
+
+			doorPosBefore[i] = slide[i]->getPlatPos();
+		}
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		if (lightPickUps[i] != nullptr && lightPickUps[i]->getDel())
+		{
+			delete lightPickUps[i];
+			lightPickUps[i] = nullptr;
+
+			sf::Packet p;
+			StampPacket(PacketType::LevelUpdate, p);
+			LevelUpdate update;
+			update.object = 2;
+			update.index = i;
+			p << update;
+			server->Broadcast(p);
+		}
+
+		if (darkPickUps[i] != nullptr && darkPickUps[i]->getDel())
+		{
+			delete darkPickUps[i];
+			darkPickUps[i] = nullptr;
+
+			sf::Packet p;
+			StampPacket(PacketType::LevelUpdate, p);
+			LevelUpdate update;
+			update.object = 3;
+			update.index = i;
+			p << update;
+			server->Broadcast(p);
+		}
+	}
+
+	if (lightHome->getFade() != lightHomeBefore)
+	{
+		sf::Packet p;
+		StampPacket(PacketType::LevelUpdate, p);
+		LevelUpdate update;
+		update.object = 4;
+		update.texture = lightHome->getFade();
+		p << update;
+		server->Broadcast(p);
+
+		lightHomeBefore = lightHome->getFade();
+	}
+
+	if (darkHome->getFade() != darkHomeBefore)
+	{
+		sf::Packet p;
+		StampPacket(PacketType::LevelUpdate, p);
+		LevelUpdate update;
+		update.object = 5;
+		update.texture = darkHome->getFade();
+		p << update;
+		server->Broadcast(p);
+
+		std::cout << darkHomeBefore << std::endl;
+	}
 }
 
 void Lvl2::networkUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position)
 {
+	float deg;
+	switch (object)
+	{
+	case 0:
+		deg = angle * 57.29577f;
+		tilt[index]->setAngle(deg);
+		break;
+	case 1:
+		slide[index]->setPlatPos(position);
+		break;
+	case 2:
+		lightPickUps[index]->delTrue();
+		break;
+	case 3:
+		darkPickUps[index]->delTrue();
+		break;
+	case 4:
+		lightHome->setFade(texture);
+		break;
+	case 5:
+		darkHome->setFade(texture);
+		break;
+	}
 }

@@ -30,7 +30,7 @@ protected:
 
 	bool lEmpty, dEmpty;
 	bool client;
-	b2Vec2 doorPosBefore[2];
+	sf::Vector2f doorPosBefore[2];
 	float tiltAngleBefore[2];
 	bool lightHomeBefore;
 	bool darkHomeBefore;

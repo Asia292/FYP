@@ -1,6 +1,6 @@
 #include "DoorPlat.h"
 
-DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Vector2f& coverPos, const float orientation, bool close, TextureManager *texMan, const std::string plat, const std::string Cover)
+DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Vector2f& coverPos, const float orientation, bool close, TextureManager *texMan, const std::string plat, const std::string Cover, bool onClient)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -100,6 +100,7 @@ DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vect
 
 	closed = close;
 	length = size.x;
+	client = onClient;
 }
 
 void DoorPlat::draw(sf::RenderTarget & target, sf::RenderStates states) const
@@ -155,11 +156,13 @@ void DoorPlat::update(float timestep)
 		motor->SetLinearOffset(b2Vec2(dist, 0));
 	}
 
-	//platform->setPos(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
-	if (!rot)
-		platform->setPos(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
-	else
-		platform->setPos(sf::Vector2f(door->GetPosition().x, door->GetFixtureList()->GetAABB(0).GetCenter().y));
+	if (!client)
+	{
+		if (!rot)
+			platform->setPos(sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y));
+		else
+			platform->setPos(sf::Vector2f(door->GetPosition().x, door->GetFixtureList()->GetAABB(0).GetCenter().y));
+	}
 }
 
 void DoorPlat::open()
@@ -220,4 +223,12 @@ void DoorPlat::close()
 			state = OPENING;
 		}
 	}
+}
+
+sf::Vector2f DoorPlat::getPlatPos()
+{
+	if (!rot)
+		return sf::Vector2f(door->GetFixtureList()->GetAABB(0).GetCenter().x, door->GetPosition().y);
+	else
+		return sf::Vector2f(door->GetPosition().x, door->GetFixtureList()->GetAABB(0).GetCenter().y);
 }

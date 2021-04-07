@@ -20,11 +20,13 @@ private:
 	const float restitution = 0.f; //!< Restitution - bouncyness of stuff
 	b2Body * anchor;
 	b2RevoluteJoint * hinge;
+	bool client;
 
 public:
 	TiltingPlat() {}; //!< Default constructor
-	TiltingPlat(b2World * world, sf::Vector2f position, sf::Vector2f size, sf::Vector2f Anchor, float orientation, TextureManager *texMan, const std::string tex); // Full constructor
+	TiltingPlat(b2World * world, sf::Vector2f position, sf::Vector2f size, sf::Vector2f Anchor, float orientation, TextureManager *texMan, const std::string tex, bool onClient = false); // Full constructor
 	//void draw(sf::RenderTarget& target, sf::RenderStates states) const; //!< Draw door
 	void update(float timestep);
 	void setUserData(void* data);		//!< Sets the user data of the bodies
+	b2Body * getBody() { return body; }
 };

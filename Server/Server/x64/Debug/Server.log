@@ -1,12 +1,6 @@
 ﻿  Game.cpp
-  Hazard.cpp
   Lvl1.cpp
-  Player.cpp
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\game\player.cpp(69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\game\levels\lvl1.cpp(218): warning C4267: 'argument': conversion from 'size_t' to 'int32', possible loss of data
   GameState.cpp
   LevelSelectState.cpp
   MenuState.cpp

@@ -120,6 +120,7 @@ void NetworkState::update(float timestep)
 				{
 					currState = nullptr;
 					client.Disconnect();
+					quit = true;
 				}
 			}
 		}

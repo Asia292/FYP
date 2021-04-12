@@ -316,7 +316,7 @@ int Lvl2::score(float time)
 			dEmpty = false;
 	}
 
-	if (lEmpty && dEmpty && (time < 60.f))
+	if (lEmpty && dEmpty && (time < 55.f))
 		return 3;
 	else if (!lEmpty && !dEmpty && (time > 60.f))
 		return 1;

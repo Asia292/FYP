@@ -12,6 +12,15 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	doc.load_file(".\\assets\\xml\\Level1.xml");
 	pugi::xml_node lvl = doc.child("Level1");
 
+	/*hazards.resize(3);
+	lightPickUps.resize(3);
+	darkPickUps.resize(3);
+	levers.resize(1);
+	buttons.resize(2);
+	movingPlats.resize(2);
+	blocks.resize(1);
+	floors.resize(1);*/
+
 	//// PLAYERS ////
 	lightPlayer = new Player(world, sf::Vector2f(1.00f, 8.14f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0010, textMan, onClient);
 	darkPlayer = new Player(world, sf::Vector2f(1.00f, 9.62f), sf::Vector2f(0.4f, 0.6f), 0.f, 0x0100, textMan, onClient);
@@ -21,33 +30,33 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	darkHazard = new Hazard(world, sf::Vector2f(7.39f, 10.18f), sf::Vector2f(1.5f, 0.25f), 0.f, 0x0100);
 	bothHazard = new Hazard(world, sf::Vector2f(9.54f, 8.00f), sf::Vector2f(1.5f, 0.25f), 0.f, 0xFFFF);*/
 	
-	int i = 0;
 	for (pugi::xml_node curr = lvl.child("hazard"); curr; curr = curr.next_sibling("hazard"))
 	{
 		pugi::xml_node pos = curr.child("position");
 		pugi::xml_node size = curr.child("size");
 
-		hazards[i++] = new Hazard(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+		hazards.push_back(new Hazard(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
 			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()),
-			0.f, curr.attribute("mask").as_uint());
+			0.f, curr.attribute("mask").as_uint()));
 	}
 
 	//// PLATFORMS ////
 	//platforms[0] = new MovingPlat(world, sf::Vector2f(1.09f, 5.55f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(1.09f, 6.60f), textMan, "yellowPlat", "yellowGlow", onClient);
 	//platforms[1] = new MovingPlat(world, sf::Vector2f(12.96f, 4.24f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(12.96f, 5.60f), textMan, "purplePlat", "purpleGlow", onClient);
 
-	i = 0;
 	for (pugi::xml_node curr = lvl.child("platform"); curr; curr = curr.next_sibling("platform"))
 	{
 		pugi::xml_node pos = curr.child("position");
 		pugi::xml_node size = curr.child("size");
 		pugi::xml_node end = curr.child("end");
 
-		platforms[i++] = new MovingPlat(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+		movingPlats.push_back(new MovingPlat(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
 			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()),
 			curr.attribute("orientation").as_float(), 
 			sf::Vector2f(end.attribute("x").as_float(), end.attribute("y").as_float()),
-			textMan, curr.attribute("colour").as_string(), curr.attribute("glow").as_string(), onClient);
+			textMan, curr.attribute("colour").as_string(), curr.attribute("glow").as_string(), onClient));
+
+		movePlatPosBefore.push_back(movingPlats.back()->getBody()->GetPosition());
 	}
 
 	//// LEVERS/BUTTONS ////
@@ -58,20 +67,21 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	pugi::xml_node curr = lvl.child("lever");
 	pugi::xml_node pos = curr.child("position");
 	pugi::xml_node size = curr.child("size");
-	lever = new Lever(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+	levers.push_back(new Lever(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
 		sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()),
-		platforms[curr.attribute("platform").as_int()], curr.attribute("right").as_bool(), textMan,
-		curr.attribute("colour").as_string(), curr.attribute("back").as_string());
+		movingPlats[curr.attribute("platform").as_int()], curr.attribute("right").as_bool(), textMan,
+		curr.attribute("colour").as_string(), curr.attribute("back").as_string()));
 
-	i = 0;
+	leverFrameBefore.push_back(levers.back()->getFrame());
+
 	for (pugi::xml_node curr = lvl.child("button"); curr; curr = curr.next_sibling("button"))
 	{
 		pugi::xml_node pos = curr.child("position");
 		pugi::xml_node size = curr.child("size");
 
-		buttons[i++] = new Button(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+		buttons.push_back(new Button(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
 			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()),
-			platforms[curr.attribute("platform").as_int()], textMan, curr.attribute("colour").as_string());
+			movingPlats[curr.attribute("platform").as_int()], textMan, curr.attribute("colour").as_string()));
 	}
 
 	//// ITEMS ////
@@ -83,24 +93,22 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	lightPickUps[1] = new PickUp(world, sf::Vector2f(3.60f, 5.04f), sf::Vector2f(0.3f, 0.3f), 0x0010, textMan);
 	lightPickUps[2] = new PickUp(world, sf::Vector2f(1.10f, 2.11f), sf::Vector2f(0.3f, 0.3f), 0x0010, textMan);*/
 
-	i = 0;
 	for (pugi::xml_node curr = lvl.child("darkPickUp"); curr; curr = curr.next_sibling("darkPickUp"))
 	{
 		pugi::xml_node pos = curr.child("position");
 		pugi::xml_node size = curr.child("size");
 
-		darkPickUps[i++] = new PickUp(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
-			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), 0x0100, textMan);
+		darkPickUps.push_back(new PickUp(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), 0x0100, textMan));
 	}
 
-	i = 0;
 	for (pugi::xml_node curr = lvl.child("lightPickUp"); curr; curr = curr.next_sibling("lightPickUp"))
 	{
 		pugi::xml_node pos = curr.child("position");
 		pugi::xml_node size = curr.child("size");
 
-		lightPickUps[i++] = new PickUp(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
-			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), 0x0010, textMan);
+		lightPickUps.push_back(new PickUp(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), 0x0010, textMan));
 	}
 
 	//// MISC ////
@@ -112,8 +120,10 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	curr = lvl.child("block");
 	pos = curr.child("position");
 	size = curr.child("size");
-	block = new Block(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
-		sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), 0.f, textMan, onClient);
+	blocks.push_back(new Block(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+		sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), 0.f, textMan, onClient));
+
+	blockPosBefore.push_back(blocks.back()->getBody()->GetPosition());
 
 	curr = lvl.child("lightHome");
 	pos = curr.child("position");
@@ -128,10 +138,9 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 		sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), darkPlayer, textMan);
 
 	//// FLOOR/OUTLINE ////
-	i = 0;
 	for (pugi::xml_node curr = lvl.child("outline").child("coord"); curr; curr = curr.next_sibling("coord"))
 	{
-		outline[i++].Set(curr.attribute("x").as_float(), curr.attribute("y").as_float());
+		outline.push_back(b2Vec2(curr.attribute("x").as_float(), curr.attribute("y").as_float()));
 	}
 
 	/*outline[0].Set(0.33f, 0.31f);
@@ -206,11 +215,11 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	outline[63].Set(0.33f, 2.51f);
 	outline[64].Set(0.33f, 0.31f);*/
 
-	floor = new Floor(outline, 65, world);
+	floors.push_back(new Floor(outline.data(), outline.size(), world));
 
 
 	//// USER DATA ////
-	floor->setUserData(new std::pair<std::string, void *>(typeid(decltype(*floor)).name(), floor));
+	for (Floor *floor : floors) floor->setUserData(new std::pair<std::string, void *>(typeid(decltype(*floor)).name(), floor));
 
 	lightPlayer->setUserData(new std::pair<std::string, void *>(typeid(decltype(*lightPlayer)).name(), lightPlayer));
 	darkPlayer->setUserData(new std::pair<std::string, void *>(typeid(decltype(*darkPlayer)).name(), darkPlayer));
@@ -222,21 +231,21 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	for (Hazard *haz : hazards) haz->setUserData(new std::pair<std::string, void *>(typeid(decltype(*haz)).name(), haz));
 
 
-	lever->setUserData(lever);
+	for (Lever *lever : levers) lever->setUserData(lever);
 	for (Button *button : buttons) button->setUserData(button);
-	for (MovingPlat *platform : platforms) platform->setUserData(new std::pair<std::string, void *>(typeid(decltype(*platform)).name(), platform));
+	for (MovingPlat *platform : movingPlats) platform->setUserData(new std::pair<std::string, void *>(typeid(decltype(*platform)).name(), platform));
 
 	for (PickUp *item : lightPickUps) item->setUserData(item);
 	for (PickUp *item : darkPickUps) item->setUserData(item);
 
-	block->setUserData(new std::pair<std::string, void *>(typeid(decltype(*block)).name(), block));
+	for (Block *block : blocks) block->setUserData(new std::pair<std::string, void *>(typeid(decltype(*block)).name(), block));
 	lightHome->setUserData(lightHome);
 	darkHome->setUserData(darkHome);
 
 	//// NETWORK BEFORE VALUES	////
-	frameBefore = lever->getFrame();
+	/*frameBefore = lever->getFrame();
 	for (int i = 0; i < 2; i++) platPosBefore[i] = platforms[i]->getBody()->GetPosition();
-	blockPosBefore = block->getBody()->GetPosition();
+	blockPosBefore = block->getBody()->GetPosition();*/
 	lightHomeBefore = false;
 	darkHomeBefore = false;
 }
@@ -259,14 +268,17 @@ Lvl1::~Lvl1()
 		haz = nullptr;
 	}
 
-	delete lever;
-	lever = nullptr;
+	for (Lever *lever : levers)
+	{
+		delete lever;
+		lever = nullptr;
+	}
 	for (Button *button : buttons)
 	{
 		delete button;
 		button = nullptr;
 	}
-	for (MovingPlat *platform : platforms)
+	for (MovingPlat *platform : movingPlats)
 	{
 		delete platform;
 		platform = nullptr;
@@ -290,8 +302,17 @@ Lvl1::~Lvl1()
 		}
 	}
 
-	delete block;
-	block = nullptr;
+	for (Block *block : blocks)
+	{
+		delete block;
+		block = nullptr;
+	}
+
+	for (Floor *floor : floors)
+	{
+		delete floor;
+		floor = nullptr;
+	}
 
 	delete lightHome;
 	lightHome = nullptr;
@@ -306,13 +327,21 @@ void Lvl1::update(float timestep, bool server)
 	lightPlayer->update(timestep);
 	darkPlayer->update(timestep);
 
-	for (MovingPlat *platform : platforms)
+	for (MovingPlat *platform : movingPlats)
 	{
 		platform->update(timestep);
 	}
 	for (Button *button : buttons)
 	{
 		button->update(timestep);
+	}
+	for (Lever *lever : levers)
+	{
+		lever->update(timestep);
+	}
+	for (Block *block : blocks)
+	{
+		block->update(timestep);
 	}
 
 	int i = 0;
@@ -346,10 +375,6 @@ void Lvl1::update(float timestep, bool server)
 		i++;
 	}
 
-	block->update(timestep);
-
-	lever->update(timestep);
-
 	lightHome->update(timestep);
 	darkHome->update(timestep);
 }
@@ -367,15 +392,21 @@ void Lvl1::draw(sf::RenderTarget & target, sf::RenderStates states) const
 		target.draw(*haz);
 	}
 
-	target.draw(*lever);
-
+	for (Lever *lever : levers)
+	{
+		target.draw(*lever);
+	}
 	for (Button *button : buttons)
 	{
 		target.draw(*button);
 	}
-	for (MovingPlat *platform : platforms)
+	for (MovingPlat *platform : movingPlats)
 	{
 		target.draw(*platform);
+	}
+	for (Block *block : blocks)
+	{
+		target.draw(*block);
 	}
 
 	for (PickUp *item : lightPickUps)
@@ -389,7 +420,6 @@ void Lvl1::draw(sf::RenderTarget & target, sf::RenderStates states) const
 			item->draw(target, states);
 	}
 
-	target.draw(*block);
 	target.draw(*lightHome);
 	target.draw(*darkHome);
 
@@ -420,57 +450,65 @@ int Lvl1::score(float time)
 
 void Lvl1::networkFrameUpdate(Server * server)
 {
-	if (lever->getFrame() != frameBefore)
+	for (int i = 0; i < levers.size(); i++)
 	{
-		sf::Packet p;
-		StampPacket(PacketType::LevelUpdate, p);
-		LevelUpdate update;
-		update.object = 0;
-		update.texture = lever->getTexture();
-		update.frame = lever->getFrame();
-		p << update;
-		server->Broadcast(p);
-
-		frameBefore = lever->getFrame();
-	}
-
-	for (int i = 0; i < 2; i++)
-	{
-		if (platforms[i]->getBody()->GetPosition() != platPosBefore[i])
+		if (levers[i]->getFrame() != leverFrameBefore[i])
 		{
 			sf::Packet p;
 			StampPacket(PacketType::LevelUpdate, p);
 			LevelUpdate update;
-			float x = platforms[i]->getBody()->GetPosition().x;
-			float y = platforms[i]->getBody()->GetPosition().y;
-			update.object = 1;
+			update.object = 0;
 			update.index = i;
-			update.position = sf::Vector2f(x, y);
-			update.texture = platforms[i]->getGlow();
+			update.texture = levers[i]->getTexture();
+			update.frame = levers[i]->getFrame();
 			p << update;
 			server->Broadcast(p);
 
-			platPosBefore[i] = platforms[i]->getBody()->GetPosition();
+			leverFrameBefore[i] = levers[i]->getFrame();
 		}
 	}
 
-	if (block->getBody()->GetPosition() != blockPosBefore)
+	for (int i = 0; i < movingPlats.size(); i++)
 	{
-		sf::Packet p;
-		StampPacket(PacketType::LevelUpdate, p);
-		LevelUpdate update;
-		float x = block->getBody()->GetPosition().x;
-		float y = block->getBody()->GetPosition().y;
-		update.object = 2;
-		update.position = sf::Vector2f(x, y);
-		update.angle = block->getBody()->GetAngle();
-		p << update;
-		server->Broadcast(p);
+		if (movingPlats[i]->getBody()->GetPosition() != movePlatPosBefore[i])
+		{
+			sf::Packet p;
+			StampPacket(PacketType::LevelUpdate, p);
+			LevelUpdate update;
+			float x = movingPlats[i]->getBody()->GetPosition().x;
+			float y = movingPlats[i]->getBody()->GetPosition().y;
+			update.object = 1;
+			update.index = i;
+			update.position = sf::Vector2f(x, y);
+			update.texture = movingPlats[i]->getGlow();
+			p << update;
+			server->Broadcast(p);
 
-		blockPosBefore = block->getBody()->GetPosition();
+			movePlatPosBefore[i] = movingPlats[i]->getBody()->GetPosition();
+		}
 	}
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < blocks.size(); i++)
+	{
+		if (blocks[i]->getBody()->GetPosition() != blockPosBefore[i])
+		{
+			sf::Packet p;
+			StampPacket(PacketType::LevelUpdate, p);
+			LevelUpdate update;
+			float x = blocks[i]->getBody()->GetPosition().x;
+			float y = blocks[i]->getBody()->GetPosition().y;
+			update.object = 2;
+			update.index = i;
+			update.position = sf::Vector2f(x, y);
+			update.angle = blocks[i]->getBody()->GetAngle();
+			p << update;
+			server->Broadcast(p);
+
+			blockPosBefore[i] = blocks[i]->getBody()->GetPosition();
+		}
+	}
+
+	for (int i = 0; i < lightPickUps.size(); i++)
 	{
 		if (lightPickUps[i] != nullptr && lightPickUps[i]->getDel())
 		{
@@ -534,17 +572,17 @@ void Lvl1::networkUpdate(int object, int index, bool texture, int frame, float a
 	switch (object)
 	{
 	case 0:
-		lever->setTexture(texture);
-		lever->setFrame(frame);
+		levers[index]->setTexture(texture);
+		levers[index]->setFrame(frame);
 		break;
 	case 1:
-		platforms[index]->setPos(position);
-		platforms[index]->setTexture(texture);
+		movingPlats[index]->setPos(position);
+		movingPlats[index]->setTexture(texture);
 		break;
 	case 2:
-		block->setPos(position);
+		blocks[index]->setPos(position);
 		deg = angle * 57.29577f;
-		block->setAngle(deg);
+		blocks[index]->setAngle(deg);
 		break;
 	case 3:
 		lightPickUps[index]->delTrue();

@@ -11,32 +11,37 @@
 class Lvl1 : public Level
 {
 protected:
+	//Hazard *hazards[3];
+	std::vector<Hazard*> hazards;
 
-	/*Hazard *lightHazard;		//!< Hazard to light player
-	Hazard *darkHazard;			//!< Hazard to dark player
-	Hazard *bothHazard;	*/		//!< Hazard to both players
-	Hazard *hazards[3];
+	//PickUp *lightPickUps[3];		//!< Array of light pickups
+	//PickUp *darkPickUps[3];		//!< Array of dark pickups
+	std::vector<PickUp*> lightPickUps;
+	std::vector<PickUp*> darkPickUps;
 
-	PickUp *lightPickUps[3];		//!< Array of light pickups
-	PickUp *darkPickUps[3];		//!< Array of dark pickups
+	//Lever *lever;				//!< A lever
+	//Button *buttons[2];			//!< Array of buttons
+	//MovingPlat *platforms[2];	//!< Array of platforms
+	std::vector<Lever*> levers;
+	std::vector<Button*> buttons;
+	std::vector<MovingPlat*> movingPlats;
 
-	Lever *lever;				//!< A lever
-	Button *buttons[2];			//!< Array of buttons
-	MovingPlat *platforms[2];	//!< Array of platforms
+	//Block *block;				//!< Movable block
+	std::vector<Block*> blocks;
 
-	Block *block;				//!< Movable block
-
-	Floor *floor;				//!< Floor of the game
-	b2Vec2 outline[65];		//!< Array of floor outline vectors
+	//Floor *floor;				//!< Floor of the game
+	//b2Vec2 outline[65];		//!< Array of floor outline vectors
+	std::vector<Floor*> floors;
+	std::vector<b2Vec2> outline;
 
 	HomeSensor *lightHome;
 	HomeSensor *darkHome;
 
 	bool lEmpty, dEmpty;
 	bool client;
-	int frameBefore;
-	b2Vec2 platPosBefore[2];
-	b2Vec2 blockPosBefore;
+	std::vector<int> leverFrameBefore;
+	std::vector<b2Vec2> movePlatPosBefore;
+	std::vector<b2Vec2> blockPosBefore;
 	bool lightHomeBefore;
 	bool darkHomeBefore;
 

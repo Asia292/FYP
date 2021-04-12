@@ -1,65 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<Level1>
+<Level time = "60" background = "lvl1" cover = "lvl1Cover">
+  <lightPlayer>
+    <position x="1.00" y="8.14"/>
+  </lightPlayer>
+
+  <darkPlayer>
+    <position x="1.00" y="9.62"/>
+  </darkPlayer>
+  
 	<hazard mask = "0x0010">
 		<position x="10.25" y="10.18"/>
 		<size x="1.5" y="0.25"/>
 	</hazard>
-
 	<hazard mask = "0x0100">
 		<position x="7.39" y="10.18"/>
 		<size x="1.5" y="0.25"/>
 	</hazard>
-
 	<hazard mask = "0xFFFF">
 		<position x="9.54" y="8.00"/>
 		<size x="1.5" y="0.25"/>
 	</hazard>
 
-	<platform name = "0" orientation = "0" colour = "yellowPlat" glow = "yellowGlow">
+	<movingPlat orientation = "0" colour = "yellowPlat" glow = "yellowGlow">
 		<position x="1.09" y="5.55"/>
 		<size x="1.47" y="0.26"/>
 		<end x="1.09" y="6.60"/>
-	</platform>
-	<platform name = "1" orientation = "0" colour = "purplePlat" glow = "purpleGlow">
+	</movingPlat>
+  <movingPlat orientation = "0" colour = "purplePlat" glow = "purpleGlow">
 		<position x="12.96" y="4.24"/>
 		<size x="1.47" y="0.26"/>
 		<end x="12.96" y="5.60"/>
-	</platform>
+	</movingPlat>
 
-	<lever platform = "0" right = "true" colour = "yellowLever" back = "yellowLeverReverse">
+	<lever name = "movingPlat" index = "0" right = "true" colour = "yellowLever" back = "yellowLeverReverse">
 		<position x="3.77" y="7.0"/>
 		<size x="0.6" y="0.5"/>
 	</lever>
 
-	<button platform = "1" colour = "purpleButton">
+  <button name = "movingPlat" index = "1" colour = "purpleButton">
 		<position x="5.42" y="5.31"/>
-		<size x="0.6" y="0.3"/>
 	</button>
-	<button platform = "1" colour = "purpleButton">
+  <button name = "movingPlat" index = "1" colour = "purpleButton">
 		<position x="11.16" y="3.85"/>
-		<size x="0.6" y="0.3"/>
 	</button>
 
 	<darkPickUp>
 		<position x="7.39" y="9.00"/>
-		<size x="0.3" y="0.3"/>
 	</darkPickUp>
 	<darkPickUp>
 		<position x="5.23" y="6.81"/>
-		<size x="0.3" y="0.3"/>
 	</darkPickUp>
 	<darkPickUp>
 		<position x="4.36" y="1.04"/>
-		<size x="0.3" y="0.3"/>
 	</darkPickUp>
 
 	<lightPickUp>
 		<position x="10.25" y="9.00"/>
-		<size x="0.3" y="0.3"/>
 	</lightPickUp>
 	<lightPickUp>
 		<position x="3.60" y="5.04"/>
-		<size x="0.3" y="0.3"/>
 	</lightPickUp>
 	<lightPickUp>
 		<position x="1.10" y="2.11"/>
@@ -148,4 +147,4 @@
 		<coord x="0.33" y="2.51"/>
 		<coord x="0.33" y="0.31"/>
 	</outline>
-</Level1>
+</Level>

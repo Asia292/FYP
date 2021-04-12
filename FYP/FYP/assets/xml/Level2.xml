@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Level2>
+<Level time = "55" background = "lvl2" cover = "lvl2Cover">
+  <lightPlayer>
+    <position x="0.70" y="9.40"/>
+  </lightPlayer>
+
+  <darkPlayer>
+    <position x="1.50" y="9.40"/>
+  </darkPlayer>
+  
 	<hazard mask = "0xFFFF">
 		<position x="4.54" y="5.49"/>
 		<size x="2.90" y="0.25"/>
@@ -25,36 +33,34 @@
 		<size x="2.88" y="0.24"/>
 	</hazard>
 
-	<tilt>
+	<tilt orientation = "0" texture = "lvl2Tilt">
 		<position x="9.73" y="4.77"/>
 		<size x="1.27" y="0.29"/>
 	</tilt>
-	<tilt>
+  <tilt orientation = "0" texture = "lvl2Tilt">
 		<position x="4.32" y="4.58"/>
 		<size x="1.27" y="0.29"/>
 	</tilt>
 
-	<door orientation = "3.14159" close = "false" glow = "greenGlow" cover = "lvl2Cover1">
+	<door orientation = "3.14159" close = "false" glow = "greenGlow">
 		<position x="6.23" y="1.96"/>
 		<size x="1.83" y="0.31"/>
-		<coverPos x="8.90" y="1.96"/>
 	</door>
-	<door orientation = "1.5708" close = "true" glow = "blueGlow" cover = "lvl2Cover2">
+	<door orientation = "1.5708" close = "true" glow = "blueGlow">
 		<position x="7.21" y="7.22"/>
 		<size x="1.48" y="0.36"/>
-		<coverPos x="7.19" y="4.83"/>
 	</door>
 
-	<button door = "0" colour = "greenButton">
+	<button name = "door" index = "0" colour = "greenButton">
 		<position x="10.26" y="1.64"/>
 	</button>
-	<button door = "0" colour = "greenButton">
+  <button name = "door" index = "0" colour = "greenButton">
 		<position x="3.59" y="1.64"/>
 	</button>
-	<button door = "1" colour = "blueButton">
+  <button name = "door" index = "1" colour = "blueButton">
 		<position x="2.14" y="7.07"/>
 	</button>
-	<button door = "1" colour = "blueButton">
+  <button name = "door" index = "1" colour = "blueButton">
 		<position x="11.34" y="7.07"/>
 	</button>
 
@@ -189,4 +195,4 @@
 		<coord x="7.92" y="9.35"/>
 		<coord x="7.92" y="9.02"/>
 	</outline>
-</Level2>
+</Level>

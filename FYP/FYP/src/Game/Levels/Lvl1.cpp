@@ -44,7 +44,7 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	//platforms[0] = new MovingPlat(world, sf::Vector2f(1.09f, 5.55f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(1.09f, 6.60f), textMan, "yellowPlat", "yellowGlow", onClient);
 	//platforms[1] = new MovingPlat(world, sf::Vector2f(12.96f, 4.24f), sf::Vector2f(1.47f, 0.26f), 0.f, sf::Vector2f(12.96f, 5.60f), textMan, "purplePlat", "purpleGlow", onClient);
 
-	for (pugi::xml_node curr = lvl.child("platform"); curr; curr = curr.next_sibling("platform"))
+	for (pugi::xml_node curr = lvl.child("movingPlat"); curr; curr = curr.next_sibling("platform"))
 	{
 		pugi::xml_node pos = curr.child("position");
 		pugi::xml_node size = curr.child("size");
@@ -96,19 +96,17 @@ Lvl1::Lvl1(TextureManager * textMan, b2World * world, bool onClient)
 	for (pugi::xml_node curr = lvl.child("darkPickUp"); curr; curr = curr.next_sibling("darkPickUp"))
 	{
 		pugi::xml_node pos = curr.child("position");
-		pugi::xml_node size = curr.child("size");
 
 		darkPickUps.push_back(new PickUp(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
-			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), 0x0100, textMan));
+			sf::Vector2f(0.3f, 0.3f), 0x0100, textMan));
 	}
 
 	for (pugi::xml_node curr = lvl.child("lightPickUp"); curr; curr = curr.next_sibling("lightPickUp"))
 	{
 		pugi::xml_node pos = curr.child("position");
-		pugi::xml_node size = curr.child("size");
 
 		lightPickUps.push_back(new PickUp(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
-			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()), 0x0010, textMan));
+			sf::Vector2f(0.3f, 0.3f), 0x0010, textMan));
 	}
 
 	//// MISC ////

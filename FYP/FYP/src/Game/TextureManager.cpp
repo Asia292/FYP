@@ -5,8 +5,16 @@ TextureManager::TextureManager()
 	//// SET SPRITES ////
 	spritesheets["menu"] = loadSprite(".\\assets\\menuBG.png");
 	spritesheets["levelSelect"] = loadSprite(".\\assets\\select.png");
-	spritesheets["lvl1"] = loadSprite(".\\assets\\Lvl1.png");
-	spritesheets["lvl2"] = loadSprite(".\\assets\\Lvl2.png");
+	spritesheets["lvl1"] = loadSprite(".\\assets\\levels\\Lvl1.png");
+	spritesheets["lvl2"] = loadSprite(".\\assets\\levels\\Lvl2.png");
+	spritesheets["lvl3"] = loadSprite(".\\assets\\levels\\Lvl3.png");
+	spritesheets["lvl4"] = loadSprite(".\\assets\\levels\\Lvl4.png");
+	spritesheets["lvl5"] = loadSprite(".\\assets\\levels\\Lvl5.png");
+	spritesheets["lvl1Cover"] = loadSprite(".\\assets\\levels\\Lvl1Cover.png");
+	spritesheets["lvl2Cover"] = loadSprite(".\\assets\\levels\\Lvl2Cover.png");
+	spritesheets["lvl3Cover"] = loadSprite(".\\assets\\levels\\Lvl3Cover.png");
+	spritesheets["lvl4Cover"] = loadSprite(".\\assets\\levels\\Lvl4Cover.png");
+	spritesheets["lvl5Cover"] = loadSprite(".\\assets\\levels\\Lvl5Cover.png");
 	spritesheets["all"] = loadSprite(".\\assets\\allSprites.png");
 	spritesheets["characters"] = loadSprite(".\\assets\\allCharacters.png");
 	spritesheets["over"] = loadSprite(".\\assets\\over.png");

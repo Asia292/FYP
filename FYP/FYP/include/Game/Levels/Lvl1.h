@@ -3,12 +3,12 @@
 \file Lvl1.h
 */
 
-#include "Level.h"
+#include "LevelOld.h"
 
 /*! \class Level
 \brief First level of the game
 */
-class Lvl1 : public Level
+class Lvl1 : public LevelOld
 {
 protected:
 	//Hazard *hazards[3];

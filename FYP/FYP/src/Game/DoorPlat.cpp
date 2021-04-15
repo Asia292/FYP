@@ -1,6 +1,6 @@
 #include "DoorPlat.h"
 
-DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Vector2f& coverPos, const float orientation, bool close, TextureManager *texMan, const std::string plat, const std::string Cover, bool onClient)
+DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, const float orientation, bool close, TextureManager *texMan, const std::string plat, bool onClient)
 {
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -41,7 +41,6 @@ DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vect
 	fixture->SetFilterData(filter);
 	shape.SetAsBox(0.18f * 0.5f, size.y * 0.5f, b2Vec2(-(size.x * 1.9f), 0.f), 0.f);
 	top->CreateFixture(&fixtureDef);
-	cover = new Texture();
 
 	fixture = top->GetFixtureList();
 	filter.maskBits = 0x1000;
@@ -70,10 +69,6 @@ DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vect
 	platform->setSize(sf::Vector2f(0.01f, 0.01f));
 	platform->setAngle(orientation * 57.29577f);
 
-	texMan->setTexture("all", cover);
-	texMan->getFrames(Cover, cover);
-	cover->setPos(coverPos);
-	cover->setSize(sf::Vector2f(0.01f, 0.01f));
 
 	//// SFML ////
 	/*Top.setPosition(sf::Vector2f(top->GetPosition().x - 2.2f, top->GetPosition().y));
@@ -106,7 +101,6 @@ DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vect
 void DoorPlat::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	platform->draw(target, states);
-	cover->draw(target, states);
 }
 
 void DoorPlat::setUserData(void *data)
@@ -118,7 +112,6 @@ void DoorPlat::setUserData(void *data)
 void DoorPlat::update(float timestep)
 {
 	platform->update(timestep);
-	cover->update(timestep);
 
 	if (state == OPENING)
 	{

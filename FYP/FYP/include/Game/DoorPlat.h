@@ -32,7 +32,6 @@ private:
 	bool rot;
 	bool client;
 
-	Texture *cover;
 	Texture *platform;
 	
 	/*sf::RectangleShape Top;
@@ -40,7 +39,7 @@ private:
 
 public:
 	DoorPlat() {};		//!< Default constructor
-	DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Vector2f& coverPos, const float orientation, bool close, TextureManager *texMan, const std::string plat, const std::string Cover, bool onClient = false);		//!< Full constructor
+	DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size,const float orientation, bool close, TextureManager *texMan, const std::string plat, bool onClient = false);		//!< Full constructor
 
 	void setUserData(void* data);		//!< Sets the user data of the bodies
 	void update(float timestep);		//!< Updates the textures and moves the door as required if state is opening or closing

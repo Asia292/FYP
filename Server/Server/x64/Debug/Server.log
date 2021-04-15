@@ -1,6 +1,19 @@
-﻿  Game.cpp
+﻿  Level.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\include\game\level.cpp(222): warning C4267: 'argument': conversion from 'size_t' to 'int32', possible loss of data
+  Button.cpp
+  ContactListener.cpp
+  DoorPlat.cpp
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\game\doorplat.cpp(32): warning C4244: 'argument': conversion from 'double' to 'float32', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\game\doorplat.cpp(37): warning C4244: 'argument': conversion from 'double' to 'float32', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\game\doorplat.cpp(186): warning C4553: '==': result of expression not used; did you intend '='?
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\game\doorplat.cpp(203): warning C4553: '==': result of expression not used; did you intend '='?
+  Draft.cpp
+  Game.cpp
   Lvl1.cpp
-c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\game\levels\lvl1.cpp(218): warning C4267: 'argument': conversion from 'size_t' to 'int32', possible loss of data
+c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\game\levels\lvl1.cpp(216): warning C4267: 'argument': conversion from 'size_t' to 'int32', possible loss of data
+  Lvl2.cpp
+  Lever.cpp
+  TextureManager.cpp
   GameState.cpp
   LevelSelectState.cpp
   MenuState.cpp

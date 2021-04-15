@@ -22,7 +22,7 @@ TextureManager::TextureManager()
 	//// LEVEL PREVIEWS ////
 	spritesheets["onePreview"] = loadSprite(".\\assets\\levelPreview\\1Preview.png");
 	spritesheets["twoPreview"] = loadSprite(".\\assets\\levelPreview\\2Preview.png");
-	spritesheets["threePreview"] = loadSprite(".\\assets\\levelPreview\\3PlaceHolder.jpg");
+	spritesheets["threePreview"] = loadSprite(".\\assets\\levelPreview\\3Preview.png");
 	spritesheets["fourPreview"] = loadSprite(".\\assets\\levelPreview\\4PlaceHolder.jpg");
 	spritesheets["fivePreview"] = loadSprite(".\\assets\\levelPreview\\5PlaceHolder.jpg");
 
@@ -68,7 +68,7 @@ TextureManager::TextureManager()
 	setFrames("darkDoor", std::vector<sf::IntRect> { sf::IntRect(108, 24, 67, 92) });
 
 	//// PLATFORMS ////
-	setFrames("tiltingPlat", std::vector<sf::IntRect> { sf::IntRect(256, 6, 625, 43) });
+	setFrames("tiltingPlat", std::vector<sf::IntRect> { sf::IntRect(287, 8, 619, 41) });
 	setFrames("lvl2Tilt", std::vector<sf::IntRect> { sf::IntRect(32, 376, 128, 27) });
 
 	setFrames("yellowGlow", std::vector<sf::IntRect> { sf::IntRect(538, 239, 150, 35) });

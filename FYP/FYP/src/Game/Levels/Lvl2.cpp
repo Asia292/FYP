@@ -48,11 +48,11 @@ Lvl2::Lvl2(TextureManager * textMan, b2World * world, bool onClient)
 		pugi::xml_node size = curr.child("size");
 		pugi::xml_node cover = curr.child("coverPos");
 
-		slide[i++] = new DoorPlat(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+		/*slide[i++] = new DoorPlat(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
 			sf::Vector2f(size.attribute("x").as_float(), size.attribute("y").as_float()),
 			sf::Vector2f(cover.attribute("x").as_float(), cover.attribute("y").as_float()),
 			curr.attribute("orientation").as_float(), curr.attribute("close").as_bool(), textMan,
-			curr.attribute("glow").as_string(), curr.attribute("cover").as_string(), onClient);
+			curr.attribute("glow").as_string(), curr.attribute("cover").as_string(), onClient);*/
 	}
 
 	//// BUTTONS ////

@@ -3,6 +3,7 @@
 Draft::Draft(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation) : Sensor(world, position, size)
 {
 	angle = orientation;
+	player = nullptr;
 }
 
 void Draft::onAction(b2Body * other)
@@ -22,13 +23,13 @@ void Draft::update(float timestep)
 		b2Vec2 velo = player->GetLinearVelocity();
 
 		if (angle == 0)
-			velo.y = -5;
+			velo.y = -2;
 		else if (angle > 1.570 && angle < 1.571)
-			velo.x = -5;
+			velo.x = -2;
 		else if (angle > 3.141 && angle < 3.142)
-			velo.y = 5;
+			velo.y = 2;
 		else
-			velo.x = 5;
+			velo.x = 2;
 
 		player->SetLinearVelocity(velo);
 	}

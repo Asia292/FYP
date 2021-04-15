@@ -20,7 +20,7 @@ Game::Game(int level, int *levelScore, bool onClient)
 			X Level class
 			X Game over return confirmation
 			X Level score
-			- Retry
+			X Retry
 	*/
 	view.setCenter(7.f, 5.2f);
 	view.setSize(worldSize);
@@ -35,15 +35,7 @@ Game::Game(int level, int *levelScore, bool onClient)
 	//lvl = level;
 	lvlScore = levelScore;
 
-	switch (level)
-	{
-	case 0:
-		currLevel = new Lvl1(texManager, world, onClient);
-		break;
-	case 1:
-		currLevel = new Lvl2(texManager, world, onClient);
-		break;
-	}
+	currLevel = new Level(texManager, world, level, onClient);
 	
 	//hud = new HUD(texManager, font);
 

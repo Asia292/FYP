@@ -17,6 +17,10 @@ void Handler(sf::IpAddress& l_ip, const PortNumber& l_port, const PacketID& l_id
 			std::string message; message = "Client left! " + l_ip.toString() + ":" + std::to_string(l_port); p << message; 
 			l_server->Broadcast(p, id); 
 		} 
+		else if ((PacketType)l_id == PacketType::HostDC)
+		{
+			l_server->Stop();
+		}
 		else if ((PacketType)l_id == PacketType::Message) 
 		{ 
 			std::string receivedMessage; 

@@ -55,6 +55,22 @@ NetworkState::NetworkState(float Height, float Width, std::stack<State*>* States
 	if (host)
 	{
 		// Start server
+		ZeroMemory(&si, sizeof(si));
+		si.cb = sizeof(si);
+		ZeroMemory(&pi, sizeof(pi));
+
+		if (!CreateProcess(TEXT("..\\..\\Server\\x64\\Debug\\Server.exe"),   // the path
+			NULL,        // Command line
+			NULL,           // Process handle not inheritable
+			NULL,           // Thread handle not inheritable
+			FALSE,          // Set handle inheritance to FALSE
+			0,              // No creation flags
+			NULL,           // Use parent's environment block
+			NULL,           // Use parent's starting directory 
+			&si,            // Pointer to STARTUPINFO structure
+			&pi             // Pointer to PROCESS_INFORMATION structure (removed extra parentheses)
+		))
+			std::cout << "Can't open server" << std::endl;
 	}
 
 	client.SetServerInfo(ip, port);
@@ -82,6 +98,8 @@ NetworkState::~NetworkState()
 	if (isHost)
 	{
 		// Shut down server
+		CloseHandle(pi.hProcess);
+		CloseHandle(pi.hThread);
 	}
 
 	if (currState != nullptr)
@@ -119,6 +137,12 @@ void NetworkState::update(float timestep)
 				else
 				{
 					currState = nullptr;
+					if (isHost)
+					{
+						sf::Packet p;
+						StampPacket(PacketType::HostDC, p);
+						client.Send(p);
+					}
 					client.Disconnect();
 					quit = true;
 				}

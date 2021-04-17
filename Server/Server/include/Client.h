@@ -1,8 +1,9 @@
 #pragma once
 
+#include <Windows.h>
 #include "NetworkDefs.h"
 
-#define CONNECT_TIMEOUT 5000 //milliseconds
+#define CONNECT_TIMEOUT 10000 //milliseconds
 
 class Client;
 using CPacketHandler = std::function<void(const PacketID&, sf::Packet&, Client*)>;

@@ -3,6 +3,7 @@
 \file NetworktState.h
 */
 
+#include <Windows.h>
 #include "LevelSelectState.h"
 #include "noConnection.h"
 #include "Client.h"
@@ -21,6 +22,9 @@ private:
 	State *currState;
 
 	noConnection *none;
+
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
 
 public:
 	NetworkState() {};

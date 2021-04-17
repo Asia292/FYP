@@ -14,26 +14,34 @@ bool Client::Connect()
 	if (connected)
 		return false;
 
-	socket.bind(sf::Socket::AnyPort);
-	sf::Packet p;
-	StampPacket(PacketType::Connect, p);
-	p << playerName;
-
-	if (socket.send(p, serverIP, serverPort) != sf::Socket::Done)
-	{
-		socket.unbind();
-		return false;
-	}
-
-	socket.setBlocking(false);
-	p.clear();
-	sf::IpAddress recvIP;
-	PortNumber recvPort;
 	sf::Clock timer;
 	timer.restart();
 
+	socket.bind(sf::Socket::AnyPort);
+
 	while (timer.getElapsedTime().asMilliseconds() < CONNECT_TIMEOUT)
 	{
+		sf::Packet p;
+		StampPacket(PacketType::Connect, p);
+		p << playerName;
+
+		if (socket.send(p, serverIP, serverPort) != sf::Socket::Done)
+		{
+			socket.unbind();
+			return false;
+		}
+
+		Sleep(2000);
+
+		socket.setBlocking(false);
+		//p.clear();
+		sf::IpAddress recvIP;
+		PortNumber recvPort;
+
+	
+		/*socket.send(p, serverIP, serverPort);
+		Sleep(2000);*/
+
 		sf::Socket::Status s = socket.receive(p, recvIP, recvPort);
 
 		if (s != sf::Socket::Done)

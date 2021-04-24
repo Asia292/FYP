@@ -10,7 +10,6 @@
 #include "SFMLDebugDraw.h"
 #include "ContactListener.h"
 #include "Level.h"
-#include "HUD.h"
 #include <memory>
 
 
@@ -50,10 +49,10 @@ private:
 	int score;			//!< Level score
 	bool levelSelect;		//!< Return to level select
 	bool won;			//!< Game won
-	bool retry;
+	bool retry;			//!< If retry is selected on level end
 	float time;			//!< Elapsed game time
 	int *lvlScore;			//!< Pointer to the level integer passed in for score
-	bool client;
+	bool client;		//!< If the class is loaded client or server side
 	float eTime;	//<! Elapsed time
 	int min;	//!< Minutes of display time
 	int sec;	//!< Seconds of display time
@@ -77,18 +76,18 @@ public:
 	void moveLeft();									//!< Moves the selection left for menu/game over screen
 	void moveRight();									//!< Moves the selection right for menu/game over screen
 	void selected();									//!< What to do with selected item
-	void networkPlayerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos);
-	void setText(int txt) { back = txt; }
-	int getText() { return back; }
-	void setRetry(bool Retry) { retry = Retry; }
-	void setLvlSelect(bool select) { levelSelect = select; }
-	void updateTime(float timestep);
-	int getMin() { return min; }
-	int getSec() { return sec; }
-	void setMin(int time) { min = time; }
-	void setSec(int time) { sec = time; }
+	void networkPlayerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos);	//!< Updates the player when connected to a network
+	void setText(int txt) { back = txt; }	//!< Sets which return option is currently selected
+	int getText() { return back; }		//!< Gets which return option is currently selected
+	void setRetry(bool Retry) { retry = Retry; }		//!< Sets the retry bool
+	void setLvlSelect(bool select) { levelSelect = select; }		//!< Sets the level select bool
+	void updateTime(float timestep);		//!< Updates the on screen game time
+	int getMin() { return min; }		//!< Returns the minutes of game time
+	int getSec() { return sec; }		//!< Returns the seconds of game time
+	void setMin(int time) { min = time; }		//!< Sets the minutes of game time
+	void setSec(int time) { sec = time; }		//!< Sets the seconds of game time
 	
-	Level * getCurrLvl() { return currLevel; }
+	Level * getCurrLvl() { return currLevel; }		//!< Returns the current level
 
 	ContactListener listener;	//!< The contact listener
 };

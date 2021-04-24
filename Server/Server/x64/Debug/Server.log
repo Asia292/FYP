@@ -1,2 +1,4 @@
-﻿  ServerMain.cpp
+﻿  Game.cpp
+  NetworkState.cpp
+  Generating Code...
   Server.vcxproj -> C:\Users\Tia-A\Documents\FYP\Student's Cartridge\Development\Code\FYP\Server\x64\Debug\Server.exe

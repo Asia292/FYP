@@ -15,7 +15,10 @@ Lever::Lever(b2World * world, const sf::Vector2f & position, const sf::Vector2f 
 
 	texMan->setTexture("all", this);
 	texMan->getFrames(reverse, this);
-	setSize(sf::Vector2f(0.01f, 0.01f));
+	if (!right)
+		flip = true;
+
+	setSize(sf::Vector2f(0.01f * (1 - (int)flip * 2), 0.01f));
 	setLoop(false);
 	setPos(sf::Vector2f(position));
 	setAnim();
@@ -42,7 +45,10 @@ Lever::Lever(b2World * world, const sf::Vector2f & position, const sf::Vector2f 
 
 	texMan->setTexture("all", this);
 	texMan->getFrames(reverse, this);
-	setSize(sf::Vector2f(0.01f, 0.01f));
+	if (!right)
+		flip = true;
+
+	setSize(sf::Vector2f(0.01f * (1 - (int)flip * 2), 0.01f));
 	setLoop(false);
 	setPos(sf::Vector2f(position));
 	setAnim();

@@ -3,6 +3,7 @@
 \file NetworktState.h
 */
 
+#define NOMINMAX
 #include <Windows.h>
 #include "LevelSelectState.h"
 #include "noConnection.h"

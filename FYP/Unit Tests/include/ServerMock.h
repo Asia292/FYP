@@ -2,7 +2,7 @@
 #include <gmock/gmock.h>
 #include "..\..\Server\Server\include\ServerBase.h"
 
-class ServerMock : public ServerBase
+/*class ServerMock : public ServerBase
 {
 public:
 	MOCK_METHOD(void, BindTimeoutHandler, (void(*handler)(const ClientID&)), (override));
@@ -30,3 +30,4 @@ public:
 	MOCK_METHOD(sf::Mutex&, GetMutex, (), (override));
 };
 
+*/

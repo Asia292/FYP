@@ -175,23 +175,24 @@ TEST(ClientPacketRecieved, LeverLevelUpdate)
 
 	sf::Packet p;
 	LevelUpdate update;
-	update.object = 0;
+	update.object = 3;
+	update.index = 0;
 	update.texture = true;
 	update.frame = 2;
 	p << update;
 
 	state.HandlePackets(8, p, nullptr);
 
-	Lvl1 * lvl = (Lvl1*)game->game->currLevel;
+	Level * lvl = game->game->currLevel;
 
-	bool texture = lvl->lever->getTexture();
-	int frame = lvl->lever->getFrame();
+	bool texture = lvl->levers[0]->getTexture();
+	int frame = lvl->levers[0]->getFrame();
 
 	EXPECT_EQ(texture, update.texture);
 	EXPECT_EQ(frame, update.frame);
 }
 
-TEST(ClientPacketRecieved, PlatformLevelUpdate)
+TEST(ClientPacketRecieved, MovingPlatformLevelUpdate)
 {
 	NetworkState state;
 	std::stack<State *> netStates = state.netStates;
@@ -202,7 +203,7 @@ TEST(ClientPacketRecieved, PlatformLevelUpdate)
 
 	sf::Packet p;
 	LevelUpdate update;
-	update.object = 1;
+	update.object = 0;
 	update.index = 0;
 	update.position = sf::Vector2f(2.4f, 4.6f);
 	update.texture = false;
@@ -210,10 +211,10 @@ TEST(ClientPacketRecieved, PlatformLevelUpdate)
 
 	state.HandlePackets(8, p, nullptr);
 
-	Lvl1 * lvl = (Lvl1*)game->game->currLevel;
+	Level * lvl = game->game->currLevel;
 
-	sf::Vector2f pos = lvl->platforms[0]->currSprite.getPosition();
-	bool texture = lvl->platforms[0]->glowTex;
+	sf::Vector2f pos = lvl->movingPlats[0]->currSprite.getPosition();
+	bool texture = lvl->movingPlats[0]->glowTex;
 
 	EXPECT_EQ(pos.x, update.position.x);
 	EXPECT_EQ(pos.y, update.position.y);
@@ -231,17 +232,18 @@ TEST(ClientPacketRecieved, BlockLevelUpdate)
 
 	sf::Packet p;
 	LevelUpdate update;
-	update.object = 2;
+	update.object = 4;
+	update.index = 0;
 	update.position = sf::Vector2f(5.8f, 3.7f);
 	update.angle = 0.964f;
 	p << update;
 
 	state.HandlePackets(8, p, nullptr);
 
-	Lvl1 * lvl = (Lvl1*)game->game->currLevel;
+	Level * lvl = game->game->currLevel;
 
-	sf::Vector2f pos = lvl->block->currSprite.getPosition();
-	float angle = lvl->block->currSprite.getRotation();
+	sf::Vector2f pos = lvl->blocks[0]->currSprite.getPosition();
+	float angle = lvl->blocks[0]->currSprite.getRotation();
 
 	EXPECT_EQ(pos.x, update.position.x);
 	EXPECT_EQ(pos.y, update.position.y);
@@ -259,13 +261,13 @@ TEST(ClientPacketRecieved, LightItemLevelUpdate)
 
 	sf::Packet p;
 	LevelUpdate update;
-	update.object = 3;
+	update.object = 5;
 	update.index = 2;
 	p << update;
 
 	state.HandlePackets(8, p, nullptr);
 
-	Lvl1 * lvl = (Lvl1*)game->game->currLevel;
+	Level * lvl = game->game->currLevel;
 
 	bool del = lvl->lightPickUps[2]->getDel();
 
@@ -283,13 +285,13 @@ TEST(ClientPacketRecieved, DarkItemLevelUpdate)
 
 	sf::Packet p;
 	LevelUpdate update;
-	update.object = 4;
+	update.object = 6;
 	update.index = 1;
 	p << update;
 
 	state.HandlePackets(8, p, nullptr);
 
-	Lvl1 * lvl = (Lvl1*)game->game->currLevel;
+	Level * lvl = game->game->currLevel;
 
 	bool del = lvl->darkPickUps[1]->getDel();
 
@@ -307,13 +309,13 @@ TEST(ClientPacketRecieved, LightHomeLevelUpdate)
 
 	sf::Packet p;
 	LevelUpdate update;
-	update.object = 5;
+	update.object = 7;
 	update.texture = true;
 	p << update;
 
 	state.HandlePackets(8, p, nullptr);
 
-	Lvl1 * lvl = (Lvl1*)game->game->currLevel;
+	Level * lvl = game->game->currLevel;
 
 	bool fade = lvl->lightHome->getFade();
 
@@ -331,13 +333,13 @@ TEST(ClientPacketRecieved, DarkHomeLevelUpdate)
 
 	sf::Packet p;
 	LevelUpdate update;
-	update.object = 6;
+	update.object = 8;
 	update.texture = true;
 	p << update;
 
 	state.HandlePackets(8, p, nullptr);
 
-	Lvl1 * lvl = (Lvl1*)game->game->currLevel;
+	Level * lvl = game->game->currLevel;
 
 	bool fade = lvl->darkHome->getFade();
 

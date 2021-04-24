@@ -173,8 +173,16 @@ Level::Level(TextureManager * textMan, b2World * world, int level, bool onClient
 	{
 		pos = curr.child("position");
 
-		blocks.push_back(new Block(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
-			sf::Vector2f(0.5f, 0.5f), 0.f, textMan, onClient));
+		if (curr.attribute("type").as_string() == std::string("block"))
+		{
+			blocks.push_back(new Block(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+				sf::Vector2f(0.5f, 0.5f), 0.f, textMan, onClient));
+		}
+		else if (curr.attribute("type").as_string() == std::string("ball"))
+		{
+			blocks.push_back(new Block(world, sf::Vector2f(pos.attribute("x").as_float(), pos.attribute("y").as_float()),
+				0.12f, 0.f, textMan, onClient));
+		}
 
 		blockPosBefore.push_back(blocks.back()->getBody()->GetPosition());
 

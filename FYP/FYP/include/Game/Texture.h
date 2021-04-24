@@ -40,6 +40,6 @@ public:
 	void setSize(sf::Vector2f(size));	//!< Sets the size of the sprite
 	void setFrame(int frame);					//!< Reset frame to 0
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;		//!< Draws the current sprite
-	int getFrame() { return currFrame; }
-	bool getFlip() { return flip; }
+	int getFrame() { return currFrame; }		//!< Returns the current animation frame
+	bool getFlip() { return flip; }			//!< Returns the flip bool
 };

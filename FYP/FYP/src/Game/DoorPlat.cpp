@@ -66,7 +66,7 @@ DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vect
 		rot = true;
 		platform->setPos(sf::Vector2f(door->GetPosition().x, door->GetFixtureList()->GetAABB(0).GetCenter().y));
 	}
-	platform->setSize(sf::Vector2f(0.01f, 0.01f));
+	platform->setSize(sf::Vector2f(0.0075f * size.x, 0.01f));
 	platform->setAngle(orientation * 57.29577f);
 
 

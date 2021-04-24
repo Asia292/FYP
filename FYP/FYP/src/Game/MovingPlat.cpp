@@ -24,7 +24,8 @@ MovingPlat::MovingPlat(b2World * world, const sf::Vector2f & position, const sf:
 
 	texMan->setTexture("all", this);
 	texMan->getFrames(col, this);
-	setSize(sf::Vector2f(0.01f, 0.01f));
+	setSize(sf::Vector2f(0.0075f * size.x, 0.01f));
+	setAngle(orientation * 57.29577f);
 	texture = texMan;
 	setPos(position);
 

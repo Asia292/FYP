@@ -3,7 +3,7 @@
 
 #define private public
 #define protected public
-#include "..\FYP\include\Menu\LevelSelect.h"
+#include "LevelSelect.h"
 
 TEST(Navigation, MoveUpAtTop)
 {

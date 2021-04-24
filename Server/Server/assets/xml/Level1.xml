@@ -65,7 +65,7 @@
 		<size x="0.3" y="0.3"/>
 	</lightPickUp>
 
-	<block>
+	<block type = "block">
 		<position x="7.56" y="3.04"/>
 	</block>
 

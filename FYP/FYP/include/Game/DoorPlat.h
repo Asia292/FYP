@@ -14,11 +14,11 @@
 class DoorPlat : public sf::RectangleShape
 {
 private:
-	b2Body * top = nullptr;		//!< What the door is attatched to - the top of it
-	b2Body * door = nullptr;		//!< The door itself
+	b2Body * top = nullptr;				//!< What the door is attatched to - the top of it
+	b2Body * door = nullptr;			//!< The door itself
 	b2MotorJoint * motor = nullptr;		//!< The motor joint that controls the door
-	b2Fixture *fixture;
-	b2Filter filter;
+	b2Fixture *fixture;					//!< Pointer to the body's fixture
+	b2Filter filter;					//!< Collision filter of the body
 
 	const float density = 1.0f; //!< Density of the material - used to give mass
 	const float friction = 0.4f; //!< Friction - only friction from movement, not when static
@@ -27,12 +27,12 @@ private:
 	enum { CLOSED, OPEN, CLOSING, OPENING } state;		//!< Enum that defines the states the door can be in
 	float eTime;	//!< Elapsed time
 	float mTime;	//!< Motion time
-	float length;
-	bool closed;
-	bool rot;
-	bool client;
+	float length;	//!< The length of the door plat
+	bool closed;	//!< If the door starts off closed
+	bool rot;		//!< If the door is rotated 90 or 270 deg
+	bool client;	//!< If it is loaded client side
 
-	Texture *platform;
+	Texture *platform;		//!< The platform/door texture
 	
 	/*sf::RectangleShape Top;
 	sf::RectangleShape Door;*/
@@ -45,8 +45,8 @@ public:
 	void update(float timestep);		//!< Updates the textures and moves the door as required if state is opening or closing
 	void open();		//!< Starts the door opening
 	void close();		//!< Starts the door closing
-	void setPlatPos(sf::Vector2f pos) { platform->setPos(pos); }
-	sf::Vector2f getPlatPos();
+	void setPlatPos(sf::Vector2f pos) { platform->setPos(pos); }		//!< Sets the position of the platform/door - only used for networking
+	sf::Vector2f getPlatPos();		//!< Returns the position of the platform/door - only used for networking
 
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const;		//!< Draws both door textures
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;		//!< Draws the door texture
 };

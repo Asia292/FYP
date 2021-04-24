@@ -72,6 +72,13 @@ NetworkState::NetworkState(float Height, float Width, std::stack<State*>* States
 		))
 			std::cout << "Can't open server" << std::endl;
 	}
+	else
+	{
+		std::cout << "Enter IP: ";
+		std::cin >> ip;
+		std::cout << "Enter Port: ";
+		std::cin >> port;
+	}
 
 	client.SetServerInfo(ip, port);
 	client.Setup(&NetworkState::HandlePackets, this);

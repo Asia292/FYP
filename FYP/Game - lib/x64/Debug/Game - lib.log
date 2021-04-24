@@ -1,8 +1,4 @@
-﻿  Game.cpp
-  Lvl1.cpp
-  GameState.cpp
-  LevelSelectState.cpp
-  MenuState.cpp
+﻿  MenuState.cpp
 c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(9): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(10): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\fyp\src\states\menustate.cpp(27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
@@ -34,4 +30,5 @@ sfml-main-d.lib(MainWin32.cpp.obj) : warning LNK4006: WinMain already defined in
 sfml-main-d.lib(MainWin32.cpp.obj) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 ws2_32.lib(WS2_32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored
 ws2_32.lib(WS2_32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+main.obj : warning LNK4006: main already defined in ServerMain.obj; second definition ignored
   Game - lib.vcxproj -> C:\Users\Tia-A\Documents\FYP\Student's Cartridge\Development\Code\FYP\FYP\x64\Debug\Game - lib.lib

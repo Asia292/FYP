@@ -170,7 +170,7 @@ TEST(SensorButton, OnAction)
 {
 	b2World * world = new b2World(b2Vec2(0, 9.81));
 	TextureManager * texManager = TextureManager::getInstance();
-	DoorPlat * door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
+	DoorPlat * door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), sf::Vector2f(0.5f, 0.8f), 0.f, true, texManager, "blueGlow");
 	MovingPlat *move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f), texManager, "yellowPlat", "yellowGlow");
 	Button * button = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), door, texManager, "yellowLever");
 	Button * buttonMove = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), move, texManager, "yellowButton");
@@ -193,7 +193,7 @@ TEST(SensorButton, OffAction)
 {
 	b2World * world = new b2World(b2Vec2(0, 9.81));
 	TextureManager * texManager = TextureManager::getInstance();
-	DoorPlat * door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), 0.f);
+	DoorPlat * door = new DoorPlat(world, sf::Vector2f(-1.5f, 0.f), sf::Vector2f(0.5f, 0.8f), 0.f, true, texManager, "blueGlow");
 	MovingPlat *move = new MovingPlat(world, sf::Vector2f(1.5f, 0.f), sf::Vector2f(0.5f, 0.1f), 0.f, sf::Vector2f(1.5f, -1.f), texManager, "yellowPlat", "yellowGlow");
 	Button * button = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), door, texManager, "yellowLever");
 	Button * buttonMove = new Button(world, sf::Vector2f(5, 5), sf::Vector2f(1, 1), move, texManager, "yellowButton");

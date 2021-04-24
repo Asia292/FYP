@@ -23,8 +23,8 @@ TextureManager::TextureManager()
 	spritesheets["onePreview"] = loadSprite(".\\assets\\levelPreview\\1Preview.png");
 	spritesheets["twoPreview"] = loadSprite(".\\assets\\levelPreview\\2Preview.png");
 	spritesheets["threePreview"] = loadSprite(".\\assets\\levelPreview\\3Preview.png");
-	spritesheets["fourPreview"] = loadSprite(".\\assets\\levelPreview\\4PlaceHolder.jpg");
-	spritesheets["fivePreview"] = loadSprite(".\\assets\\levelPreview\\5PlaceHolder.jpg");
+	spritesheets["fourPreview"] = loadSprite(".\\assets\\levelPreview\\4Preview.png");
+	spritesheets["fivePreview"] = loadSprite(".\\assets\\levelPreview\\5Preview.png");
 
 	//// SET INT RECS ////
 	//// LIGHT PLAYER ////
@@ -69,23 +69,29 @@ TextureManager::TextureManager()
 
 	//// PLATFORMS ////
 	setFrames("tiltingPlat", std::vector<sf::IntRect> { sf::IntRect(287, 8, 619, 41) });
-	setFrames("lvl2Tilt", std::vector<sf::IntRect> { sf::IntRect(32, 376, 128, 27) });
+	setFrames("lvl2Tilt", std::vector<sf::IntRect> { sf::IntRect(863, 450, 128, 27) });
 
 	setFrames("yellowGlow", std::vector<sf::IntRect> { sf::IntRect(538, 239, 150, 35) });
 	setFrames("purpleGlow", std::vector<sf::IntRect> { sf::IntRect(711, 239, 150, 35) });
 	setFrames("blueGlow", std::vector<sf::IntRect> { sf::IntRect(540, 295, 150, 35) });
 	setFrames("greenGlow", std::vector<sf::IntRect> { sf::IntRect(711, 295, 150, 35) });
+	setFrames("redGlow", std::vector<sf::IntRect> { sf::IntRect(539, 346, 150, 35) });
+	setFrames("whiteGlow", std::vector<sf::IntRect> { sf::IntRect(710, 345, 150, 35) });
 
 	setFrames("yellowPlat", std::vector<sf::IntRect> { sf::IntRect(23, 144, 150, 35) });
 	setFrames("purplePlat", std::vector<sf::IntRect> { sf::IntRect(23, 200, 150, 35) });
 	setFrames("bluePlat", std::vector<sf::IntRect> { sf::IntRect(22, 253, 150, 35) });
 	setFrames("greenPlat", std::vector<sf::IntRect> { sf::IntRect(21, 306, 150, 35) });
+	setFrames("redPlat", std::vector<sf::IntRect> { sf::IntRect(21, 357, 150, 35) });
+	setFrames("whitePlat", std::vector<sf::IntRect> { sf::IntRect(19, 407, 150, 35) });
 
 	//// BUTTONS ////
 	setFrames("yellowButton", std::vector<sf::IntRect> { sf::IntRect(882, 151, 82, 28) });
 	setFrames("purpleButton", std::vector<sf::IntRect> { sf::IntRect(884, 199, 82, 28) });
 	setFrames("blueButton", std::vector<sf::IntRect> { sf::IntRect(885, 243, 82, 28) });
 	setFrames("greenButton", std::vector<sf::IntRect> { sf::IntRect(885, 291, 82, 28) });
+	setFrames("redButton", std::vector<sf::IntRect> { sf::IntRect(884, 342, 82, 28) });
+	setFrames("whiteButton", std::vector<sf::IntRect> { sf::IntRect(884, 390, 82, 28) });
 
 	//// LEVERS ////
 	setFrames("yellowLever", std::vector<sf::IntRect>
@@ -120,6 +126,22 @@ TextureManager::TextureManager()
 	{ sf::IntRect(212, 253, 86, 79),
 		sf::IntRect(319, 253, 86, 79),
 		sf::IntRect(421, 255, 86, 79)});
+	setFrames("redLever", std::vector<sf::IntRect>
+	{ sf::IntRect(417, 353, 86, 79),
+		sf::IntRect(313, 351, 86, 79),
+		sf::IntRect(211, 352, 86, 79)});
+	setFrames("redLeverReverse", std::vector<sf::IntRect>
+	{ sf::IntRect(211, 352, 86, 79),
+		sf::IntRect(313, 351, 86, 79),
+		sf::IntRect(417, 353, 86, 79)});
+	setFrames("whiteLever", std::vector<sf::IntRect>
+	{ sf::IntRect(758, 401, 86, 79),
+		sf::IntRect(655, 399, 86, 79),
+		sf::IntRect(557, 397, 86, 79)});
+	setFrames("whiteLeverReverse", std::vector<sf::IntRect>
+	{ sf::IntRect(557, 397, 86, 79),
+		sf::IntRect(655, 399, 86, 79),
+		sf::IntRect(758, 401, 86, 79)});
 
 	//// PICKUPS ////
 	setFrames("lightPickUp", std::vector<sf::IntRect> { sf::IntRect(847, 53, 70, 67) });
@@ -127,12 +149,11 @@ TextureManager::TextureManager()
 
 	//// MISC ////
 	setFrames("Block", std::vector<sf::IntRect> { sf::IntRect(193, 40, 76, 76) });
+	setFrames("Ball", std::vector<sf::IntRect> { sf::IntRect(951, 7, 38, 37) });
 	setFrames("Green", std::vector<sf::IntRect> { sf::IntRect(770, 53, 70, 66) });
 	setFrames("Orange", std::vector<sf::IntRect> { sf::IntRect(610, 53, 70, 66) });
 	setFrames("Red", std::vector<sf::IntRect> { sf::IntRect(691, 53, 70, 66) });
 	setFrames("Empty", std::vector<sf::IntRect> { sf::IntRect(624, 143, 27, 24) });
-	setFrames("lvl2Cover1", std::vector<sf::IntRect> { sf::IntRect(15, 438, 204, 46) });
-	setFrames("lvl2Cover2", std::vector<sf::IntRect> { sf::IntRect(267, 361, 48, 178) });
 
 	//// SET ANIM TIME ////
 	animTime["yellowLever"] = 0.3f;
@@ -143,6 +164,10 @@ TextureManager::TextureManager()
 	animTime["greenLeverReverse"] = 0.3f;
 	animTime["purpleLever"] = 0.3f;
 	animTime["purpleLeverReverse"] = 0.3f;
+	animTime["redLever"] = 0.3f;
+	animTime["redLeverReverse"] = 0.3f;
+	animTime["whiteLever"] = 0.3f;
+	animTime["whiteLeverReverse"] = 0.3f;
 
 	animTime["darkRun"] = 0.5f;
 	animTime["lightRun"] = 0.5f;

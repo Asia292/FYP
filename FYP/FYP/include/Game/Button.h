@@ -23,5 +23,5 @@ public:
 
 	virtual void onAction(b2Body * other) override;		//!< Action to do when sensor is triggered
 	virtual void offAction(b2Body * other) override;		//!< Action to do when sensor stops being triggered
-	void update(float timestep) override;
+	void update(float timestep) override;		//!< Updates the entity
 };

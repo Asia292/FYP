@@ -1,9 +1,11 @@
 #pragma once
 
+#define NOMINMAX
 #include <Windows.h>
 #include "NetworkDefs.h"
 
 #define CONNECT_TIMEOUT 10000 //milliseconds
+#define CLIENT_PORT unsigned short(Network::ClientPort)
 
 class Client;
 using CPacketHandler = std::function<void(const PacketID&, sf::Packet&, Client*)>;

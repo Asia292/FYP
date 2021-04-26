@@ -22,7 +22,6 @@
 #include "Draft.h"
 #include "Floor.h"
 #include "HomeSensor.h"
-#include "TextureManager.h"
 
 
 /*! \class Level

@@ -17,7 +17,10 @@ bool Client::Connect()
 	sf::Clock timer;
 	timer.restart();
 
-	socket.bind(sf::Socket::AnyPort);
+	unsigned short port = CLIENT_PORT;
+	//socket.bind(5601);
+	while (socket.bind(port) != sf::Socket::Done)
+		port++;
 
 	while (timer.getElapsedTime().asMilliseconds() < CONNECT_TIMEOUT)
 	{

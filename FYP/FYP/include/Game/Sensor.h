@@ -25,6 +25,6 @@ public:
 
 	virtual void onAction(b2Body * other) = 0;		//!< Action to do when sensor is triggered
 	virtual void offAction(b2Body * other) = 0;		//!< Action to do when sensor stops being triggered
-	void setUserData(void* data);		//!< Sets the user data of the body
-	virtual void update(float timestep) = 0;
-};
+	void setUserData(void* data);					//!< Sets the user data of the body
+	virtual void update(float timestep) = 0;		//!< Updates the entity
+};	

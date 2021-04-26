@@ -7,7 +7,7 @@
 
 enum class Network
 {
-	HighestTimestamp = 2147483647, ClientTimeout = 10000, ServerPort = 5600, NullID = -1
+	HighestTimestamp = 2147483647, ClientTimeout = 10000, ServerPort = 5600, ClientPort = 25565, NullID = -1
 };
 
 using ClientID = int;

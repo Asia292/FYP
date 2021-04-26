@@ -6,7 +6,7 @@
 #include "Sensor.h"
 
 /*! \class Button
-\brief Sensor that acts as a pickup
+\brief Derrives from the base sensor class. Creates pickups for players.
 */
 class PickUp : public Sensor
 {
@@ -18,12 +18,12 @@ private:
 public:
 	PickUp() {};		//!< Default constructor
 	PickUp(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, int mask, TextureManager *texMan);		//!< Full constructor for a door platform
-	~PickUp();
+	~PickUp();		//!< Deconstructor
 
 	virtual void onAction(b2Body * other) override;		//!< Action to do when sensor is triggered
 	virtual void offAction(b2Body * other) override {};		//!< Action to do when sensor stops being triggered
 	virtual void update(float timestep) override;
 
-	bool getDel();		//!< Return the delete bool
-	void delTrue() { del = true; }
+	bool getDel();		//!< Returns the delete bool
+	void delTrue() { del = true; }		//!< Sets the delete bool to true - only used for network update
 };

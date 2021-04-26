@@ -641,8 +641,6 @@ void Level::networkFrameUpdate(Server * server)
 		update.texture = darkHome->getFade();
 		p << update;
 		server->Broadcast(p);
-
-		std::cout << darkHomeBefore << std::endl;
 	}
 }
 

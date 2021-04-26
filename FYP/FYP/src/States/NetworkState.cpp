@@ -59,7 +59,7 @@ NetworkState::NetworkState(float Height, float Width, std::stack<State*>* States
 		si.cb = sizeof(si);
 		ZeroMemory(&pi, sizeof(pi));
 
-		if (!CreateProcess(TEXT("..\\..\\Server\\x64\\Debug\\Server.exe"),   // the path
+		if (!CreateProcess(TEXT("Server.exe"),   // the path
 			NULL,        // Command line
 			NULL,           // Process handle not inheritable
 			NULL,           // Thread handle not inheritable
@@ -158,8 +158,13 @@ void NetworkState::update(float timestep)
 		else
 			std::cout << "EMPTY!" << std::endl;
 	}
-	else if (none != nullptr)
+	else
+	{
+		if (none == nullptr)
+			noServer();
+
 		none->update(timestep);
+	}
 }
 
 

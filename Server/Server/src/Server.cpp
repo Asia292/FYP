@@ -31,6 +31,7 @@ bool Server::Send(const ClientID & id, sf::Packet & packet)
 	sf::Lock lock(mutex);
 
 	auto itr = clients.find(id);
+	//std::cout << "IP: " << itr->second.clientIP << " Port: " << itr->second.clientPort << std::endl;
 
 	if (itr == clients.end())
 		return false;
@@ -172,6 +173,16 @@ void Server::Update(const sf::Time & time)
 			{
 				std::cout << "Client " << itr->first << "has timed out." << std::endl;
 
+				switch (itr->first)
+				{
+				case 0:
+					ID0Free = true;
+					break;
+				case 1:
+					ID1Free = true;
+					break;
+				}
+
 				if (timeoutHandler)
 					timeoutHandler(itr->first);
 
@@ -227,6 +238,7 @@ ClientID Server::AddClient(const sf::IpAddress & ip, const PortNumber & port)
 	//ClientID id = lastID;
 	ClientInfo info(ip, port, serverTime);
 	clients.insert(std::make_pair(id, info));
+	std::cout << "Client " << id << " connected. IP: " << ip << " Port: " << port << std::endl;
 	return id;
 }
 
@@ -278,6 +290,16 @@ bool Server::RemoveClient(const ClientID & id)
 	if (itr == clients.end())
 		return false;
 
+	switch (itr->first)
+	{
+	case 0:
+		ID0Free = true;
+		break;
+	case 1:
+		ID1Free = true;
+		break;
+	}
+
 	sf::Packet p;
 	StampPacket(PacketType::Disconnect, p);
 	Send(id, p);
@@ -293,10 +315,15 @@ bool Server::RemoveClient(const sf::IpAddress & ip, const PortNumber& port)
 	{
 		if (itr->second.clientIP == ip && itr->second.clientPort == port)
 		{
-			if (itr->first == 0)
+			switch (itr->first)
+			{
+			case 0:
 				ID0Free = true;
-			else if (itr->first == 1)
+				break;
+			case 1:
 				ID1Free = true;
+				break;
+			}
 
 			sf::Packet p;
 			StampPacket(PacketType::Disconnect, p);
@@ -318,6 +345,8 @@ void Server::DisconnectAll()
 	Broadcast(p);
 	sf::Lock lock(mutex);
 	clients.clear();
+	ID0Free = true;
+	ID1Free = true;
 }
 
 bool Server::Start()

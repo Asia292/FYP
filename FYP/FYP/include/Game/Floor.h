@@ -12,7 +12,7 @@
 */
 class Floor
 {
-protected:
+private:
 	b2Body * body = nullptr; //!< Box2D body
 	const float density = 1.0f; //!< Density of the material - used to give mass
 	const float friction = 1.0f; //!< Friction - only friction from movement, not when static

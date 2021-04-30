@@ -22,7 +22,7 @@ Menu::Menu(float Width, float Height)
 
 	play = false;
 	network = false;
-	net = false;
+	networkText = false;
 	close = false;
 	selectedItemIndex = 0;
 	width = Width;
@@ -73,7 +73,7 @@ void Menu::update(float timestep)
 	}
 	menue[selectedItemIndex].setColor(sf::Color(100, 32, 188));
 
-	if (net)
+	if (networkText)
 	{
 		menue[0].setString("HOST");
 		menue[0].setPosition(sf::Vector2f((width / 2) + 35.f, height / (3 + 1) * 1));
@@ -146,7 +146,7 @@ void Menu::selected()
 	switch (selectedItemIndex)
 	{
 	case 0:
-		if(!net)
+		if(!networkText)
 			play = true;
 		else
 		{
@@ -155,9 +155,9 @@ void Menu::selected()
 		}
 		break;
 	case 1:
-		if (!net)
+		if (!networkText)
 		{
-			net = true;
+			networkText = true;
 			selectedItemIndex = 0;
 		}
 		else
@@ -167,11 +167,11 @@ void Menu::selected()
 		}
 		break;
 	case 2:
-		if (!net)
+		if (!networkText)
 			close = true;
 		else
 		{
-			net = false;
+			networkText = false;
 			selectedItemIndex = 0;
 		}
 		break;

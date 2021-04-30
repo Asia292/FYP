@@ -7,7 +7,7 @@
 #include "LevelSelect.h"
 
 /*! \class LevelSelectState
-\brief The state which holds the level select screen
+\brief Derives from base state class - holds and manages the level select
 */
 class LevelSelectState : public State
 {
@@ -27,10 +27,10 @@ public:
 	virtual void processNetworkKeyRelease(int code, Server* l_server, int id) override {};		//!< Overrides base network key release
 	virtual bool getQuit() override { return quit; }	//!< Overrides base quit - returns quit bool
 
-	//Function per packet type???
-	virtual void levelSelectUpdate(int lvl, int back) override;
-	virtual void stateTransition(bool push) override;
-	virtual void playerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos) override {};
-	virtual void levelUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position) override {};
-	virtual void timeUpdate(int minute, int second) override {};
+	//Function per packet type
+	virtual void levelSelectUpdate(int lvl, int back) override;		//!< Updates the level select values - used only for networking
+	virtual void stateTransition(bool push) override;		//!< Signifies if a state should be pushed or popped - used only for networking
+	virtual void playerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos) override {};		//!< Updates the player - used only for networking - not needed in this state
+	virtual void levelUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position) override {};		//!< Updates all other objects in a level except the player - used only for networking - not needed in this state
+	virtual void timeUpdate(int minute, int second) override {};		//!< Updates the time for the level - used only for networking - not needed in this state
 };

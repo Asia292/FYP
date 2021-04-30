@@ -7,7 +7,7 @@
 #include "Game.h"
 
 /*! \class GameState
-\brief State which holds the game
+\brief Derives from base state class - holds and manages the game
 */
 class GameState : public State
 {
@@ -15,11 +15,11 @@ private:
 	Game *game;		//!< Pointer to the game
 	bool quit;		//!< If game scene should close
 	Server* server;	//!< On the server or not
-	int lvl;
-	int *lvlScore;
-	bool gameOver;
-	bool onServer;
-	bool onClient;
+	int lvl;		//!< The level to load
+	int *lvlScore;	//!< A pointer to the level score recieved from the level select
+	bool gameOver;	//!< If the game is over or not
+	bool onServer;	//!< If the state is loaded server side
+	bool onClient;	//!< If the state is loaded client side
 
 public:
 	GameState(int level, int *levelScore, std::stack<State *>* States, Server* l_server = nullptr);		//!< Constructor
@@ -32,10 +32,10 @@ public:
 	virtual void processNetworkKeyRelease(int code, Server* l_server, int id) override;		//!< Overrides base network key release
 	virtual bool getQuit() override { return quit; }		//!< Override base quit - returns quit bool
 
-	//Function per packet type???
-	virtual void levelSelectUpdate(int lvl, int back) override;
-	virtual void stateTransition(bool push) override;
-	virtual void playerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos) override;
-	virtual void levelUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position) override;
-	virtual void timeUpdate(int minute, int second) override;
+	//Function per packet type
+	virtual void levelSelectUpdate(int lvl, int back) override;		//!< Updates the game time values, takes same values as level select update so same function is overriden - used only for networking
+	virtual void stateTransition(bool push) override;		//!< Signifies if a state should be pushed or popped - used only for networking
+	virtual void playerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos) override;		//!< Updates the player - used only for networking
+	virtual void levelUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position) override;		//!< Updates all other objects in a level except the player - used only for networking
+	virtual void timeUpdate(int minute, int second) override;		//!< Updates the time for the level - used only for networking
 };

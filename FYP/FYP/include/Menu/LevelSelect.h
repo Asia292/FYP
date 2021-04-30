@@ -45,10 +45,10 @@ public:
 	bool getPlay() { return play; }		//!< Returns the play bool
 	bool getClose() { return close; }	//!< Returns the close bool
 	int getLevel() { return selectedLevel; }	//!< Returns the selected level
-	int getBack() { return back; }
-	void networkUpdate(int lvl, int Back);
+	int getBack() { return back; }		//!< Returns back
+	void networkUpdate(int lvl, int Back);		//!< Updates the selected level and back ints - only used for networking
 	void setPlay(bool Play) { play = Play; }		//!< Sets the play bool
-	void setClose(bool quit) { close = quit; }
+	void setClose(bool quit) { close = quit; }		//!< Sets the close bool
 	void moveUp();		//!< Move up in the index (text options)
 	void moveDown();	//!< Move down in the index (text options)
 	void moveLeft();	//!< Move left in the index (text options)

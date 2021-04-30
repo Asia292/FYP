@@ -10,26 +10,26 @@
 #include "Client.h"
 
 /*! \class LevelSelectState
-\brief The state which holds the level select screen
+\brief Derives from base state class - sets up and handles the networking
 */
 class NetworkState : public State
 {
 private:
-	bool quit;		//!< If the state should quit
-	bool isHost;
-	Client client;
-	sf::Clock clock;
-	std::stack<State *> netStates;
-	State *currState;
+	bool quit;							//!< If the state should quit
+	bool isHost;						//!< If host has been selected
+	Client client;						//!< The client
+	sf::Clock clock;					//!< Clock used to update client
+	std::stack<State *> netStates;		//!< Stack of states held by the network state
+	State *currState;					//!< The current state on the network state
 
-	noConnection *none;
+	noConnection *none;					//!< Pointer to the no connection class, used when there is no server to connect to
 
-	STARTUPINFO si;
-	PROCESS_INFORMATION pi;
+	STARTUPINFO si;						//!< Start up information for the server
+	PROCESS_INFORMATION pi;				//!< Process information for the server
 
 public:
-	NetworkState() {};
-	NetworkState(float Height, float Width, std::stack<State *>* States, bool host);		//!< Constructior
+	NetworkState() {};		//!< Default constructor
+	NetworkState(float Height, float Width, std::stack<State *>* States, bool host);		//!< Full constructior
 	virtual ~NetworkState() override;		//!< Overrides base deconstructor
 	virtual void update(float timestep) override;		//!< Overrides base update
 	void HandlePackets(const PacketID & id, sf::Packet & packet, Client * client);
@@ -40,12 +40,12 @@ public:
 	virtual void processNetworkKeyRelease(int code, Server* l_server, int id) override {};		//!< Overrides base network key release
 	virtual bool getQuit() override { return quit; }	//!< Overrides base quit - returns quit bool
 
-	virtual void noServer();
+	void noServer();		//!< Creates no connection screen
 
-	//Function per packet type???
-	virtual void levelSelectUpdate(int lvl, int back) override {};
-	virtual void stateTransition(bool push) override {};
-	virtual void playerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos) override {};
-	virtual void levelUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position) override {};
-	virtual void timeUpdate(int minute, int second) override {};
+	//Function per packet type
+	virtual void levelSelectUpdate(int lvl, int back) override {};		//!< Updates the level select values - used only for networking - not needed in this state
+	virtual void stateTransition(bool push) override {};		//!< Signifies if a state should be pushed or popped - used only for networking - not needed in this state
+	virtual void playerUpdate(int player, int texture, int frame, bool flip, bool dead, sf::Vector2f pos) override {};		//!< Updates the player - used only for networking - not needed in this state
+	virtual void levelUpdate(int object, int index, bool texture, int frame, float angle, sf::Vector2f position) override {};		//!< Updates all other objects in a level except the player - used only for networking - not needed in this state
+	virtual void timeUpdate(int minute, int second) override {};		//!< Updates the time for the level - used only for networking - not needed in this state
 };

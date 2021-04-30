@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Level time = "40" background = "lvl4" cover = "lvl4Cover">
+  <lightPlayer>
+    <position x="1.80" y="1.68"/>
+  </lightPlayer>
+
+  <darkPlayer>
+    <position x="0.73" y="1.58"/>
+  </darkPlayer>
+  
+	<hazard mask = "0x0100">
+		<position x="4.49" y="2.25"/>
+		<size x="1.51" y="0.24"/>
+	</hazard>
+  <hazard mask = "0x0100">
+    <position x="8.17" y="2.26"/>
+    <size x="1.45" y="0.25"/>
+  </hazard>
+  <hazard mask = "0x0100">
+    <position x="3.59" y="8.39"/>
+    <size x="1.86" y="0.23"/>
+  </hazard>
+  <hazard mask = "0x0010">
+    <position x="6.29" y="2.25"/>
+    <size x="0.83" y="0.24"/>
+  </hazard>
+  <hazard mask = "0x0010">
+    <position x="8.65" y="8.75"/>
+    <size x="1.19" y="0.25"/>
+  </hazard>
+  <hazard mask = "0x0010">
+    <position x="8.47" y="10.19"/>
+    <size x="1.51" y="0.23"/>
+  </hazard>
+
+  <door orientation = "1.5708" close = "true" glow = "greenGlow">
+    <position x="5.57" y="4.25"/>
+    <size x="1.88" y="0.36"/>
+  </door>
+  <door orientation = "1.5708" close = "true" glow = "blueGlow">
+    <position x="7.01" y="4.25"/>
+    <size x="1.88" y="0.36"/>
+  </door>
+  <door orientation = "4.71239" close = "true" glow = "yellowGlow">
+    <position x="7.01" y="4.20"/>
+    <size x="1.04" y="0.37"/>
+  </door>
+  <door orientation = "3.14159" close = "false" glow = "purpleGlow">
+    <position x="11.57" y="8.10"/>
+    <size x="1.08" y="0.35"/>
+  </door>
+
+  <button name = "door" index = "2" colour = "yellowButton">
+    <position x="12.23" y="9.99"/>
+  </button>
+  <button name = "door" index = "3" colour = "purpleButton">
+    <position x="13.33" y="9.99"/>
+  </button>
+
+  <lever name = "door" index = "1" right = "true" colour = "blueLever" back = "blueLeverReverse">
+    <position x="5.04" y="9.87"/>
+    <size x="0.6" y="0.5"/>
+  </lever>
+  <lever name = "door" index = "0" right = "false" colour = "greenLever" back = "greenLeverReverse">
+    <position x="2.15" y="9.87"/>
+    <size x="0.6" y="0.5"/>
+  </lever>
+
+  <block type = "ball">
+    <position x="10.98" y="4.16"/>
+  </block>
+  <block type = "ball">
+    <position x="12.06" y="1.99"/>
+  </block>
+
+	<darkPickUp>
+		<position x="13.06" y="0.78"/>
+	</darkPickUp>
+	<darkPickUp>
+		<position x="1.82" y="5.95"/>
+	</darkPickUp>
+	<darkPickUp>
+		<position x="8.29" y="7.83"/>
+	</darkPickUp>
+	<darkPickUp>
+		<position x="8.50" y="9.70"/>
+	</darkPickUp>
+
+	<lightPickUp>
+		<position x="8.14" y="1.83"/>
+	</lightPickUp>
+	<lightPickUp>
+		<position x="4.44" y="1.83"/>
+	</lightPickUp>
+	<lightPickUp>
+		<position x="0.73" y="5.33"/>
+	</lightPickUp>
+	<lightPickUp>
+		<position x="9.19" y="5.28"/>
+	</lightPickUp>
+	<lightPickUp>
+		<position x="3.57" y="7.91"/>
+	</lightPickUp>
+	
+	<lightHome>
+		<position x="8.28" y="3.88"/>
+		<size x="0.60" y="0.85"/>
+	</lightHome>
+	
+	<darkHome>
+		<position x="4.33" y="3.87"/>
+		<size x="0.63" y="0.87"/>
+	</darkHome>
+
+  <outline>
+    <coord x="0.33" y="0.33"/>
+    <coord x="13.69" y="0.33"/>
+    <coord x="13.69" y="1.07"/>
+    <coord x="13.33" y="1.07"/>
+    <coord x="13.33" y="1.43"/>
+    <coord x="12.97" y="1.43"/>
+    <coord x="12.97" y="1.77"/>
+    <coord x="13.31" y="1.77"/>
+    <coord x="13.69" y="2.15"/>
+    <coord x="13.69" y="7.55"/>
+    <coord x="13.31" y="7.92"/>
+    <coord x="12.60" y="7.92"/>
+    <coord x="12.60" y="8.27"/>
+    <coord x="13.69" y="9.36"/>
+    <coord x="13.69" y="10.08"/>
+    <coord x="12.96" y="10.08"/>
+    <coord x="12.96" y="9.35"/>
+    <coord x="11.86" y="8.28"/>
+    <coord x="11.86" y="7.96"/>
+    <coord x="11.52" y="8.27"/>
+    <coord x="12.61" y="9.36"/>
+    <coord x="12.61" y="10.08"/>
+    <coord x="11.87" y="10.08"/>
+    <coord x="11.87" y="9.36"/>
+    <coord x="11.15" y="8.63"/>
+    <coord x="11.15" y="7.92"/>
+    <coord x="11.53" y="7.55"/>
+    <coord x="11.87" y="7.55"/>
+    <coord x="11.87" y="4.65"/>
+    <coord x="11.52" y="4.31"/>
+    <coord x="10.08" y="4.31"/>
+    <coord x="10.08" y="3.24"/>
+    <coord x="9.35" y="3.24"/>
+    <coord x="9.35" y="2.17"/>
+    <coord x="9.00" y="2.17"/>
+    <coord x="8.64" y="2.36"/>
+    <coord x="7.55" y="2.36"/>
+    <coord x="7.22" y="2.17"/>
+    <coord x="6.83" y="2.17"/>
+    <coord x="6.48" y="2.36"/>
+    <coord x="6.11" y="2.36"/>
+    <coord x="5.78" y="2.17"/>
+    <coord x="5.38" y="2.17"/>
+    <coord x="5.03" y="2.36"/>
+    <coord x="3.94" y="2.36"/>
+    <coord x="3.60" y="2.17"/>
+    <coord x="3.24" y="2.17"/>
+    <coord x="3.24" y="3.24"/>
+    <coord x="2.87" y="3.24"/>
+    <coord x="2.87" y="4.33"/>
+    <coord x="1.76" y="4.33"/>
+    <coord x="1.44" y="4.66"/>
+    <coord x="5.38" y="4.66"/>
+    <coord x="5.38" y="4.32"/>
+    <coord x="3.57" y="4.32"/>
+    <coord x="3.57" y="2.52"/>
+    <coord x="9.00" y="2.52"/>
+    <coord x="9.00" y="4.32"/>
+    <coord x="7.20" y="4.32"/>
+    <coord x="7.20" y="4.67"/>
+    <coord x="11.54" y="4.67"/>
+    <coord x="11.54" y="6.84"/>
+    <coord x="10.81" y="6.84"/>
+    <coord x="10.81" y="7.20"/>
+    <coord x="10.09" y="7.20"/>
+    <coord x="10.09" y="7.56"/>
+    <coord x="8.65" y="7.57"/>
+    <coord x="8.65" y="7.91"/>
+    <coord x="10.80" y="7.90"/>
+    <coord x="10.80" y="9.36"/>
+    <coord x="10.09" y="9.36"/>
+    <coord x="10.09" y="10.09"/>
+    <coord x="9.36" y="10.09"/>
+    <coord x="9.00" y="10.30"/>
+    <coord x="7.90" y="10.30"/>
+    <coord x="7.57" y="10.11"/>
+    <coord x="3.93" y="10.09"/>
+    <coord x="3.93" y="8.64"/>
+    <coord x="6.10" y="8.64"/>
+    <coord x="6.10" y="8.28"/>
+    <coord x="7.56" y="8.28"/>
+    <coord x="7.56" y="9.36"/>
+    <coord x="7.90" y="9.36"/>
+    <coord x="7.90" y="9.00"/>
+    <coord x="9.36" y="8.99"/>
+    <coord x="9.69" y="8.65"/>
+    <coord x="9.35" y="8.65"/>
+    <coord x="9.01" y="8.85"/>
+    <coord x="8.27" y="8.85"/>
+    <coord x="7.90" y="8.65"/>
+    <coord x="7.90" y="7.94"/>
+    <coord x="5.37" y="7.94"/>
+    <coord x="5.01" y="8.29"/>
+    <coord x="4.68" y="8.29"/>
+    <coord x="4.30" y="8.50"/>
+    <coord x="2.86" y="8.50"/>
+    <coord x="2.52" y="8.30"/>
+    <coord x="1.43" y="8.30"/>
+    <coord x="1.43" y="8.64"/>
+    <coord x="3.22" y="8.64"/>
+    <coord x="3.22" y="10.10"/>
+    <coord x="1.05" y="10.10"/>
+    <coord x="1.05" y="9.38"/>
+    <coord x="0.32" y="9.38"/>
+    <coord x="0.32" y="6.12"/>
+    <coord x="0.70" y="6.12"/>
+    <coord x="0.70" y="6.47"/>
+    <coord x="1.06" y="6.47"/>
+    <coord x="1.06" y="6.83"/>
+    <coord x="5.01" y="6.83"/>
+    <coord x="5.01" y="6.49"/>
+    <coord x="7.18" y="6.49"/>
+    <coord x="7.18" y="6.12"/>
+    <coord x="10.08" y="6.12"/>
+    <coord x="10.08" y="5.77"/>
+    <coord x="7.56" y="5.77"/>
+    <coord x="7.20" y="5.40"/>
+    <coord x="6.83" y="5.40"/>
+    <coord x="6.48" y="5.05"/>
+    <coord x="6.10" y="5.05"/>
+    <coord x="5.40" y="5.73"/>
+    <coord x="5.40" y="6.13"/>
+    <coord x="4.68" y="6.13"/>
+    <coord x="4.68" y="6.47"/>
+    <coord x="1.41" y="6.47"/>
+    <coord x="1.41" y="6.13"/>
+    <coord x="1.05" y="6.13"/>
+    <coord x="1.05" y="5.77"/>
+    <coord x="0.33" y="5.77"/>
+    <coord x="0.33" y="2.51"/>
+    <coord x="2.49" y="2.51"/>
+    <coord x="2.49" y="2.16"/>
+    <coord x="0.33" y="2.16"/>
+    <coord x="0.33" y="0.33"/>
+  </outline>
+  <outline>
+    <coord x="10.78" y="1.83"/>
+    <coord x="10.78" y="2.16"/>
+    <coord x="12.96" y="2.16"/>
+    <coord x="13.31" y="2.50"/>
+    <coord x="13.31" y="7.22"/>
+    <coord x="12.97" y="7.54"/>
+    <coord x="12.26" y="7.54"/>
+    <coord x="12.26" y="4.32"/>
+    <coord x="11.89" y="3.94"/>
+    <coord x="11.55" y="3.94"/>
+    <coord x="11.55" y="3.60"/>
+    <coord x="12.23" y="3.60"/>
+    <coord x="12.59" y="3.24"/>
+    <coord x="12.97" y="3.24"/>
+    <coord x="12.97" y="2.50"/>
+    <coord x="10.45" y="2.50"/>
+    <coord x="10.45" y="2.12"/>
+    <coord x="10.78" y="1.83"/>
+  </outline>
+</Level>

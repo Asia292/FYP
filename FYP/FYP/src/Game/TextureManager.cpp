@@ -1,3 +1,7 @@
+/*!
+\file TextureManager.cpp
+*/
+
 #include "TextureManager.h"
 
 TextureManager::TextureManager()

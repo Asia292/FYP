@@ -1,3 +1,7 @@
+/*!
+\file ContactListener.cpp
+*/
+
 #include "ContactListener.h"
 
 void ContactListener::BeginContact(b2Contact * contact)

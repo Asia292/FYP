@@ -1,3 +1,7 @@
+/*!
+\file PickUp.cpp
+*/
+
 #include "PickUp.h"
 
 PickUp::PickUp(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, int mask, TextureManager *texMan) : Sensor(world, position, size)

@@ -1,3 +1,7 @@
+/*!
+\file GameState.cpp
+*/
+
 #include "GameState.h"
 
 GameState::GameState(int level, int * levelScore, std::stack<State*>* States, Server * l_server)

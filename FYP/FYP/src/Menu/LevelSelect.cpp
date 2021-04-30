@@ -1,3 +1,7 @@
+/*!
+\file LevelSelect.cpp
+*/
+
 #include "LevelSelect.h"
 
 LevelSelect::LevelSelect(float width, float height)

@@ -1,6 +1,6 @@
-//#include "GameTests.h"
+#include "GameTests.h"
 //#include "LevelSelectTests.h"
-#include "StateTests.h"
+//#include "StateTests.h"
 //#include "NetworkTests.h"
 #include <gtest/gtest.h>
 #include <iostream>

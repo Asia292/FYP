@@ -1,3 +1,7 @@
+/*!
+\file NetworkState.cpp
+*/
+
 #include "NetworkState.h"
 
 void NetworkState::HandlePackets(const PacketID & id, sf::Packet & packet, Client * client)

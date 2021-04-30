@@ -1,3 +1,7 @@
+/*!
+\file Hazard.cpp
+*/
+
 #include "Hazard.h"
 
 Hazard::Hazard(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, int mask)

@@ -8,7 +8,7 @@
 
 #include "TextureManager.h"
 
-#define MAX_LEVELS 5
+#define MAX_LEVELS 5		//!< The max number of levels for the game
 
 /*! \class LevelSelect
 \brief The level select screen

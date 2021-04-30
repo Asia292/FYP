@@ -1,3 +1,7 @@
+/*!
+\file noConnection.cpp
+*/
+
 #include "noConnection.h"
 
 noConnection::noConnection()

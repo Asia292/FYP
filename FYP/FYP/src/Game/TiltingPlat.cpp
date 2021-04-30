@@ -1,3 +1,7 @@
+/*!
+\file tiltingPlat.cpp
+*/
+
 #include "TiltingPlat.h"
 
 TiltingPlat::TiltingPlat(b2World * world, sf::Vector2f position, sf::Vector2f size, sf::Vector2f Anchor, float orientation, TextureManager *texMan, const std::string tex, bool onClient)

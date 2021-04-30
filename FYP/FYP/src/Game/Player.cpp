@@ -1,3 +1,7 @@
+/*!
+\file Player.cpp
+*/
+
 #include "Player.h"
 
 Player::Player(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, int cat, TextureManager *texMan, bool onClient)

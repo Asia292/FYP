@@ -1,3 +1,7 @@
+/*!
+\file Game.cpp
+*/
+
 #include "Game.h"
 
 Game::Game(int level, int *levelScore, bool onClient)

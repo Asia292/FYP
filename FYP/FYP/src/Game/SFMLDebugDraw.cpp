@@ -1,3 +1,7 @@
+/*!
+\file SFMLDebugDraw.cpp
+*/
+
 #include "SFMLDebugDraw.h"
 
 void SFMLDebugDraw::setWorld(b2World * world) {

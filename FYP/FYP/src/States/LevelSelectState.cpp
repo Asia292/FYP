@@ -1,3 +1,7 @@
+/*!
+\file LevelSelectState.cpp
+*/
+
 #include "LevelSelectState.h"
 
 LevelSelectState::LevelSelectState(float Height, float Width, std::stack<State*>* States, Server * l_server)

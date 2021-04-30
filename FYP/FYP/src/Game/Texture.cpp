@@ -1,3 +1,7 @@
+/*!
+\file Texture.cpp
+*/
+
 #include "Texture.h"
 
 Texture::Texture()

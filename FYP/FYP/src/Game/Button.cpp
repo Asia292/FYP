@@ -1,3 +1,7 @@
+/*!
+\file Button.cpp
+*/
+
 #include "Button.h"
 
 Button::Button(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, DoorPlat * Door, TextureManager *texMan, const std::string col) : Sensor(world, position, size)

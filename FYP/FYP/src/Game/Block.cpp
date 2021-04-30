@@ -1,3 +1,7 @@
+/*!
+\file Block.cpp
+*/
+
 #include "Block.h"
 
 Block::Block(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, TextureManager *texMan, bool onClient)

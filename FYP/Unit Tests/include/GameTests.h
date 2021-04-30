@@ -369,7 +369,7 @@ TEST(Animation, Flip)
 
 
 //// HUD ////
-TEST(HUDUpdate, TimeSeconds)
+/*TEST(HUDUpdate, TimeSeconds)
 {
 	TextureManager * texMan = TextureManager::getInstance();
 	sf::Font font;
@@ -400,4 +400,4 @@ TEST(HUDUpdate, TimeMinutes)
 	EXPECT_EQ(secAfter, 0);
 	EXPECT_LT(minBefore, minAfter);
 	EXPECT_EQ(minAfter, 1);
-}
+}*/

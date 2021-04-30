@@ -3,16 +3,15 @@
 \file TexManager.h
 */
 
-/*! \class TexManager
-\brief Sets up all texture data - spritesheets, key frames, and animation times
-*/
-//#include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <memory>
 
 #include "Texture.h"
 
+/*! \class TexManager
+\brief Sets up all texture data - spritesheets, key frames, and animation times
+*/
 class TextureManager
 {
 private:

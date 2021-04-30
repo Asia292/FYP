@@ -1,3 +1,7 @@
+/*!
+\file MovingPlat.cpp
+*/
+
 #include "MovingPlat.h"
 
 MovingPlat::MovingPlat(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, const float orientation, const sf::Vector2f &End, TextureManager *texMan, const std::string col, const std::string Glow, bool onClient)

@@ -1,3 +1,7 @@
+/*!
+\file HomeSensor.cpp
+*/
+
 #include "HomeSensor.h"
 
 HomeSensor::HomeSensor(b2World * world, const sf::Vector2f position, sf::Vector2f size, Player * play, TextureManager *texMan) : Sensor(world, position, size)

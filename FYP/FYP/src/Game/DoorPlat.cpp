@@ -1,3 +1,7 @@
+/*!
+\file DoorPlat.cpp
+*/
+
 #include "DoorPlat.h"
 
 DoorPlat::DoorPlat(b2World * world, const sf::Vector2f& position, const sf::Vector2f& size, const float orientation, bool close, TextureManager *texMan, const std::string plat, bool onClient)

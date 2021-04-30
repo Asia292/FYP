@@ -1,3 +1,7 @@
+/*!
+\file Lever.cpp
+*/
+
 #include "Lever.h"
 
 Lever::Lever(b2World * world, const sf::Vector2f & position, const sf::Vector2f & size, DoorPlat * Door, bool Right, TextureManager *texMan, const std::string col, const std::string back) : Sensor(world, position, size)

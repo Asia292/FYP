@@ -1,3 +1,7 @@
+/*!
+\file Menu.cpp
+*/
+
 #include "MenuState.h"
 
 MenuState::MenuState(float Height, float Width, std::stack<State *>* States)

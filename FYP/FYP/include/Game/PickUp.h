@@ -5,7 +5,7 @@
 
 #include "Sensor.h"
 
-/*! \class Button
+/*! \class PickUp
 \brief Derrives from the base sensor class. Creates pickups for players.
 */
 class PickUp : public Sensor

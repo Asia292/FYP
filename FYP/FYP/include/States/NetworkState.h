@@ -9,7 +9,7 @@
 #include "noConnection.h"
 #include "Client.h"
 
-/*! \class LevelSelectState
+/*! \class NetworkState
 \brief Derives from base state class - sets up and handles the networking
 */
 class NetworkState : public State

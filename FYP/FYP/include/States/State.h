@@ -8,7 +8,7 @@
 #include <iostream>
 #include <stack>
 
-/*! \class Level
+/*! \class State
 \brief Base class for all states, all functions are virtual to be overrided.
 */
 class State : public sf::Drawable

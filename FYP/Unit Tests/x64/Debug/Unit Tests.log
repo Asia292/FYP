@@ -9,6 +9,8 @@ c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit t
 c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(194): warning C4305: 'argument': truncation from 'double' to 'float32'
 c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(271): warning C4305: 'argument': truncation from 'double' to 'float32'
 c:\users\tia-a\documents\fyp\student's cartridge\development\code\fyp\fyp\unit tests\include\gametests.h(355): warning C4305: 'argument': truncation from 'double' to 'float32'
+  NetworkTests.cpp
+  Generating Code...
 Main.obj : warning LNK4217: locally defined symbol ??1Drawable@sf@@UEAA@XZ (public: virtual __cdecl sf::Drawable::~Drawable(void)) imported in function "int `public: __cdecl Game::Game(void)'::`1'::dtor$0" (?dtor$0@?0???0Game@@QEAA@XZ@4HA)
 NetworkTests.obj : warning LNK4049: locally defined symbol ??1Drawable@sf@@UEAA@XZ (public: virtual __cdecl sf::Drawable::~Drawable(void)) imported
 Main.obj : warning LNK4217: locally defined symbol ??0Drawable@sf@@QEAA@XZ (public: __cdecl sf::Drawable::Drawable(void)) imported in function "public: __cdecl Game::Game(void)" (??0Game@@QEAA@XZ)
@@ -16,6 +18,7 @@ NetworkTests.obj : warning LNK4049: locally defined symbol ??0Drawable@sf@@QEAA@
 Main.obj : warning LNK4217: locally defined symbol ?getScale@Transformable@sf@@QEBAAEBV?$Vector2@M@2@XZ (public: class sf::Vector2<float> const & __cdecl sf::Transformable::getScale(void)const ) imported in function "public: virtual void __cdecl Animation_Flip_Test::TestBody(void)" (?TestBody@Animation_Flip_Test@@UEAAXXZ)
 Main.obj : warning LNK4217: locally defined symbol ??0Font@sf@@QEAA@XZ (public: __cdecl sf::Font::Font(void)) imported in function "public: __cdecl Game::Game(void)" (??0Game@@QEAA@XZ)
 Main.obj : warning LNK4217: locally defined symbol ??1Font@sf@@QEAA@XZ (public: __cdecl sf::Font::~Font(void)) imported in function "int `public: __cdecl Game::Game(void)'::`1'::dtor$5" (?dtor$5@?0???0Game@@QEAA@XZ@4HA)
+Main.obj : warning LNK4217: locally defined symbol ??1RectangleShape@sf@@UEAA@XZ (public: virtual __cdecl sf::RectangleShape::~RectangleShape(void)) imported in function "public: virtual __cdecl LevelSelect::~LevelSelect(void)" (??1LevelSelect@@UEAA@XZ)
 Main.obj : warning LNK4217: locally defined symbol ??0View@sf@@QEAA@XZ (public: __cdecl sf::View::View(void)) imported in function "public: __cdecl Game::Game(void)" (??0Game@@QEAA@XZ)
 Main.obj : warning LNK4217: locally defined symbol ??1Sprite@sf@@UEAA@XZ (public: virtual __cdecl sf::Sprite::~Sprite(void)) imported in function "public: virtual __cdecl Texture::~Texture(void)" (??1Texture@@UEAA@XZ)
 Main.obj : warning LNK4217: locally defined symbol ??0Text@sf@@QEAA@XZ (public: __cdecl sf::Text::Text(void)) imported in function "public: __cdecl Game::Game(void)" (??0Game@@QEAA@XZ)

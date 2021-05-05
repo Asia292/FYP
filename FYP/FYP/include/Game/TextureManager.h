@@ -9,7 +9,7 @@
 
 #include "Texture.h"
 
-/*! \class TexManager
+/*! \class TextureManager
 \brief Sets up all texture data - spritesheets, key frames, and animation times
 */
 class TextureManager

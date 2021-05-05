@@ -221,6 +221,58 @@ TEST(ClientPacketRecieved, MovingPlatformLevelUpdate)
 	EXPECT_EQ(texture, update.texture);
 }
 
+TEST(ClientPacketRecieved, DoorPlatformLevelUpdate)
+{
+	NetworkState state;
+	std::stack<State *> netStates = state.netStates;
+	int score = 1;
+	GameState * game = new GameState(1, &score, &netStates);
+	netStates.push(game);
+	state.currState = netStates.top();
+
+	sf::Packet p;
+	LevelUpdate update;
+	update.object = 1;
+	update.index = 0;
+	update.position = sf::Vector2f(2.4f, 4.6f);
+	p << update;
+
+	state.HandlePackets(8, p, nullptr);
+
+	Level * lvl = game->game->currLevel;
+
+	sf::Vector2f pos = lvl->doorPlats[0]->platform->currSprite.getPosition();
+
+	EXPECT_EQ(pos.x, update.position.x);
+	EXPECT_EQ(pos.y, update.position.y);
+}
+
+TEST(ClientPacketRecieved, TiltPlatformLevelUpdate)
+{
+	NetworkState state;
+	std::stack<State *> netStates = state.netStates;
+	int score = 1;
+	GameState * game = new GameState(1, &score, &netStates);
+	netStates.push(game);
+	state.currState = netStates.top();
+
+	sf::Packet p;
+	LevelUpdate update;
+	update.object = 2;
+	update.index = 0;
+	update.angle = 0.2f;
+	p << update;
+
+	state.HandlePackets(8, p, nullptr);
+
+	Level * lvl = game->game->currLevel;
+
+	float angle = lvl->tiltPlats[0]->currSprite.getRotation();
+	angle /= 57.29577f;
+
+	EXPECT_EQ(angle, update.angle);
+}
+
 TEST(ClientPacketRecieved, BlockLevelUpdate)
 {
 	NetworkState state;
